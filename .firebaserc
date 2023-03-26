@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "slack-cd3d1": {
+      "hosting": {
+        "Slack_clone": [
+          "slack-cd3d1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "slack-cd3d1"
+  }
+}
