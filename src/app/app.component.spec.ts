@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'Slack_clone'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Slack_clone');
+    expect("").toEqual('Slack_clone');
   });
 
   it('should render title', () => {

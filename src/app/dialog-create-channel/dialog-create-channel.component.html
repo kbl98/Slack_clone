@@ -1,0 +1,22 @@
+<h2>Create Channel</h2>
+<p>
+  Channels are for communication with your team. They should have a name, that
+  gives imformation about content.
+</p>
+
+<div class="form-channel-cont">
+  <mat-form-field appearance="outline">
+    <mat-label>Channel-Name</mat-label>
+    <input
+      matInput
+      placeholder="Channelname"
+      [(ngModel)]="channelname"
+      [disabled]="loading"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="saveChannel()" cdkFocusInitial>Save</button>
+</div>

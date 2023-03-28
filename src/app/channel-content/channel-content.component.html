@@ -1,0 +1,17 @@
+<div class="thread-cont" *ngFor="let thread of threads">
+  <div class="thread-date">day</div>
+  <div class="thread-content-cont">
+    <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
+    <div class="thread-content">
+      <h3>
+        {{ thread.author }}<span>{{ thread.date }}</span>
+      </h3>
+      <div class="thread-text">{{ thread.text }}</div>
+    </div>
+  </div>
+  <div class="answers">
+    <img src="assets/img/pinguin.svg" alt="img of answer-user" />
+    <p>Antworten</p>
+    <span>Zeitraum zu letzter Antwort</span>
+  </div>
+</div>
