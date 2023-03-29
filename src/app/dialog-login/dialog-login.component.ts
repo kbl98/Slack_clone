@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-login',
@@ -17,7 +18,7 @@ export class DialogLoginComponent implements OnInit {
    
   }
 
-  constructor(public dialog: MatDialog, private firestore: AngularFirestore ,public dialogRef: MatDialogRef<DialogLoginComponent>) {
+  constructor(private router: Router, public dialog: MatDialog, private firestore: AngularFirestore ,public dialogRef: MatDialogRef<DialogLoginComponent>) {
     
   }
 
@@ -35,4 +36,9 @@ export class DialogLoginComponent implements OnInit {
   togglePassword() {
     this.showPassword = !this.showPassword; //wechsel zwischen true und false
   }
+
+  guestLogIn() {
+    this.router.navigateByUrl('main/:id');
+    this.dialogRef.close();
+  }  
 }

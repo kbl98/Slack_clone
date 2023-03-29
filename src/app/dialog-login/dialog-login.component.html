@@ -22,4 +22,5 @@
         <button [disabled]="loading" mat-button (click)="closeWindow()">Cancel</button>
         <button [disabled]="loading" mat-button (click)="logInUser()" cdkFocusInitial>Log in</button>
     </div>
+    <button class="guestLogIn" [disabled]="loading" mat-button (click)="guestLogIn()" cdkFocusInitial>Guest log in</button>
 </div>
