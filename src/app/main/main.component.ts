@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from 'src/models/channel.class';
 import { DialogCreateChannelComponent } from '../dialog-create-channel/dialog-create-channel.component';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -10,7 +12,7 @@ import { DialogCreateChannelComponent } from '../dialog-create-channel/dialog-cr
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  constructor(public dialog: MatDialog, private firestore: AngularFirestore) {}
+  constructor(public dialog: MatDialog, private firestore: AngularFirestore, private route: ActivatedRoute,private router:Router) {}
 
   ngOnInit(): void {
     this.getChannels();
@@ -45,4 +47,7 @@ export class MainComponent implements OnInit {
     });
   }
 
+  logout(){
+    this.router.navigateByUrl('/');
+  }
 }

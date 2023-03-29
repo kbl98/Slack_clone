@@ -39,7 +39,7 @@ export class ChannelContentComponent implements OnInit {
       .valueChanges()
       .subscribe((channel) => {
         this.channel = new Channel(channel);
-        this.threads = this.channel.threads;
+        //this.threads = this.channel.threads;
       });
   }
 }

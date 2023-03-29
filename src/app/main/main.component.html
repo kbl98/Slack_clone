@@ -1,12 +1,16 @@
 <mat-toolbar class="toolbar-cont">
-    <button mat-icon-button>Slack_Clone</button>
+    <h1>Slack_Clone</h1>
     <div class="search-field">
         <input matInput placeholder="Search" />
     </div>
 
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button mat-icon-button class="center"   [matMenuTriggerFor]="menu">
     <img src="assets/img/serious-woman.svg" />
   </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+    <button mat-menu-item>Impressum</button>
+  </mat-menu>
 </mat-toolbar>
 <mat-drawer-container class="nav-cont" autosize>
     <mat-drawer #drawer class="nav-content-cont" mode="side" [opened]="true">
@@ -32,7 +36,7 @@
             </mat-menu>
         </h3>
         <div *ngIf="open" class="channel-cont">
-            <h4 *ngFor="let chan of channels" routerLink="/channel/{{ chan.customIdName }}">
+            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}">
                 # {{ chan.name }}
             </h4>
         </div>
@@ -43,7 +47,7 @@
       <mat-icon>swap_horiz</mat-icon>
     </button>-->
         <div class="route-cont">
-            <router-outlet></router-outlet>
+            <router-outlet ></router-outlet>
         </div>
     </div>
 
