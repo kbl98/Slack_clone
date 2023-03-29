@@ -24,12 +24,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 
-
-
-
-
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { MainComponent } from './main/main.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 
 
@@ -41,7 +39,9 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     AppComponent,
 
     ChannelContentComponent,
-    DialogCreateChannelComponent
+    DialogCreateChannelComponent,
+    MainComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,

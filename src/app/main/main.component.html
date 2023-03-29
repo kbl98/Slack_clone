@@ -1,0 +1,51 @@
+<mat-toolbar class="toolbar-cont">
+    <button mat-icon-button>Slack_Clone</button>
+    <div class="search-field">
+        <input matInput placeholder="Search" />
+    </div>
+
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <img src="assets/img/serious-woman.svg" />
+  </button>
+</mat-toolbar>
+<mat-drawer-container class="nav-cont" autosize>
+    <mat-drawer #drawer class="nav-content-cont" mode="side" [opened]="true">
+        <h2>
+            My Academy
+            <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+        </h2>
+
+        <h3>
+            <button (click)="changeOpen()" mat-icon-button>
+        <mat-icon *ngIf="!open">arrow_right </mat-icon>
+        <mat-icon *ngIf="open">arrow_drop_down</mat-icon>
+      </button> Channels
+            <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon class="channel-create-icon">expand_more</mat-icon>
+      </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openDialogNewChannel()">
+          Create new channel
+        </button>
+            </mat-menu>
+        </h3>
+        <div *ngIf="open" class="channel-cont">
+            <h4 *ngFor="let chan of channels" routerLink="/channel/{{ chan.customIdName }}">
+                # {{ chan.name }}
+            </h4>
+        </div>
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+        <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
+      <mat-icon>swap_horiz</mat-icon>
+    </button>-->
+        <div class="route-cont">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+    <!--<app-channel-content></app-channel-content>-->
+</mat-drawer-container>
