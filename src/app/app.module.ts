@@ -28,6 +28,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { MainComponent } from './main/main.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DialogLoginComponent } from './dialog-login/dialog-login.component';
+import { DialogCreateNewAccountComponent } from './dialog-create-new-account/dialog-create-new-account.component';
 
 
 
@@ -41,12 +44,14 @@ import { HomepageComponent } from './homepage/homepage.component';
     ChannelContentComponent,
     DialogCreateChannelComponent,
     MainComponent,
-    HomepageComponent
+    HomepageComponent,
+    DialogLoginComponent,
+    DialogCreateNewAccountComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    
+    MatProgressBarModule,
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     FormsModule,

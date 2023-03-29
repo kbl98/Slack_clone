@@ -1,5 +1,106 @@
 .start-screen {
+    width: 100vw;
+    height: 100vh;
+    background-color: #4A154B;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    img {
+        margin-right: 100px;
+    }
+}
+
+.introduction {
+    position: absolute;
+    left: 5%;
+    top: 10%;
+    height: 400px;
+}
+
+.introduction-header {
     width: 500px;
-    height: 500px;
-    background-color: black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    h1 {
+        margin: 0;
+        color: white;
+        font-size: 50px;
+        font-weight: 600;
+    }
+    img {
+        width: 55px;
+        margin: 0px;
+    }
+}
+
+.introduction-body {
+    margin-top: 50px;
+    height: 150px;
+    width: 500px;
+    p {
+        font-size: 40px;
+        color: white;
+        margin: 0;
+        line-height: 120%;
+    }
+}
+
+.sign-in-button {
+    background-color: #33D375;
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    position: absolute;
+    left: 23%;
+    bottom: 0;
+    p {
+        margin: 0;
+        padding: 10px 50px 10px 50px;
+        font-size: 24px;
+        color: white;
+    }
+    &:hover {
+        transform: scale(1.1);
+        transition: all 125ms ease-in-out;
+    }
+}
+
+.start-screen-footer {
+    position: absolute;
+    display: flex;
+    left: 5%;
+    bottom: 10%;
+    gap: 20px;
+    p {
+        color: white;
+        font-size: 16px;
+    }
+}
+
+.underline-registry {
+    @media(min-width: 951px) {
+        position: relative;
+    }
+}
+
+.underline-registry::after {
+    @media(min-width: 951px) {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 4px;
+        background-color: #33D375;
+        z-index: 2;
+        transition: width 0.2s;
+    }
+}
+
+.underline-registry:hover::after {
+    @media(min-width: 951px) {
+        width: 66.66%;
+    }
 }

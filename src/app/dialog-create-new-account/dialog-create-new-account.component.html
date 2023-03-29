@@ -1,0 +1,30 @@
+<div class="dialogFields">
+    <h1>Register</h1>
+    <mat-progress-bar *ngIf="loading" class="progressBar" mode="indeterminate"></mat-progress-bar>
+    <div class="dialogUsername">
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>Username</mat-label>
+            <input [disabled]="loading" matInput placeholder="Username....">
+        </mat-form-field>
+    </div>
+    <div class="dialogEmail">
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>Email</mat-label>
+            <input [disabled]="loading" matInput placeholder="Email....">
+        </mat-form-field>
+    </div>
+    <div class="dialogPassword">
+        <mat-form-field appearance="outline" class="fullWidth">
+            <mat-label>Password</mat-label>
+            <input [disabled]="loading" [(ngModel)]="password" matInput name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Enter password...">
+            <span class="toggle-password" (click)="togglePassword()">
+                <img *ngIf="showPassword" src="./assets/img/hide.png">
+                <img *ngIf="!showPassword" src="./assets/img/view.png">
+            </span>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button [disabled]="loading" mat-button (click)="closeWindow()">Cancel</button>
+        <button [disabled]="loading" mat-button (click)="createAccount()" cdkFocusInitial>Register</button>
+    </div>
+</div>

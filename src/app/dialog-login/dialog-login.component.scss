@@ -1,0 +1,31 @@
+.dialogFields {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    h1 {
+        font-size: 36px;
+        font-weight: 600;
+        padding: 10px 0 10px 0;
+    }
+}
+
+.dialogPassword {
+    position: relative;
+    input[type="password"] {
+        padding-right: 20px;
+    }
+    .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        img {
+            width: 20px;
+        }
+    }
+}
