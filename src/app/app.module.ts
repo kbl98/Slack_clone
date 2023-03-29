@@ -31,6 +31,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DialogLoginComponent } from './dialog-login/dialog-login.component';
 import { DialogCreateNewAccountComponent } from './dialog-create-new-account/dialog-create-new-account.component';
+import { TextBoxComponent } from './text-box/text-box.component';
 
 
 
@@ -46,7 +47,8 @@ import { DialogCreateNewAccountComponent } from './dialog-create-new-account/dia
     MainComponent,
     HomepageComponent,
     DialogLoginComponent,
-    DialogCreateNewAccountComponent
+    DialogCreateNewAccountComponent,
+    TextBoxComponent
   ],
   imports: [
     BrowserModule,
