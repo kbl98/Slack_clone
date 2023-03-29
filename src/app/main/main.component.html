@@ -4,10 +4,10 @@
         <input matInput placeholder="Search" />
     </div>
 
-    <button mat-icon-button class="center"   [matMenuTriggerFor]="menu">
+    <button mat-icon-button class="center"   [matMenuTriggerFor]="logoff">
     <img src="assets/img/serious-woman.svg" />
   </button>
-  <mat-menu #menu="matMenu">
+  <mat-menu #logoff="matMenu">
     <button mat-menu-item (click)="logout()">Logout</button>
     <button mat-menu-item>Impressum</button>
   </mat-menu>
@@ -53,5 +53,4 @@
 
     <!--<app-channel-content></app-channel-content>-->
 </mat-drawer-container>
-    <!--<app-channel-content></app-channel-content>-->
-</mat-drawer-container>
+   
