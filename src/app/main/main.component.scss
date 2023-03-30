@@ -84,8 +84,6 @@
 
 .route-cont {
     width: 100%;
-    height: calc(100vh - 46px);
-    margin-top:46px;
 }
 
 .right{
@@ -100,7 +98,20 @@
     top:0;
     height:100vh;
 }
+
 .side-nav-cont{
     width:500px;
+}
+
+.example-sidenav-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 46px);
+    background-color: rgb(30, 30, 30);
+}
+
+.app-text-container {
+    width: 100%;
 }
 
