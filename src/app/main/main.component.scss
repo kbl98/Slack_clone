@@ -105,13 +105,24 @@
 
 .example-sidenav-content {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100vh - 46px);
-    background-color: rgb(30, 30, 30);
+    
 }
 
 .app-text-container {
     width: 100%;
+}
+
+.mid-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 46px);
+   // background-color: rgb(30, 30, 30);
+}
+
+.side-thread-cont{
+    width:250px;
+    background-color: aqua;
+    
 }
 

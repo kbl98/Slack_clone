@@ -17,6 +17,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.getChannels();
   }
+  sideThread=true;
   channel = new Channel();
   channels = [];
   public open = true;

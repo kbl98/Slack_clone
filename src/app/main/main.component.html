@@ -40,9 +40,32 @@
         # {{ chan.name }}
       </h4>
     </div>
-  </mat-drawer>
+  
+
+
+  <h3>
+    <button (click)="changeOpen()" mat-icon-button>
+      <mat-icon *ngIf="!open">arrow_right </mat-icon>
+      <mat-icon *ngIf="open">arrow_drop_down</mat-icon>
+    </button> Chats
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon class="channel-create-icon">expand_more</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item >
+       New Chat
+      </button>
+    </mat-menu>
+  </h3>
+  <!--<div *ngIf="open" class="channel-cont">
+    <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}">
+      # {{ chan.name }}
+    </h4>
+  </div>-->
+</mat-drawer>
 
   <div class="example-sidenav-content">
+    <div class="mid-container">
     <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
     </button>-->
@@ -52,7 +75,11 @@
 
     <app-text-box class="app-text-container"></app-text-box>
 
-
+</div>
+    <div class="side-thread-cont" *ngIf="sideThread">
+        <h1>Opend Threads</h1>
+    </div>
+    
   </div>
 
   <mat-drawer-container />
