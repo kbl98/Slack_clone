@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class TextBoxComponent {
 
+  quillConfiguration = {
+    toolbar: [
+      ['bold', 'italic', 'strike'],
+      ['link'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ 'align': [] }], 
+      ['code-block','blockquote'],
+      [{ color: [] }, { background: [] }],
+      ['clean'],
+    ],
+  }
+
 }

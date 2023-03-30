@@ -1,9 +1,15 @@
 .text-box {
     width: 100%;
-    height: 300px;
-    background-color: rgb(150, 150, 150);
+    background-color: rgb(250, 250, 250);
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.content-editor {
+    margin-block: 16px;
+    width: 90%;
+
 }
