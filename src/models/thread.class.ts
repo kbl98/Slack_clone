@@ -10,7 +10,7 @@ export class Thread{
         this.authorPic=obj? obj.authorPic:"";
         this.date=obj? obj.date:"";
         this.text=obj? obj.text:"";
-        this.comments=obj? obj.comments:"";
+        this.comments=obj? obj.comments:[""];
     }
 
     threadToJSON(){

@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar-cont">
+<mat-toolbar class="toolbar-cont mode-colors">
     <h1>Slack_Clone</h1>
     <div class="search-field">
         <input matInput placeholder="Search" />
@@ -13,7 +13,7 @@
   </mat-menu>
 </mat-toolbar>
 <mat-drawer-container class="nav-cont" autosize>
-    <mat-drawer #drawer class="nav-content-cont" mode="side" [opened]="true">
+    <mat-drawer #drawer class="nav-content-cont mode-colors-nav" mode="side" [opened]="true">
         <h2>
             My Academy
             <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
@@ -46,11 +46,15 @@
         <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
     </button>-->
-        <div class="route-cont">
-            <router-outlet ></router-outlet>
-        </div>
+    <div class="route-cont">
+
+            
+        <router-outlet ></router-outlet>
+    </div>
+   <div>
+       </div>
     </div>
 
-    <!--<app-channel-content></app-channel-content>-->
-</mat-drawer-container>
+    <mat-drawer-container/>
+
    
