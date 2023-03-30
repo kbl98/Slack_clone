@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogCreateChannelComponent } from '../dialog-create-channel/dialog-create-channel.component';
 import { DialogCreateNewAccountComponent } from '../dialog-create-new-account/dialog-create-new-account.component';
 import { DialogLoginComponent } from '../dialog-login/dialog-login.component';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-homepage',
@@ -15,17 +15,19 @@ export class HomepageComponent implements OnInit {
     
   }
 
-  
-  
-  constructor(public dialog: MatDialog, private firestore: AngularFirestore) {
+  constructor(public dialog: MatDialog, 
+    private firestore: AngularFirestore,
+    private sharedService: SharedService) {
     
   }
 
-  openLogIn() {
+  openLogIn(){
     this.dialog.open(DialogLoginComponent);
   }
-  
-  openRegistryWindow() {
+
+
+  openRegistryWindow(){
     this.dialog.open(DialogCreateNewAccountComponent);
   }
+  
 }

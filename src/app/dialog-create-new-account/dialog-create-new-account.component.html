@@ -26,5 +26,8 @@
     <div mat-dialog-actions>
         <button [disabled]="loading" mat-button (click)="closeWindow()">Cancel</button>
         <button [disabled]="loading" mat-button (click)="createAccount()" cdkFocusInitial>Register</button>
+
     </div>
+    <button class="backToLogInBtn" [disabled]="loading" mat-button (click)="openLogIn()">Back to log In</button>
+
 </div>

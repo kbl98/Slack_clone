@@ -32,6 +32,10 @@ export class DialogCreateNewAccountComponent implements OnInit {
 
   }
 
+  openLogIn() {
+
+  }
+
   togglePassword() {
     this.showPassword = !this.showPassword; //wechsel zwischen true und false
   }
