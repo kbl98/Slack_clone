@@ -13,7 +13,7 @@ export class ChannelContentComponent implements OnInit {
   sideThread = true;
   activChannel;
   activThread;
-  openSide = true;
+  openSide = false;
   dateOfThreads;
   channelId = '';
   channel = new Channel();
@@ -54,6 +54,7 @@ export class ChannelContentComponent implements OnInit {
   }
 
   open(i) {
+    
     this.activChannel = i;
     this.openSide = true;
   }
