@@ -32,6 +32,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DialogLoginComponent } from './dialog-login/dialog-login.component';
 import { DialogCreateNewAccountComponent } from './dialog-create-new-account/dialog-create-new-account.component';
 import { TextBoxComponent } from './text-box/text-box.component';
+import { QuillModule } from 'ngx-quill';
 
 
 
@@ -70,6 +71,7 @@ import { TextBoxComponent } from './text-box/text-box.component';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    QuillModule.forRoot()
    
 
   ],
