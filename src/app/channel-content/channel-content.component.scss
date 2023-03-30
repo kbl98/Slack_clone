@@ -1,4 +1,3 @@
-
 .thread-cont {
   position: relative;
   border-top: solid 1px rgba(0, 0, 0, 0.4);
@@ -57,5 +56,35 @@
     height: 24px;
     object-fit: contain;
     border-radius: 25%;
+  }
+}
+
+.allThreads {
+  display: flex;
+  justify-content: space-between;
+  min-height: calc(100vh - 200px);
+  margin-left: 24px;
+  margin-right: 48px;
+}
+
+.side-thread-cont {
+  width: 250px;
+  background-color: aqua;
+}
+
+.answer-cont {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 16px;
+  font-size: 18px;
+  width: 150px;
+  h3 {
+    font-size: 16px;
+    span {
+      margin-left: 24px;
+      font-size: 12px;
+    }
   }
 }

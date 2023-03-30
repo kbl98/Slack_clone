@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
-import { ActivatedRoute } from '@angular/router';
+import { Thread } from 'src/models/thread.class';
+import { ActivatedRoute, OutletContext } from '@angular/router';
 
 @Component({
   selector: 'app-channel-content',
@@ -9,9 +10,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./channel-content.component.scss'],
 })
 export class ChannelContentComponent implements OnInit {
+  sideThread = true;
+  activChannel;
+  activThread;
+  openSide = true;
   dateOfThreads;
   channelId = '';
   channel = new Channel();
+  emitId;
   threads = [
     {
       author: 'Hugo',
@@ -21,7 +27,6 @@ export class ChannelContentComponent implements OnInit {
     },
   ];
 
-  
   constructor(
     private firestore: AngularFirestore,
     private route: ActivatedRoute
@@ -42,24 +47,30 @@ export class ChannelContentComponent implements OnInit {
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel) => {
-        console.log(channel)
+        console.log(channel);
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
-        console.log(this.channel)
       });
   }
 
-  getDate(){
-    let date=new Date().getTime();
-    for(let i=0;i<this.threads.length;i++){
-      let datediff=date - new Date().getTime();//statt new Date () muss muss new Date(this.threads[i].date)
-      if(datediff==0){
-        this.dateOfThreads="heute";
-      }else{
-        this.dateOfThreads="vor" + datediff +"h"
+  open(i) {
+    this.activChannel = i;
+    this.openSide = true;
+  }
+
+  getAnswers(i) {
+    this.activThread = this.threads[i];
+  }
+
+  getDate() {
+    let date = new Date().getTime();
+    for (let i = 0; i < this.threads.length; i++) {
+      let datediff = date - new Date().getTime(); //statt new Date () muss muss new Date(this.threads[i].date)
+      if (datediff == 0) {
+        this.dateOfThreads = 'heute';
+      } else {
+        this.dateOfThreads = 'vor' + datediff + 'h';
       }
     }
   }
 }
-
-

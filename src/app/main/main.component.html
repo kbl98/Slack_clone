@@ -44,9 +44,9 @@
 
 
   <h3>
-    <button (click)="changeOpen()" mat-icon-button>
-      <mat-icon *ngIf="!open">arrow_right </mat-icon>
-      <mat-icon *ngIf="open">arrow_drop_down</mat-icon>
+    <button (click)="changeOpen2()" mat-icon-button>
+      <mat-icon *ngIf="!open2">arrow_right </mat-icon>
+      <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
     </button> Chats
     <button mat-button [matMenuTriggerFor]="menu">
       <mat-icon class="channel-create-icon">expand_more</mat-icon>
@@ -65,20 +65,21 @@
 </mat-drawer>
 
   <div class="example-sidenav-content">
-    <div class="mid-container">
+   
     <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
     </button>-->
     <div class="route-cont">
-      <router-outlet></router-outlet>
-    </div>
+      <router-outlet >
+       
+      </router-outlet>
+     
+    
 
     <app-text-box class="app-text-container"></app-text-box>
 
 </div>
-    <div class="side-thread-cont" *ngIf="sideThread">
-        <h1>Opend Threads</h1>
-    </div>
+   
     
   </div>
 

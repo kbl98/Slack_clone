@@ -1,8 +1,6 @@
-
-
-
-<div class="thread-cont" *ngFor="let thread of threads">
-    <div class="thread-date">{{dateOfThreads}}</div>
+<div class="allThreads">
+  <div class="thread-cont" *ngFor="let thread of threads; let i = index">
+    <div class="thread-date">{{ dateOfThreads }}</div>
     <div class="thread-content-cont">
       <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
       <div class="thread-content">
@@ -14,7 +12,12 @@
     </div>
     <div class="answers">
       <img src="assets/img/pinguin.svg" alt="img of answer-user" />
-      <a href="">Antworten</a>
+      <a href="" (click)="open(i)">Antworten</a>
       <span>Zeitraum zu letzter Antwort</span>
     </div>
   </div>
+
+  <div class="side-thread-cont" *ngIf="openSide">
+    <h1>Opend Threads</h1>
+  </div>
+</div>

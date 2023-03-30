@@ -1,128 +1,111 @@
 .toolbar-cont {
-    top: 0;
-    left: 0;
-    height: 46px;
-    width: 100%;
+  top: 0;
+  left: 0;
+  height: 46px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+  button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+  }
 
-    h1{
-        margin:0;
-    }
-    button{
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        
-    }
-        
-    img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        border: solid 1px gray;
-    }
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: solid 1px gray;
+  }
 }
-    .search-field {
-        height: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: white;
-    }
-
+.search-field {
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
 
 .margin-top {
-    padding-top: 24px;
+  padding-top: 24px;
 }
 
 .nav-cont {
-    width: 100%;
-    height: calc(100vh - 46px);
+  width: 100%;
+  height: calc(100vh - 46px);
 }
 
 .nav-content-cont {
-    width: 400px;
+  width: 400px;
+  padding-left: 12px;
+  padding-right: 12px;
+  h2 {
+    border-top: solid 1px rgb(130, 8, 130);
+    border-bottom: solid 1px rgb(130, 8, 130);
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 12px;
-    padding-right: 12px;
-    h2 {
-        border-top: solid 1px rgb(130, 8, 130);
-        border-bottom: solid 1px rgb(130, 8, 130);
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 12px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  h3 {
+    margin-bottom: 0;
+    padding-top: 10px;
+    padding-left: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &:hover {
+      .channel-create-icon {
+        color: white;
+      }
     }
-    h3 {
-        margin-bottom: 0;
-        padding-top: 10px;
-        padding-left: 12px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        &:hover {
-            .channel-create-icon {
-                color: white;
-            }
-        }
-        .channel-create-icon {
-            color: transparent;
-        }
+    .channel-create-icon {
+      color: transparent;
     }
-    .channel-cont {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 32px;
-    }
+  }
+  .channel-cont {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 32px;
+  }
 }
 
 .route-cont {
-    width: 100%;
+  width: 100%;
 }
 
-.right{
-    right:0
+.right {
+  right: 0;
 }
 
-
-.side-container{
-    background-color:red;
-    position: absolute;
-    right:0;
-    top:0;
-    height:100vh;
+.side-container {
+  background-color: red;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100vh;
 }
 
-.side-nav-cont{
-    width:500px;
+.side-nav-cont {
+  width: 500px;
 }
 
 .example-sidenav-content {
-    display: flex;
-    
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .app-text-container {
-    width: 100%;
+  width: 100%;
 }
-
-.mid-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100vh - 46px);
-   // background-color: rgb(30, 30, 30);
-}
-
-.side-thread-cont{
-    width:250px;
-    background-color: aqua;
-    
-}
-

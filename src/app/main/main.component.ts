@@ -1,26 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from 'src/models/channel.class';
 import { DialogCreateChannelComponent } from '../dialog-create-channel/dialog-create-channel.component';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { ChannelContentComponent } from '../channel-content/channel-content.component';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  template: ` <router-outlet></router-outlet>`,
+
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor(public dialog: MatDialog, private firestore: AngularFirestore, private route: ActivatedRoute,private router:Router) {}
+  constructor(
+    public dialog: MatDialog,
+    private firestore: AngularFirestore,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+  @ViewChildren(ChannelContentComponent)
+  public viewedChannel: QueryList<ChannelContentComponent>;
 
   ngOnInit(): void {
     this.getChannels();
   }
-  sideThread=true;
+
+  sideThread = true;
   channel = new Channel();
   channels = [];
   public open = true;
+  public open2 = true;
 
   getChannels() {
     this.firestore
@@ -35,8 +54,18 @@ export class MainComponent implements OnInit {
   changeOpen() {
     if (this.open) {
       this.open = false;
+      console.log(this.viewedChannel);
     } else {
       this.open = true;
+    }
+  }
+
+  changeOpen2() {
+    if (this.open2) {
+      this.open2 = false;
+      console.log(this.viewedChannel);
+    } else {
+      this.open2 = true;
     }
   }
 
@@ -48,7 +77,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  logout(){
+  logout() {
     this.router.navigateByUrl('/');
   }
 }
