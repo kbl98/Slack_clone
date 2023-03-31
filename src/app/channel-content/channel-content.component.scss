@@ -73,6 +73,14 @@
 .side-thread-cont {
   width: 250px;
   background-color: aqua;
+  position: relative;
+  padding:12px;
+}
+
+.close-btn{
+position: absolute;
+top:16px;
+right:16px;
 }
 
 .answer-cont {

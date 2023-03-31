@@ -50,13 +50,17 @@ export class ChannelContentComponent implements OnInit {
         console.log(channel);
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
+       
       });
   }
 
   open(i) {
     
+    if(this.threads[i]["comments"]){
+    console.log(this.threads[i]["comments"])
     this.activChannel = i;
     this.openSide = true;
+    }
   }
 
   getAnswers(i) {

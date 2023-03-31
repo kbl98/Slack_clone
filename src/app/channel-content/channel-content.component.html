@@ -18,6 +18,12 @@
   </div>
 
   <div class="side-thread-cont" *ngIf="openSide">
-    <h1>Opend Threads</h1>
+    <button class="close-btn" mat-button (click)="openSide=false">X</button>
+    <h1># {{channel['name']}}</h1>
+    
+    <div class="comment-cont" *ngFor="let comment of threads[activChannel]['comments']">
+      <h2>{{comment['author']}}</h2>
+      <p>{{comment['comment']}}</p>
+    </div>
   </div>
 </div>
