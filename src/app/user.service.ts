@@ -6,7 +6,19 @@ import { Observable, catchError, map, of } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
+  allUsers = [];
+
   constructor(private firestore: AngularFirestore) {}
+
+  ngOnInit(): void {
+    this.firestore
+      .collection('users')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((changes: any) => {
+        console.log('Änderungen', changes);
+        this.allUsers = changes;
+      });
+  }
 
   loginUser(username: string, password: string): Observable<boolean> {
     return this.firestore

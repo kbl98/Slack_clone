@@ -1,65 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SharedService } from '../shared.service';
 import { UserService } from '../user.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-dialog-login',
   templateUrl: './dialog-login.component.html',
   styleUrls: ['./dialog-login.component.scss']
-  })
-  export class DialogLoginComponent implements OnInit {
-  
-  loading = false;
-
+})
+export class DialogLoginComponent implements OnInit {
   username: string = '';
   password: string = '';
   showPassword: boolean = false;
-  error: string = '';
-  
-  constructor(private router: Router,
-  public dialog: MatDialog,
-  private userService: UserService,
-  public dialogRef: MatDialogRef<DialogLoginComponent>,
-  private sharedService: SharedService) {
-  
-  }
-  
-  ngOnInit(): void {
-  
-  }
-  
+  loading: boolean = false;
+
+  constructor(
+    private userService: UserService,
+    private dialogRef: MatDialogRef<DialogLoginComponent>,
+    private router: Router,
+    private firestore: AngularFirestore,
+  ) {}
+
+  ngOnInit(): void {}
+
   logInUser() {
-  this.userService.loginUser(this.username, this.password).subscribe(
-  success => {
-  if (success) {
-  // Benutzer authentifiziert
-  this.router.navigateByUrl('main/:id');
-  this.dialogRef.close();
-  } else {
-  // Benutzer nicht authentifiziert
-  this.error = 'Falscher Benutzername oder Passwort.';
-  }
-  },
-  error => {
-  console.log(error);
-  this.error = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
-  }
-  );
+    this.loading = true;
+    // Überprüfen Sie, ob die Benutzerdaten in der Datenbank vorhanden sind
+    this.firestore
+      .collection('users', ref => ref.where('username', '==', this.username).where('password', '==', this.password))
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        // Wenn der Benutzer gefunden wurde, navigieren Sie zur Hauptseite mit der ID des Benutzers als Parameter
+        if (!querySnapshot.empty) {
+          const user = querySnapshot.docs[0].data();
+          this.router.navigateByUrl(`main/id`);
+          this.dialogRef.close();
+        } else {
+          console.log('Benutzer nicht gefunden');
+          alert('Benutzername oder Passwort ungültig.');
+        }
+        this.loading = false;
+      });
   }
   
+
   closeWindow() {
-  this.dialogRef.close();
+    this.dialogRef.close();
   }
-  
+
   togglePassword() {
-  this.showPassword = !this.showPassword;
+    this.showPassword = !this.showPassword;
   }
-  
+
   guestLogIn() {
-  this.router.navigateByUrl('main/:id');
-  this.dialogRef.close();
-  }
+    this.router.navigateByUrl('main/:id');
+    this.dialogRef.close();
+  }  
 }
