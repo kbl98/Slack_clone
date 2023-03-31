@@ -8,6 +8,9 @@
     justify-content: flex-end;
     img {
         margin-right: 100px;
+        @media (max-width: 1050px) {
+            display: none;
+        }
     }
 }
 
@@ -16,6 +19,10 @@
     left: 5%;
     top: 10%;
     height: 400px;
+    @media (max-width: 1050px) {
+        width: 90%;
+        left: 5%;
+    }
 }
 
 .introduction-header {
@@ -23,15 +30,24 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    @media (max-width: 1050px) {
+        width: 100%;
+    }
     h1 {
         margin: 0;
         color: white;
         font-size: 50px;
         font-weight: 600;
+        @media (max-width: 400px) {
+            font-size: 30px;
+        }
     }
     img {
         width: 55px;
         margin: 0px;
+        @media (max-width: 1050px) {
+            display: block;
+        }
     }
 }
 
@@ -39,11 +55,17 @@
     margin-top: 50px;
     height: 150px;
     width: 500px;
+    @media (max-width: 1050px) {
+        width: 100%;
+    }
     p {
         font-size: 40px;
         color: white;
         margin: 0;
         line-height: 120%;
+        @media (max-width: 400px) {
+            font-size: 25px;
+        }
     }
 }
 
@@ -55,11 +77,22 @@
     position: absolute;
     left: 23%;
     bottom: 0;
+    @media (max-width: 1050px) {
+        left: 50%;
+        transform: translate(-50%);
+    }
     p {
         margin: 0;
         padding: 10px 50px 10px 50px;
         font-size: 24px;
         color: white;
+        @media (max-width: 450px) {
+            padding: 10px 30px 10px 30px;
+        }
+        @media (max-width: 350px) {
+            padding: 10px 20px 10px 20px;
+            font-size: 16px;
+        }
     }
     &:hover {
         transform: scale(1.1);
@@ -73,6 +106,10 @@
     left: 5%;
     bottom: 10%;
     gap: 20px;
+    @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 5px;
+    }
     p {
         color: white;
         font-size: 16px;

@@ -4,10 +4,19 @@
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.2);
     padding: 16px;
+    @media (max-width: 540px) {
+        width: 100%;
+    }
     h1 {
         font-size: 36px;
         font-weight: 600;
         padding: 10px 0 10px 0;
+    }
+}
+
+.cdk-overlay-pane {
+    @media (max-width: 540px) {
+        width: 400px;
     }
 }
 
