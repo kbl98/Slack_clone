@@ -39,11 +39,17 @@
   padding-left: 16px;
   font-size: 18px;
   h3 {
-    font-size: 16px;
+    margin-bottom:5px;
+    font-size: 14px;
+    font-weight: bold;
     span {
       margin-left: 24px;
       font-size: 12px;
+      font-weight: 300;
     }
+  }
+  .thread-text{
+    font-size: 14px;
   }
 }
 
@@ -58,7 +64,8 @@
     border-radius: 25%;
   }
   a{
-    cursor:pointer
+    cursor:pointer;
+    color:blue;
   }
 }
 
@@ -68,34 +75,61 @@
   min-height: calc(100vh - 200px);
   margin-left: 24px;
   margin-right: 48px;
+  margin-top:48px;
 }
 
 .side-thread-cont {
-  width: 250px;
-  background-color: aqua;
+  width: 300px;
+  background-color: rgba(130, 8, 130,0.7);
   position: relative;
   padding:12px;
 }
 
 .close-btn{
 position: absolute;
-top:16px;
-right:16px;
+top:6px;
+right:6px;
 }
 
-.answer-cont {
+.comment-cont {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: flex-start;
+ margin-top: 16px;
   align-items: flex-start;
   padding-left: 16px;
   font-size: 18px;
-  width: 150px;
-  h3 {
-    font-size: 16px;
-    span {
-      margin-left: 24px;
-      font-size: 12px;
-    }
+  width: 250px;
+  h2 {
+    font-size: 14px;
+   }
+   p {
+    
+    font-size: 14px;
   }
 }
+
+.opend-comment{
+  margin-left:10px;
+}
+
+.w250{
+width:250px;
+}
+
+.w60{
+  width: 60%;
+}
+
+.bg-gray{
+  background-color: aliceblue;
+  border-radius: 10px;
+  border:solid 1px rgba(0, 0, 0, 0.4);
+  padding: 16px;
+}
+
+.textbox-channel{
+  position: absolute;
+  bottom:10px;
+  left:10px;
+}
+
