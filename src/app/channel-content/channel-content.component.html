@@ -10,20 +10,36 @@
         <div class="thread-text">{{ thread.text }}</div>
       </div>
     </div>
-    <div class="answers">
+    <div class="answers" *ngIf="threads[i]['comments']">
       <img src="assets/img/pinguin.svg" alt="img of answer-user" />
-      <a  (click)="open(i)">Antworten</a>
+      <a (click)="open(i)">{{threads[i]["comments"].length}}Antwort(en)</a>
       <span>Zeitraum zu letzter Antwort</span>
     </div>
+    <app-text-box class="textbox-channel" #channeltext></app-text-box>
   </div>
+
+
 
   <div class="side-thread-cont" *ngIf="openSide">
     <button class="close-btn" mat-button (click)="openSide=false">X</button>
     <h1># {{channel['name']}}</h1>
-    
-    <div class="comment-cont" *ngFor="let comment of threads[activChannel]['comments']">
+    <div class="selected-thread-cont w250">
+      <div class="thread-content-cont bg-gray">
+        <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
+        <div class="thread-content w60">
+          <h3>
+            {{ threads[activThreadId].author }}<span>{{ threads[activThreadId].date }}</span>
+          </h3>
+          <div class="thread-text">{{threads[activThreadId].text }}</div>
+        </div>
+    </div>
+
+    <div class="comment-cont" *ngFor="let comment of threads[activThreadId]['comments']">
+      <img src="threads[activThreadId].comments.authorPic">
+      <div class="opend-comment bg-gray">
       <h2>{{comment['author']}}</h2>
       <p>{{comment['comment']}}</p>
+    </div>
     </div>
   </div>
 </div>

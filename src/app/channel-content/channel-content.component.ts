@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Channel } from 'src/models/channel.class';
 import { Thread } from 'src/models/thread.class';
 import { ActivatedRoute, OutletContext } from '@angular/router';
+import { TextBoxComponent } from '../text-box/text-box.component';
 
 @Component({
   selector: 'app-channel-content',
@@ -11,22 +12,16 @@ import { ActivatedRoute, OutletContext } from '@angular/router';
 })
 
 export class ChannelContentComponent implements OnInit {
+  @ViewChild('channeltext') channeltext: TextBoxComponent;
   sideThread = true;
-  activChannel;
+  activThreadId;
   activThread;
   openSide = false;
   dateOfThreads;
   channelId = '';
   channel = new Channel();
   emitId;
-  threads = [
-    {
-      author: 'Hugo',
-      text: 'Heute war ich in der Maxarena',
-      date: new Date().toDateString(),
-      authorPic: 'monkey.png',
-    },
-  ];
+  threads = [new Thread()];
 
   constructor(
     private firestore: AngularFirestore,
@@ -42,8 +37,8 @@ export class ChannelContentComponent implements OnInit {
     });
   }
 
-  getThreads() {
-    this.firestore
+  async getThreads() {
+    await this.firestore
       .collection('channels')
       .doc(this.channelId)
       .valueChanges()
@@ -51,16 +46,14 @@ export class ChannelContentComponent implements OnInit {
         console.log(channel);
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
-       
       });
   }
 
   open(i) {
-    
-    if(this.threads[i]["comments"]){
-    console.log(this.threads[i]["comments"])
-    this.activChannel = i;
-    this.openSide = true;
+    if (this.threads[i]['comments']) {
+      this.activThreadId = i;
+      this.openSide = true;
+      console.log(this.threads[0]);
     }
   }
 
@@ -70,8 +63,11 @@ export class ChannelContentComponent implements OnInit {
 
   getDate() {
     let date = new Date().getTime();
+
     for (let i = 0; i < this.threads.length; i++) {
-      let datediff = date - new Date().getTime(); //statt new Date () muss muss new Date(this.threads[i].date)
+      let thread_date = new Date(this.threads[i]['date']);
+      console.log(this.threads[i]['date']);
+      let datediff = date - date; //statt new Date () muss muss new Date(this.threads[i].date)
       if (datediff == 0) {
         this.dateOfThreads = 'heute';
       } else {
