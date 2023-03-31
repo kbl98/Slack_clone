@@ -80,4 +80,9 @@ export class MainComponent implements OnInit {
   logout() {
     this.router.navigateByUrl('/');
   }
+
+
+  openDialogNewChat(){
+    
+  }
 }

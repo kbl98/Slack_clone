@@ -48,11 +48,11 @@
         <mat-icon *ngIf="!open2">arrow_right </mat-icon>
         <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
       </button> Chats
-      <button mat-button [matMenuTriggerFor]="menu">
+      <button mat-button [matMenuTriggerFor]="menu2">
         <mat-icon class="channel-create-icon">expand_more</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+      <mat-menu #menu2="matMenu" >
+        <button mat-menu-item routerLink="main/:id/userchat">
           New Chat
         </button>
       </mat-menu>

@@ -1,0 +1,35 @@
+
+<div class="direct-mess-cont">
+<h1>Direktnachrichten</h1>
+<div class="input-cont">
+    <span>An:</span>
+    <div [matMenuTriggerFor]="contacts"><input [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
+    <mat-menu #contacts="matMenu">
+        <button  mat-menu-item (click)="writeContact('Contact1')" >Contact1</button>
+        <button mat-menu-item>Contact2</button>
+      </mat-menu>
+</div>
+
+<div class="message-box" *ngIf="overview">
+    <div class="message-date">11.10.2022</div>
+    <div class="message-cont" >
+       
+        <div class="thread-content-cont">
+          <img src="assets/img/pinguin.svg" alt="img of thread-user" />
+          <div class="thread-content">
+            <h3>
+               Theo 
+            </h3>
+            <div class="thread-text">text text texttext</div>
+          </div>
+        </div>
+       
+       
+      </div>
+</div>
+
+<div class="write-cont" *ngIf="!overview">
+    <button class="close-btn" mat-button (click)="closeWrite()">X</button>
+    <!--<app-text-box class="bottom"></app-text-box>-->
+</div>
+</div>

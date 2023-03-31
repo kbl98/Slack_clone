@@ -33,6 +33,7 @@ import { DialogLoginComponent } from './dialog-login/dialog-login.component';
 import { DialogCreateNewAccountComponent } from './dialog-create-new-account/dialog-create-new-account.component';
 import { TextBoxComponent } from './text-box/text-box.component';
 import { QuillModule } from 'ngx-quill';
+import { CreateDirectMessageComponent } from './create-direct-message/create-direct-message.component';
 
 
 
@@ -49,7 +50,9 @@ import { QuillModule } from 'ngx-quill';
     HomepageComponent,
     DialogLoginComponent,
     DialogCreateNewAccountComponent,
-    TextBoxComponent
+    TextBoxComponent,
+    CreateDirectMessageComponent,
+   
   ],
   imports: [
     BrowserModule,
