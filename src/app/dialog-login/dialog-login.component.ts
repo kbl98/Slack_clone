@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SharedService } from '../shared.service';
+import { UserService } from '../user.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-dialog-login',
@@ -10,35 +10,48 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./dialog-login.component.scss']
 })
 export class DialogLoginComponent implements OnInit {
-  
-  opened = false;
+  username: string = '';
   password: string = '';
   showPassword: boolean = false;
-  
-  ngOnInit(): void {
-   
-  }
+  loading: boolean = false;
 
-  constructor(private router: Router, 
-    public dialog: MatDialog, 
+  constructor(
+    private userService: UserService,
+    private dialogRef: MatDialogRef<DialogLoginComponent>,
+    private router: Router,
     private firestore: AngularFirestore,
-    public dialogRef: MatDialogRef<DialogLoginComponent>,
-    private sharedService: SharedService) {
-    
-  }
+  ) {}
 
-  loading = false;
+  ngOnInit(): void {}
 
   logInUser() {
-    
+    this.loading = true;
+    // Überprüfen Sie, ob die Benutzerdaten in der Datenbank vorhanden sind
+    this.firestore
+      .collection('users', ref => ref.where('username', '==', this.username).where('password', '==', this.password))
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        // Wenn der Benutzer gefunden wurde, navigieren Sie zur Hauptseite mit der ID des Benutzers als Parameter
+        if (!querySnapshot.empty) {
+          const user = querySnapshot.docs[0].data();
+          this.router.navigateByUrl(`main/id`);
+          this.dialogRef.close();
+        } else {
+          console.log('Benutzer nicht gefunden');
+          alert('Benutzername oder Passwort ungültig.');
+        }
+        this.loading = false;
+      });
   }
+  
 
   closeWindow() {
     this.dialogRef.close();
   }
 
   togglePassword() {
-    this.showPassword = !this.showPassword; //wechsel zwischen true und false
+    this.showPassword = !this.showPassword;
   }
 
   guestLogIn() {

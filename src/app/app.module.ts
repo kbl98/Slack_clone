@@ -33,9 +33,8 @@ import { DialogLoginComponent } from './dialog-login/dialog-login.component';
 import { DialogCreateNewAccountComponent } from './dialog-create-new-account/dialog-create-new-account.component';
 import { TextBoxComponent } from './text-box/text-box.component';
 import { QuillModule } from 'ngx-quill';
+import { UserComponent } from './user/user.component';
 import { CreateDirectMessageComponent } from './create-direct-message/create-direct-message.component';
-
-
 
 
 
@@ -51,8 +50,8 @@ import { CreateDirectMessageComponent } from './create-direct-message/create-dir
     DialogLoginComponent,
     DialogCreateNewAccountComponent,
     TextBoxComponent,
-    CreateDirectMessageComponent,
-   
+    UserComponent,
+    CreateDirectMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +73,9 @@ import { CreateDirectMessageComponent } from './create-direct-message/create-dir
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    
+   
    
 
   ],

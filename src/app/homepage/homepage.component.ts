@@ -11,8 +11,17 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
+
+  allUsers = [];
+
   ngOnInit(): void {
-    
+    this.firestore
+    .collection('users')
+    .valueChanges({idField: 'customIdName'}) // durch das zufügen von "{idField: 'customIdName'}" kann man nun die Id vom User rauslesen
+    .subscribe((changes: any) => {
+      console.log('Änderungen', changes);
+      this.allUsers = changes;
+    });
   }
 
   constructor(public dialog: MatDialog, 
@@ -21,8 +30,8 @@ export class HomepageComponent implements OnInit {
     
   }
 
-  openLogIn(){
-    this.dialog.open(DialogLoginComponent);
+  public openLogInHomepage(): void{
+    this.sharedService.openLogIn();
   }
 
 
