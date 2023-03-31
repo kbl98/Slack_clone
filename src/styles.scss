@@ -32,18 +32,62 @@ body {
     width: 100%;
 }
 
-.center{
+.center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.mode-colors{
+.mode-colors {
     background-color: rgb(77, 2, 77);
     color: white;
 }
 
-.mode-colors-nav{
+.mode-colors-nav {
     color: white;
     background-color: rgba(85, 2, 85, 0.961);
+}
+
+
+
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-color: rgb(129, 131, 133) !important;
+    transition: all 75ms ease-in-out;
+
+
+    .ql-formats {
+        margin: unset !important;
+        border-left: 1px solid #444 !important;
+
+        &:not(:last-child, :first-child) {
+            padding: 0 7.5px;
+        }
+
+        &:first-child {
+            padding-right: 7.5px;
+            border-left: unset !important;
+        }
+
+        &:last-child {
+            padding-left: 7.5px;
+            border-right: unset !important;
+        }
+    }
+}
+
+
+.ql-container.ql-snow {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-color: rgb(129, 131, 133) !important;
+    transition: all 75ms ease-in;
+}
+
+
+.ql-editor {
+    width: 93% !important;
 }

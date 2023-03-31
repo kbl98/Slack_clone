@@ -13,11 +13,21 @@ export class TextBoxComponent {
       ['bold', 'italic', 'strike'],
       ['link'],
       [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ 'align': [] }], 
       ['code-block','blockquote'],
       [{ color: [] }, { background: [] }],
-      ['clean'],
     ],
+    theme: 'snow'
   }
+
+
+  x() {
+    console.log();
+  }
+
+
+
+
+
+
 
 }

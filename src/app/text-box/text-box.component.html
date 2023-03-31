@@ -1,5 +1,15 @@
-<div class="text-box">
+<div class="text-box-container">
 
-    <quill-editor class="content-editor" [placeholder]="'Nachricht an XXX'" [modules]="quillConfiguration" [styles]="{'min-height': '75px', 'max-height': '500px'}"> </quill-editor>
+    <form class="editorForm" (submit)="x()">
+
+        <quill-editor class="content-editor" [placeholder]="'Nachricht an XXX'" [modules]="quillConfiguration" [styles]="{'min-height': '80px', 'max-height': '500px'}">
+
+        </quill-editor>
+
+        <button type="submit" mat-raised-button>
+            <mat-icon>send</mat-icon>
+          </button>
+
+    </form>
 
 </div>

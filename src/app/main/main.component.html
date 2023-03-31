@@ -40,47 +40,47 @@
         # {{ chan.name }}
       </h4>
     </div>
-  
 
 
-  <h3>
-    <button (click)="changeOpen2()" mat-icon-button>
-      <mat-icon *ngIf="!open2">arrow_right </mat-icon>
-      <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
-    </button> Chats
-    <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon class="channel-create-icon">expand_more</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item >
-       New Chat
+
+    <h3>
+      <button (click)="changeOpen2()" mat-icon-button>
+        <mat-icon *ngIf="!open2">arrow_right </mat-icon>
+        <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
+      </button> Chats
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon class="channel-create-icon">expand_more</mat-icon>
       </button>
-    </mat-menu>
-  </h3>
-  <!--<div *ngIf="open" class="channel-cont">
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          New Chat
+        </button>
+      </mat-menu>
+    </h3>
+    <!--<div *ngIf="open" class="channel-cont">
     <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}">
       # {{ chan.name }}
     </h4>
   </div>-->
-</mat-drawer>
+  </mat-drawer>
 
   <div class="example-sidenav-content">
-   
+
     <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
     </button>-->
     <div class="route-cont">
-      <router-outlet >
-       
+      <router-outlet>
+
       </router-outlet>
-     
-    
 
-    <app-text-box class="app-text-container"></app-text-box>
 
-</div>
-   
-    
+
+      <app-text-box class="app-text-container"></app-text-box>
+
+    </div>
+
+
   </div>
 
   <mat-drawer-container />
