@@ -9,6 +9,7 @@ import { ActivatedRoute, OutletContext } from '@angular/router';
   templateUrl: './channel-content.component.html',
   styleUrls: ['./channel-content.component.scss'],
 })
+
 export class ChannelContentComponent implements OnInit {
   sideThread = true;
   activChannel;
