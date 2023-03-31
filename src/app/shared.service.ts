@@ -10,4 +10,8 @@ export class SharedService {
   constructor(public dialog: MatDialog) { }
 
  
+  openLogIn() {
+    this.dialog.open(DialogLoginComponent);
+  }
+
 }
