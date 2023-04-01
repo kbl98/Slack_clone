@@ -16,7 +16,6 @@ export class TextBoxComponent {
       ['code-block','blockquote'],
       [{ color: [] }, { background: [] }],
     ],
-    theme: 'snow'
   }
 
 

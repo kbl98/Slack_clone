@@ -241,6 +241,20 @@ body {
     width: 93% !important;
 }
 
+
+.ql-container.ql-snow .ql-editor::before {
+    color: #444;
+    font-style: normal !important;
+    transition: all 75ms ease-in;
+}
+
+
+.ql-container.ql-snow .ql-editor:focus {
+    &::before {
+        color: #b7b8b9;
+    }
+}
+
 // OBERHALB TEXT BOX CSS (Muss in die style.css) //
 
 .bottom {
