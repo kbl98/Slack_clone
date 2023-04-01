@@ -1,4 +1,8 @@
-<div class="dialogFields">
+<div class="dialogFields" [class.errorLogin]="wrongPassword">
+    <div [class.displayBlock]="wrongPassword" [class.d-none]="!wrongPassword">
+        <span>Wrong username or password</span>
+    </div>
+
     <h1>Log in</h1>
     <mat-progress-bar *ngIf="loading" class="progressBar" mode="indeterminate"></mat-progress-bar>
     <div class="dialogEmail">

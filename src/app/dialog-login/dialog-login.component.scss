@@ -64,3 +64,16 @@
         transform: translateX(0);
     }
 }
+
+.errorLogin {
+    background: red;
+}
+
+.displayBlock {
+    display: flex;
+    justify-content: center;
+}
+
+.d-none {
+    display: none;
+}

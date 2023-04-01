@@ -19,6 +19,7 @@ export class DialogLoginComponent implements OnInit {
   allUsers = [];
 
   logedin = true;
+  wrongPassword = false;
 
   @ViewChild('emailField') emailField: ElementRef;
   @ViewChild('passwordField') passwordField: ElementRef;
@@ -62,7 +63,10 @@ export class DialogLoginComponent implements OnInit {
       } else {
         // Wenn Benutzer nicht gefunden, dann Fehlermeldung anzeigen
         console.log('Benutzer nicht gefunden');
-        alert('Benutzername oder Passwort ungültig.');
+        this.wrongPassword = true;
+        setTimeout(() => {
+          this.wrongPassword = false;
+        }, 2000);
       }
     } catch (error) {
       // Wenn es einen Fehler gibt, dann in der Konsole ausgeben
