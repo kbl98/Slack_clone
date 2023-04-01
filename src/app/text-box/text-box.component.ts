@@ -10,7 +10,7 @@ export class TextBoxComponent {
 
   quillConfiguration = {
     toolbar: [
-      ['bold', 'italic', 'strike'],
+      ['bold', 'italic', 'underline'],
       ['link'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       ['code-block','blockquote'],

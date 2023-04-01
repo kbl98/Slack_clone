@@ -12,6 +12,7 @@
 .editorForm {
     margin-block: 16px;
     width: 90%;
+    height: 140px;
     position: relative;
     border-radius: 5px;
     background-color: #222529 !important;
@@ -20,6 +21,9 @@
 
 .content-editor {
     width: 100%;
+    height: calc(100% - 42px);
+
+
 }
 
 
