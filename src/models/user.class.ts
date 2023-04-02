@@ -3,6 +3,7 @@ export class User {
     email: string;
     password: string;
     userpicture: any;
+    directMessages=[];
 
   constructor(obj?: any) {
 
@@ -10,7 +11,7 @@ export class User {
     this.email = obj ? obj.email : '';
     this.password = obj ? obj.password : '';
     this.userpicture = obj ? obj.street : [];
-
+    this.directMessages = obj ? obj.directMessages : [];
   }
 
   public toJSON() {
@@ -18,7 +19,8 @@ export class User {
       username: this.username,
       email: this.email,
       password: this.password,
-      userpicture: this.userpicture
+      userpicture: this.userpicture,
+      userMessages:this.directMessages
     }
   }
 }

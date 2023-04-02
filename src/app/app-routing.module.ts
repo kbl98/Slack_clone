@@ -10,7 +10,7 @@ const routes: Routes = [
   {path:'',component:HomepageComponent},
  
   {path:"main/:id",component:MainComponent, 
-children: [{path:'main/:id/channel/:id',component:ChannelContentComponent},
+children: [{path:'main/:id/channel/:id2',component:ChannelContentComponent},
           {path:'main/:id/userchat',component:CreateDirectMessageComponent}
         
       

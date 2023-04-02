@@ -4,7 +4,8 @@ import { Channel } from 'src/models/channel.class';
 import { Thread } from 'src/models/thread.class';
 import { ActivatedRoute, OutletContext } from '@angular/router';
 import { TextBoxComponent } from '../text-box/text-box.component';
-
+import { of } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -33,35 +34,24 @@ export class ChannelContentComponent implements OnInit {
   async ngOnInit() {
     this.channel$ = new Observable((observer) => {
       this.route.paramMap.subscribe((paraMap) => {
-        this.channelId = paraMap.get('id');
+        this.channelId = paraMap.get('id2');
         console.log(this.channelId);
         this.getThreads();
-        observer.next(this.getDate());
+        //observer.next(this.getDate());
         observer.complete();
       });
     });
 
     this.channel$.subscribe();
-  }
+  
+    }
 
   async getAllThreads() {
     await this.getThreads();
     this.getDate();
   }
 
-  /*channel$ = Observable.create((observer) => {
-    this.firestore
-      .collection('channels')
-      .doc(this.channelId)
-      .valueChanges()
-      .subscribe((channel) => {
-        console.log(channel);
-        this.channel = new Channel(channel);
-        this.threads = this.channel.threads;
-        console.log(this.threads[0]['date']);
-        observer.next(channel);
-      });
-  });*/
+  
 
   async getThreads() {
     await this.firestore
@@ -73,6 +63,7 @@ export class ChannelContentComponent implements OnInit {
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
         console.log(this.threads[0]['date']);
+        this.getDate();
       });
   }
 

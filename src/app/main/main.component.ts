@@ -13,6 +13,8 @@ import { DialogCreateChannelComponent } from '../dialog-create-channel/dialog-cr
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
+import { User } from 'src/models/user.class';
+
 
 @Component({
   selector: 'app-main',
@@ -33,6 +35,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChannels();
+    this.getloggedUser();
+
   }
 
   sideThread = true;
@@ -40,6 +44,8 @@ export class MainComponent implements OnInit {
   channels = [];
   public open = true;
   public open2 = true;
+  loggedUserId;
+  loggedUser=new User();
 
   getChannels() {
     this.firestore
@@ -50,6 +56,12 @@ export class MainComponent implements OnInit {
         this.channels = changes;
       });
   }
+
+  getUserId(){
+    this.route.paramMap.subscribe((paraMap) => {
+      this.loggedUserId = paraMap.get('id');
+      console.log(this.loggedUserId);
+  })}
 
   changeOpen() {
     if (this.open) {
@@ -81,8 +93,20 @@ export class MainComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+getloggedUser(){
+  this.getUserId();
+  this.firestore
+  .collection('users')
+  .doc(this.loggedUserId)
+  .valueChanges()
+  .subscribe((user) => {
+    console.log(user);
+    this.loggedUser = new User(user);
+  });
+  
+}
 
   openDialogNewChat(){
-    
+
   }
 }

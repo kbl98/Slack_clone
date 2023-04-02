@@ -3,10 +3,10 @@
 <h1>Direktnachrichten</h1>
 <div class="input-cont">
     <span>An:</span>
-    <div [matMenuTriggerFor]="contacts"><input [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
-    <mat-menu #contacts="matMenu">
-        <button  mat-menu-item (click)="writeContact('Contact1')" >Contact1</button>
-        <button mat-menu-item>Contact2</button>
+   
+    <div [matMenuTriggerFor]="contacts"  ><input [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
+    <mat-menu [hasBackdrop]="false" #contacts="matMenu">
+        <button *ngFor="let user of users;let i=index" mat-menu-item (click)="writeContact(user.email)" >{{user.email}} </button>
       </mat-menu>
 </div>
 
@@ -32,4 +32,5 @@
     <button class="close-btn" mat-button (click)="closeWrite()">X</button>
     <!--<app-text-box class="bottom"></app-text-box>-->
 </div>
-</div>
+
+
