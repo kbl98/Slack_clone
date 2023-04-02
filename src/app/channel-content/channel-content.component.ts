@@ -5,12 +5,13 @@ import { Thread } from 'src/models/thread.class';
 import { ActivatedRoute, OutletContext } from '@angular/router';
 import { TextBoxComponent } from '../text-box/text-box.component';
 
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-channel-content',
   templateUrl: './channel-content.component.html',
   styleUrls: ['./channel-content.component.scss'],
 })
-
 export class ChannelContentComponent implements OnInit {
   @ViewChild('channeltext') channeltext: TextBoxComponent;
   sideThread = true;
@@ -22,20 +23,45 @@ export class ChannelContentComponent implements OnInit {
   channel = new Channel();
   emitId;
   threads = [new Thread()];
+  channel$;
 
   constructor(
     private firestore: AngularFirestore,
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((paraMap) => {
-      this.channelId = paraMap.get('id');
-      console.log(this.channelId);
-      this.getThreads();
-      this.getDate();
+  async ngOnInit() {
+    this.channel$ = new Observable((observer) => {
+      this.route.paramMap.subscribe((paraMap) => {
+        this.channelId = paraMap.get('id');
+        console.log(this.channelId);
+        this.getThreads();
+        observer.next(this.getDate());
+        observer.complete();
+      });
     });
+
+    this.channel$.subscribe();
   }
+
+  async getAllThreads() {
+    await this.getThreads();
+    this.getDate();
+  }
+
+  /*channel$ = Observable.create((observer) => {
+    this.firestore
+      .collection('channels')
+      .doc(this.channelId)
+      .valueChanges()
+      .subscribe((channel) => {
+        console.log(channel);
+        this.channel = new Channel(channel);
+        this.threads = this.channel.threads;
+        console.log(this.threads[0]['date']);
+        observer.next(channel);
+      });
+  });*/
 
   async getThreads() {
     await this.firestore
@@ -46,6 +72,7 @@ export class ChannelContentComponent implements OnInit {
         console.log(channel);
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
+        console.log(this.threads[0]['date']);
       });
   }
 
@@ -61,17 +88,18 @@ export class ChannelContentComponent implements OnInit {
     this.activThread = this.threads[i];
   }
 
-  getDate() {
-    let date = new Date().getTime();
-
+  async getDate() {
+    let date = new Date().getTime() / 1000;
+    console.log(this.threads[0]['date']['seconds']);
     for (let i = 0; i < this.threads.length; i++) {
-      let thread_date = new Date(this.threads[i]['date']);
-      console.log(this.threads[i]['date']);
-      let datediff = date - date; //statt new Date () muss muss new Date(this.threads[i].date)
+      let datediff = +date - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
+      datediff = Math.floor(datediff / 86400);
+      console.log(date);
+      console.log(datediff);
       if (datediff == 0) {
         this.dateOfThreads = 'heute';
       } else {
-        this.dateOfThreads = 'vor' + datediff + 'h';
+        this.dateOfThreads = 'vor' + datediff + 'Tagen';
       }
     }
   }

@@ -51,7 +51,8 @@ import { CreateDirectMessageComponent } from './create-direct-message/create-dir
     DialogCreateNewAccountComponent,
     TextBoxComponent,
     UserComponent,
-    CreateDirectMessageComponent
+    CreateDirectMessageComponent,
+    
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ export class Thread{
     date;
     text;
     comments=[];
+    datestring;
 
     constructor(obj?){
         this.author=obj? obj.author:"";
@@ -11,6 +12,7 @@ export class Thread{
         this.date=obj? obj.date:"";
         this.text=obj? obj.text:"";
         this.comments=obj? obj.comments:[""];
+        this.datestring=obj? obj.datestring:"";
     }
 
     threadToJSON(){
@@ -19,7 +21,8 @@ export class Thread{
             authorPic:this.authorPic,
             date:this.date,
             text:this.text,
-            comments:this.comments
+            comments:this.comments,
+            datestring:this.datestring
 
         }
     }

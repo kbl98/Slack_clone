@@ -5,7 +5,7 @@
       <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
       <div class="thread-content">
         <h3>
-          {{ thread.author }}<span>{{ thread.date }}</span>
+          {{ thread.author }}<span>{{thread.datestring}}</span>
         </h3>
         <div class="thread-text">{{ thread.text }}</div>
       </div>
@@ -15,7 +15,7 @@
       <a (click)="open(i)">{{threads[i]["comments"].length}}Antwort(en)</a>
       <span>Zeitraum zu letzter Antwort</span>
     </div>
-    <app-text-box class="textbox-channel" #channeltext></app-text-box>
+   <!-- <app-text-box class="textbox-channel" #channeltext></app-text-box>-->
   </div>
 
 
@@ -28,7 +28,7 @@
         <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
         <div class="thread-content w60">
           <h3>
-            {{ threads[activThreadId].author }}<span>{{ threads[activThreadId].date }}</span>
+            {{ threads[activThreadId].author }}<span>{{ threads[activThreadId].datestring }}</span>
           </h3>
           <div class="thread-text">{{threads[activThreadId].text }}</div>
         </div>
