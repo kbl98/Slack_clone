@@ -4,7 +4,8 @@ import { Channel } from 'src/models/channel.class';
 import { Thread } from 'src/models/thread.class';
 import { ActivatedRoute, OutletContext } from '@angular/router';
 import { TextBoxComponent } from '../text-box/text-box.component';
-
+import { of } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -33,10 +34,10 @@ export class ChannelContentComponent implements OnInit {
   async ngOnInit() {
     this.channel$ = new Observable((observer) => {
       this.route.paramMap.subscribe((paraMap) => {
-        this.channelId = paraMap.get('id');
+        this.channelId = paraMap.get('id2');
         console.log(this.channelId);
         this.getThreads();
-        observer.next(this.getDate());
+        //observer.next(this.getDate());
         observer.complete();
       });
     });
@@ -49,20 +50,6 @@ export class ChannelContentComponent implements OnInit {
     this.getDate();
   }
 
-  /*channel$ = Observable.create((observer) => {
-    this.firestore
-      .collection('channels')
-      .doc(this.channelId)
-      .valueChanges()
-      .subscribe((channel) => {
-        console.log(channel);
-        this.channel = new Channel(channel);
-        this.threads = this.channel.threads;
-        console.log(this.threads[0]['date']);
-        observer.next(channel);
-      });
-  });*/
-
   async getThreads() {
     await this.firestore
       .collection('channels')
@@ -73,6 +60,7 @@ export class ChannelContentComponent implements OnInit {
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
         console.log(this.threads[0]['date']);
+        this.getDate();
       });
   }
 
@@ -90,17 +78,25 @@ export class ChannelContentComponent implements OnInit {
 
   async getDate() {
     let date = new Date().getTime() / 1000;
+    this.threads.sort((a, b) => a.date - b.date);
+
     console.log(this.threads[0]['date']['seconds']);
     for (let i = 0; i < this.threads.length; i++) {
       let datediff = +date - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
       datediff = Math.floor(datediff / 86400);
       console.log(date);
       console.log(datediff);
+
       if (datediff == 0) {
-        this.dateOfThreads = 'heute';
+        this.threads[i]['dateOfThread'] = 'heute';
+       
       } else {
-        this.dateOfThreads = 'vor' + datediff + 'Tagen';
+        this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
+       
       }
+      
     }
   }
+
+  
 }

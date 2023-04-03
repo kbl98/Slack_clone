@@ -1,3 +1,10 @@
+alldirect-messages{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
 .direct-mess-cont{
     width:100%;
     min-height: 100vh;
@@ -40,6 +47,10 @@
    width:80%;
    padding: 24px;
    background-color: white;
+   &:hover{
+    background-color:rgba(0,0,0,0.15); 
+    cursor: pointer;
+   }
   }
   
   .message-date {
@@ -58,7 +69,7 @@
     img {
       width: 54px;
       height: 54px;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
   
@@ -90,6 +101,8 @@
 
   .close-btn{
     position: absolute;
-    top:6px;
+    top:-156px;
     right:6px;
     }
+
+

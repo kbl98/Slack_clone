@@ -13,10 +13,11 @@ const routes: Routes = [
   {path:'main/:id/imprint',component:ImprintComponent},        
   {path:'main/:id/policy',component:PolicyComponent},   
   {path:"main/:id",component:MainComponent, 
-children: [{path:'main/:id/channel/:id',component:ChannelContentComponent},
-          {path:'main/:id/userchat',component:CreateDirectMessageComponent},        
+children: [{path:'main/:id/channel/:id2',component:ChannelContentComponent},
+          {path:'main/:id/userchat',component:CreateDirectMessageComponent}
+        
+      
           
-         
 ]},
 ];
 
