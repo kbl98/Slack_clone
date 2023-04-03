@@ -43,15 +43,12 @@ export class ChannelContentComponent implements OnInit {
     });
 
     this.channel$.subscribe();
-  
-    }
+  }
 
   async getAllThreads() {
     await this.getThreads();
     this.getDate();
   }
-
-  
 
   async getThreads() {
     await this.firestore
@@ -81,17 +78,25 @@ export class ChannelContentComponent implements OnInit {
 
   async getDate() {
     let date = new Date().getTime() / 1000;
+    this.threads.sort((a, b) => a.date - b.date);
+
     console.log(this.threads[0]['date']['seconds']);
     for (let i = 0; i < this.threads.length; i++) {
       let datediff = +date - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
       datediff = Math.floor(datediff / 86400);
       console.log(date);
       console.log(datediff);
+
       if (datediff == 0) {
-        this.dateOfThreads = 'heute';
+        this.threads[i]['dateOfThread'] = 'heute';
+       
       } else {
-        this.dateOfThreads = 'vor' + datediff + 'Tagen';
+        this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
+       
       }
+      
     }
   }
+
+  
 }

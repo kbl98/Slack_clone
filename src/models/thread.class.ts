@@ -5,6 +5,7 @@ export class Thread{
     text;
     comments=[];
     datestring;
+    dateOfThread;
 
     constructor(obj?){
         this.author=obj? obj.author:"";
@@ -26,5 +27,6 @@ export class Thread{
 
         }
     }
+    
 
 }
