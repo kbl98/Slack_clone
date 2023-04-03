@@ -85,4 +85,12 @@ export class MainComponent implements OnInit {
   openDialogNewChat(){
     
   }
+
+  openImprint() {
+    this.router.navigateByUrl('main/:id/imprint');
+  }
+
+  openPolicy() {
+    this.router.navigateByUrl('main/:id/policy');
+  }
 }

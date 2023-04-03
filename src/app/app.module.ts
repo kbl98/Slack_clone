@@ -35,6 +35,8 @@ import { TextBoxComponent } from './text-box/text-box.component';
 import { QuillModule } from 'ngx-quill';
 import { UserComponent } from './user/user.component';
 import { CreateDirectMessageComponent } from './create-direct-message/create-direct-message.component';
+import { ImprintComponent } from './imprint/imprint.component';
+import { PolicyComponent } from './policy/policy.component';
 
 
 
@@ -52,6 +54,8 @@ import { CreateDirectMessageComponent } from './create-direct-message/create-dir
     TextBoxComponent,
     UserComponent,
     CreateDirectMessageComponent,
+    ImprintComponent,
+    PolicyComponent,
     
   ],
   imports: [

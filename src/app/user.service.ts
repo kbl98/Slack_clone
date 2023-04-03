@@ -6,6 +6,9 @@ import { Observable, catchError, map, of } from 'rxjs';
   providedIn: 'root',
   })
   export class UserService {
+  checkPassword(password: any) {
+    throw new Error('Method not implemented.');
+  }
   allUsers = [];
   
   constructor(private firestore: AngularFirestore) {

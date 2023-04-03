@@ -44,25 +44,22 @@ export class DialogLoginComponent implements OnInit {
   }
 
   async logInUser() {
-    // Zugriff auf die Input-Felder
-    const username = this.usernameField.nativeElement.value;
-    const password = this.passwordField.nativeElement.value;
+    let username = this.usernameField.nativeElement.value;
+    let password = this.passwordField.nativeElement.value;
   
     try {
       // Abfrage an Firebase
-      const querySnapshot = await this.firestore
+      let querySnapshot = await this.firestore
         .collection('users', ref => ref.where('username', '==', username).where('password', '==', password))
         .get()
         .toPromise();
   
       if (!querySnapshot.empty) {
         // Wenn Benutzer gefunden, dann Weiterleitung zur Hauptseite
-        const user = querySnapshot.docs[0].data();
+        let user = querySnapshot.docs[0].data();
         this.router.navigateByUrl('main/:id');
         this.dialogRef.close();
       } else {
-        // Wenn Benutzer nicht gefunden, dann Fehlermeldung anzeigen
-        console.log('Benutzer nicht gefunden');
         this.wrongPassword = true;
         setTimeout(() => {
           this.wrongPassword = false;
