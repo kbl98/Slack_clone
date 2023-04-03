@@ -1,7 +1,7 @@
 <div class="allThreads">
   <div class="thread-column">
   <div class="thread-cont" *ngFor="let thread of threads; let i = index">
-    <div class="thread-date">{{ thread.dateOfThread }}</div>
+    <div class="thread-date" *ngIf="topBoarder">{{ thread.dateOfThread }}   </div>
     <div class="thread-content-cont">
       <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
       <div class="thread-content">

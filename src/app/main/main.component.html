@@ -57,11 +57,11 @@
         </button>
       </mat-menu>
     </h3>
-    <!--<div *ngIf="open" class="channel-cont">
-    <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}">
-      # {{ chan.name }}
+    <div *ngIf="open2" class="channel-cont">
+    <h4 *ngFor="let chat of loggedUser.userMessages" routerLink="main/:id/userchat/{{chat.author}}">
+      {{ chat['author'] }}
     </h4>
-  </div>-->
+  </div>
   </mat-drawer>
 
   <div class="example-sidenav-content">

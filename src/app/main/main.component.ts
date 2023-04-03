@@ -44,7 +44,7 @@ export class MainComponent implements OnInit {
   channels = [];
   public open = true;
   public open2 = true;
-  loggedUserId;
+  loggedUserId="gn8iWQp4fDNXKy0hnwTk";
   loggedUser=new User();
 
   getChannels() {
@@ -79,6 +79,7 @@ export class MainComponent implements OnInit {
     } else {
       this.open2 = true;
     }
+    console.log(this.loggedUser)
   }
 
   openDialogNewChannel(): void {
@@ -94,7 +95,7 @@ export class MainComponent implements OnInit {
   }
 
 getloggedUser(){
-  this.getUserId();
+  //this.getUserId();
   this.firestore
   .collection('users')
   .doc(this.loggedUserId)
@@ -102,9 +103,14 @@ getloggedUser(){
   .subscribe((user) => {
     console.log(user);
     this.loggedUser = new User(user);
+    console.log(this.loggedUser)
   });
   
 }
+
+/*getAllMessagePartner(){
+  this.firestore.collection('users').doc('gn8iWQp4fDNXKy0hnwTk').valueChanges().subscribe((changes) => {
+    console.log(changes);})}*/
 
   openDialogNewChat(){
 

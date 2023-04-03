@@ -9,25 +9,25 @@
         <button *ngFor="let user of users;let i=index" mat-menu-item (click)="writeContact(user.email)" >{{user.email}} </button>
       </mat-menu>
 </div>
-
-<div class="message-box" *ngIf="overview">
-    <div class="message-date">11.10.2022</div>
+<div *ngIf="overview">
+<div class="message-box" *ngFor="let message of allMessages" >
+    <div class="message-date">{{message.date}}</div>
     <div class="message-cont" >
        
         <div class="thread-content-cont">
           <img src="assets/img/pinguin.svg" alt="img of thread-user" />
           <div class="thread-content">
             <h3>
-               Theo 
+               {{message.author}}
             </h3>
-            <div class="thread-text">text text texttext</div>
+            <div class="thread-text">{{message['message']}}</div>
           </div>
         </div>
        
        
       </div>
 </div>
-
+</div>
 <div class="write-cont" *ngIf="!overview">
     <button class="close-btn" mat-button (click)="closeWrite()">X</button>
     <!--<app-text-box class="bottom"></app-text-box>-->

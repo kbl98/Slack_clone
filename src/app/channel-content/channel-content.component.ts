@@ -25,6 +25,7 @@ export class ChannelContentComponent implements OnInit {
   emitId;
   threads = [new Thread()];
   channel$;
+  topBoarder=false;
 
   constructor(
     private firestore: AngularFirestore,
@@ -60,6 +61,7 @@ export class ChannelContentComponent implements OnInit {
         this.channel = new Channel(channel);
         this.threads = this.channel.threads;
         console.log(this.threads[0]['date']);
+        this.dateToString()
         this.getDate();
       });
   }
@@ -79,24 +81,38 @@ export class ChannelContentComponent implements OnInit {
   async getDate() {
     let date = new Date().getTime() / 1000;
     this.threads.sort((a, b) => a.date - b.date);
+    this.compareDates(date);
+  }
 
-    console.log(this.threads[0]['date']['seconds']);
+  compareDates(date){
     for (let i = 0; i < this.threads.length; i++) {
+      let diffTemp;
       let datediff = +date - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
       datediff = Math.floor(datediff / 86400);
-      console.log(date);
-      console.log(datediff);
-
+     if(!(diffTemp==datediff)){
+      diffTemp=datediff;
+      this.topBoarder=true;
       if (datediff == 0) {
         this.threads[i]['dateOfThread'] = 'heute';
-       
       } else {
         this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
-       
-      }
-      
+    }
+    }else{
+      this.topBoarder=false;
+    }
     }
   }
+
+  dateToString(){
+    for (let i=0;i<this.threads.length;i++){
+      let datestring=new Date(this.threads[i]['date']*1000);
+      console.log(datestring);
+      let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
+      this.threads[i]['datestring']=dateAsString;
+    }
+  }
+
+ 
 
   
 }

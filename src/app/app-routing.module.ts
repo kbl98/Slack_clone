@@ -11,7 +11,8 @@ const routes: Routes = [
  
   {path:"main/:id",component:MainComponent, 
 children: [{path:'main/:id/channel/:id2',component:ChannelContentComponent},
-          {path:'main/:id/userchat',component:CreateDirectMessageComponent}
+          {path:'main/:id/userchat',component:CreateDirectMessageComponent},
+          {path:'main/:id/userchat/:chatpartner',component:CreateDirectMessageComponent}
         
       
           
