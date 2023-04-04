@@ -33,7 +33,7 @@ export class CreateDirectMessageComponent implements OnInit {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   disabledTrigger = false;
   messageTo;
-  overview = true;
+  overview = false;
   userEmails = [];
   users = [];
   currentChatpartner;
@@ -56,7 +56,12 @@ export class CreateDirectMessageComponent implements OnInit {
   getChatpartner() {
     this.route.paramMap.subscribe((paraMap) => {
       this.currentChatpartner = paraMap.get('chatpartner');
-      console.log(this.currentChatpartner);
+      if(!this.currentChatpartner){
+        this.overview=false;
+      }else{
+        this.overview=true;
+      }
+      console.log(this.overview);
     });
   }
 
@@ -120,23 +125,25 @@ export class CreateDirectMessageComponent implements OnInit {
 
   
   getMessages() {
+    if(this.overview){
     this.allMessages = this.loggedUser.userMassages.filter((messages) => {
       return messages.author == this.currentChatpartner;
     });
     console.log(this.allMessages);
-  }
+  }}
 
   sortMessages(){
     this.allMessages[0]['messages'].sort((a, b) => a.date - b.date);
   }
 
   dateToString(){
+    if(this.overview){
     for (let i=0;i<this.allMessages[0]['messages'].length;i++){
       let datestring=new Date(this.allMessages[0]['messages'][i]['date']*1000);
       console.log(datestring);
       let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
       this.allMessages[0]['messages'][i]['datestring']=dateAsString;
-    }
+    }}
   }
 
   saveMessage() {
