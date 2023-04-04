@@ -7,16 +7,18 @@ import { MainComponent } from './main/main.component';
 
 
 const routes: Routes = [
-  {path:'',component:HomepageComponent},
- 
-  {path:"main/:id",component:MainComponent, 
-children: [{path:'main/:id/channel/:id2',component:ChannelContentComponent},
-          {path:'main/:id/userchat',component:CreateDirectMessageComponent},
-          {path:'main/:id/userchat/:chatpartner',component:CreateDirectMessageComponent}
-        
-      
-          
-]},
+  { path: '', component: HomepageComponent },
+
+  {
+    path: "main/:id", component: MainComponent,
+    children: [{ path: 'main/:id/channel/:id2', component: ChannelContentComponent },
+    { path: 'main/:id/userchat', component: CreateDirectMessageComponent },
+    { path: 'main/:id/userchat/:chatpartner', component: CreateDirectMessageComponent }
+
+
+
+    ]
+  },
 ];
 
 @NgModule({
