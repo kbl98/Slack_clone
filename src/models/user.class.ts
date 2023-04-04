@@ -3,15 +3,15 @@ export class User {
     email: string;
     password: string;
     userpicture: any;
-    userMessages=[];
+    userMassages: any[]=[]
 
   constructor(obj?: any) {
 
     this.username = obj ? obj.username : ''; // if-Abfrage mit "?" ob obj.firstName eingefügt wird oder mit ":"-oder ein leerer String mit '' geingefügt wird
     this.email = obj ? obj.email : '';
     this.password = obj ? obj.password : '';
-    this.userpicture = obj ? obj.userpicture : [];
-    this.userMessages = obj ? obj.userMessages : [];
+    this.userpicture = obj ? obj.userpicture : ["serious-woman.svg"];
+    this.userMassages = obj ? obj.userMassages : [];
   }
 
   public toJSON() {
@@ -20,7 +20,7 @@ export class User {
       email: this.email,
       password: this.password,
       userpicture: this.userpicture,
-      userMessages:this.userMessages
+      userMassages:this.userMassages
     }
   }
 }

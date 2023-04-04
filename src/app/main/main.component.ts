@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
 import { User } from 'src/models/user.class';
+import { KeyValuePipe } from '@angular/common';
+
 
 
 @Component({

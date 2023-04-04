@@ -35,7 +35,7 @@ import { TextBoxComponent } from './text-box/text-box.component';
 import { QuillModule } from 'ngx-quill';
 import { UserComponent } from './user/user.component';
 import { CreateDirectMessageComponent } from './create-direct-message/create-direct-message.component';
-
+import { KeyValue, KeyValuePipe } from '@angular/common';
 
 
 
@@ -52,6 +52,7 @@ import { CreateDirectMessageComponent } from './create-direct-message/create-dir
     TextBoxComponent,
     UserComponent,
     CreateDirectMessageComponent,
+    
     
   ],
   imports: [
@@ -75,6 +76,7 @@ import { CreateDirectMessageComponent } from './create-direct-message/create-dir
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     QuillModule.forRoot(),
+    KeyValuePipe
     
    
    

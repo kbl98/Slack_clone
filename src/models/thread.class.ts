@@ -9,7 +9,7 @@ export class Thread{
 
     constructor(obj?){
         this.author=obj? obj.author:"";
-        this.authorPic=obj? obj.authorPic:"";
+        this.authorPic=obj? obj.authorPic:"serious-woman.svg";
         this.date=obj? obj.date:"";
         this.text=obj? obj.text:"";
         this.comments=obj? obj.comments:[""];
@@ -27,6 +27,6 @@ export class Thread{
 
         }
     }
-    
+
 
 }
