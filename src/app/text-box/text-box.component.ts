@@ -1,8 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
-// import { FormGroup } from '@angular/forms';
-import { QuillEditorComponent } from 'ngx-quill';
-
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-text-box',
@@ -11,12 +7,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class TextBoxComponent {
 
-  // messageText: string = '';
   valid: boolean = false;
-  // @ViewChild('messageInput')
-  // messageInput: QuillEditorComponent;
-  // messageForm: FormGroup;
-  // @Input() textBoxPath;
+  message: string = '';
 
   modules = {
     toolbar: [
@@ -29,69 +21,20 @@ export class TextBoxComponent {
     ],
   }
 
-
-
-  constructor(private firestore: AngularFirestore) {
-
-
-  }
-
-
-  check() {
-    let quillEditorTextfield = document.querySelector('.ql-editor');
-    // if (this.textBoxPath == 'channels') {
-    //   // this.channel.postInChannel();
-    //   this.messageForm.reset();
-    // } else if (this.textBoxPath == 'create-chat') {
-    //   // this.chatService.createChatRoom();
-    //   this.messageForm.reset();
-    // } else if (this.textBoxPath == 'thread') {
-    //   // this.channel.postComment();
-    //   this.messageForm.reset();
-    // } else if (this.textBoxPath == 'chatroom') {
-    //   // this.chatService.addMessage();
-    //   this.messageForm.reset();
-    // } else if (this.textBoxPath == 'chat-thread') {
-    //   // this.chatService.msgToChatThread();
-    //   this.messageForm.reset();
-    // } else if (this.textBoxPath == 'edit') {
-    //   // this.chatService.editMsg(this.chatService.chatMsg);
-    // } else if (this.textBoxPath == 'edit-channel') {
-    //   // this.channel.editMessage(this.chatService.chatMsg);
-    // }
-
-    // console.log(this.textBoxPath);
-    console.log(quillEditorTextfield.innerHTML);
-    quillEditorTextfield.innerHTML = "";
-
-  }
+  constructor() { }
 
 
 
-
-
-
-
-
-
-
-
-
-
-  
-
-  checkEditor(event: any) {
+  getEditorInput(event: any) {
     if (event.event === 'text-change') {
-      let text = event.html;
-      if (text !== null) {
+      this.message = event.html;
+      if (this.message !== null) {
         this.valid = true;
-        // this.channel.newMessage = text;
-        // this.channel.newComment = text;
-        // this.chatService.chatMsg = text;
       } else {
         this.valid = false;
       }
     }
+    console.log(this.message);
   }
 
   onSelectionChanged = (event) => {

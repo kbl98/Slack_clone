@@ -15,7 +15,8 @@ import { User } from 'src/models/user.class';
   styleUrls: ['./channel-content.component.scss'],
 })
 export class ChannelContentComponent implements OnInit {
-  @ViewChild('channeltext') channeltext: TextBoxComponent;
+  @ViewChild(TextBoxComponent) editorText: TextBoxComponent;
+
   sideThread = true;
   activThreadId;
   activThread;
@@ -186,6 +187,8 @@ export class ChannelContentComponent implements OnInit {
   }
 
   saveMessageToChannel() {
+    // console.log(this.editorText.message);
+    
     let thread = new Thread();
     thread.author = this.loggedUser.username;
     thread.date = this.dateToTimestamp();
