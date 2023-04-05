@@ -79,7 +79,6 @@ export class ChannelContentComponent implements OnInit {
         }*/
 
         this.threads = this.channel.threads;
-        console.log(this.threads[0]['date']);
         this.dateToString();
         this.getDate();
       });
@@ -98,13 +97,16 @@ export class ChannelContentComponent implements OnInit {
   }
 
   async getDate() {
+    if(this.threads.length>0){
     let date = this.dateToTimestamp();
     this.threads.sort((a, b) => a.date['seconds'] - b.date['seconds']);
     console.log(this.threads)
     this.compareDates(date);
+    }
   }
 
   compareDates(date) {
+    if(this.threads.length>1){
     for (let i = 0; i < this.threads.length; i++) {
       let diffTemp;
       let datediff = +date['seconds'] - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
@@ -124,6 +126,7 @@ export class ChannelContentComponent implements OnInit {
      
     }
   }
+  }
 
   isDateChanged(index: number): boolean {
     if (index === 0) {
@@ -136,6 +139,7 @@ export class ChannelContentComponent implements OnInit {
   }
 
   dateToString() {
+    if(this.threads.length>0){
     for (let i = 0; i < this.threads.length; i++) {
       let timestamp = this.threads[i]['date'];
       const date = new Date(
@@ -158,6 +162,7 @@ export class ChannelContentComponent implements OnInit {
       let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
       this.threads[i]['datestring']=dateAsString;*/
     }
+  }
   }
 
   getloggedUser() {

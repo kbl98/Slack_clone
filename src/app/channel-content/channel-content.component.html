@@ -1,6 +1,6 @@
 <div class="allThreads">
-  <div class="thread-column">
-    <div class="thread-cont" *ngFor="let thread of threads; let i = index">
+  <div class="thread-column" *ngIf="threads.length>0">
+    <div class="thread-cont" *ngFor="let thread of threads; let i = index" >
       <div class="thread-date" [style.display]="isDateChanged(i) ? '' : 'none'">
         {{ thread.dateOfThread }}
       </div>
@@ -13,7 +13,7 @@
           <div class="thread-text">{{ thread.text }}</div>
         </div>
       </div>
-      <div class="answers" *ngIf="!(threads[i]['comments'] == '')">
+      <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
         <img src="assets/img/pinguin.svg" alt="img of answer-user" />
         <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
         <span>Zeitraum zu letzter Antwort</span>
