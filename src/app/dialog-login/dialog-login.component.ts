@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { take } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-dialog-login',
@@ -31,6 +32,7 @@ export class DialogLoginComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogLoginComponent>,
     private router: Router,
     private firestore: AngularFirestore,
+    private authServ: AngularFireAuth
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +46,15 @@ export class DialogLoginComponent implements OnInit {
   }
 
   async logInUser() {
+    this.authServ.onAuthStateChanged((user)=>{
+        if(user){
+          // user is logged in
+          
+        }else{
+          // user is not logged in
+          this.router.navigateByUrl('/');
+        }
+    });
     let username = this.usernameField.nativeElement.value;
     let password = this.passwordField.nativeElement.value;
   

@@ -6,24 +6,24 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { MainComponent } from './main/main.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PolicyComponent } from './policy/policy.component';
-
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path:'',component:HomepageComponent},
-  {path:'main/:id/imprint',component:ImprintComponent},        
-  {path:'main/:id/policy',component:PolicyComponent},   
-  {path:"main/:id",component:MainComponent, 
-children: [{path:'main/:id/channel/:id2',component:ChannelContentComponent},
-          {path:'main/:id/userchat',component:CreateDirectMessageComponent}
-        
-      
-          
-]},
+  { path: '', component: HomepageComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'policy', component: PolicyComponent },
+  {
+    path: 'main/:id',
+    component: MainComponent,
+    children: [
+      { path: 'main/:id/channel/:id2', component: ChannelContentComponent, canActivate: [AuthGuard], },
+      { path: 'main/:id/userchat', component: CreateDirectMessageComponent, canActivate: [AuthGuard], },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
+export class AppRoutingModule {}

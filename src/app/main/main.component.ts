@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
 import { User } from 'src/models/user.class';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authServ: AngularFireAuth,
   ) {}
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
@@ -90,7 +92,9 @@ export class MainComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigateByUrl('/');
+    this.authServ.signOut().then(()=>  this.router.navigateByUrl('/'))
+    .catch((error)=> console.info(error) );
+    // this.router.navigateByUrl('/');
   }
 
 getloggedUser(){

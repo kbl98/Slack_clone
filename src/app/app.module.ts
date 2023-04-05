@@ -37,6 +37,7 @@ import { UserComponent } from './user/user.component';
 import { CreateDirectMessageComponent } from './create-direct-message/create-direct-message.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PolicyComponent } from './policy/policy.component';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 
 
@@ -78,6 +79,7 @@ import { PolicyComponent } from './policy/policy.component';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     QuillModule.forRoot(),
     
    

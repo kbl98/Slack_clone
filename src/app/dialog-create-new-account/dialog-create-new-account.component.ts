@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SharedService } from '../shared.service';
 import { User } from 'src/models/user.class';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-dialog-create-new-account',
@@ -14,10 +15,10 @@ export class DialogCreateNewAccountComponent implements OnInit {
   
 
   user = new User();
-
   opened = false;
   password: string = '';
   showPassword: boolean = false;
+  email: string = '';
   
   ngOnInit(): void {
     
@@ -25,7 +26,7 @@ export class DialogCreateNewAccountComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private firestore: AngularFirestore ,
     public dialogRef: MatDialogRef<DialogCreateNewAccountComponent>,
-    private sharedService: SharedService) {
+    private sharedService: SharedService, private authServ: AngularFireAuth) {
     
   }
 
@@ -37,16 +38,31 @@ export class DialogCreateNewAccountComponent implements OnInit {
   }
 
   createAccount() {
-    console.log(this.user);
-    this.loading = true;
-    this.firestore
+    this.authServ.signInWithEmailAndPassword(this.email, this.password)
+    
+    .then(userCred =>{
+      this.firestore
       .collection('users')
-      .add(this.user.toJSON())
+      .doc(userCred.user.uid)
+      .set(this.user.toJSON())
       .then((result: any) => {
         this.loading = false;
         console.log(result);
         this.dialogRef.close();
+        
       });
+      
+    })
+    // console.log(this.user);
+    // this.loading = true;
+    // this.firestore
+    //   .collection('users')
+    //   .add(this.user.toJSON())
+    //   .then((result: any) => {
+    //     this.loading = false;
+    //     console.log(result);
+    //     this.dialogRef.close();
+    //   });
   }
 
   public openLogIn(): void {
