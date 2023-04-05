@@ -57,7 +57,7 @@ body {
     border-top-right-radius: 5px !important;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    border-color: rgb(129, 131, 133) !important;
+    border-color: #464646 !important;
     transition: all 75ms ease-in-out;
 
     .ql-formats {
@@ -232,19 +232,20 @@ body {
 .ql-container.ql-snow {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-color: rgb(129, 131, 133) !important;
+    border-color: #464646 !important;
     transition: all 75ms ease-in;
 }
 
 
 .ql-editor {
     width: 93% !important;
+    font-family: Roboto !important;
 }
 
 
 .ql-container.ql-snow .ql-editor::before {
     color: #444;
-    font-style: normal !important;
+    font-family: Roboto !important;
     transition: all 75ms ease-in;
 }
 
