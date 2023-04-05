@@ -35,21 +35,16 @@ import { TextBoxComponent } from './text-box/text-box.component';
 import { QuillModule } from 'ngx-quill';
 import { UserComponent } from './user/user.component';
 import { CreateDirectMessageComponent } from './create-direct-message/create-direct-message.component';
-<<<<<<< HEAD
+import { KeyValue, KeyValuePipe } from '@angular/common';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PolicyComponent } from './policy/policy.component';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-
-=======
-import { KeyValue, KeyValuePipe } from '@angular/common';
->>>>>>> 3eed72896e490c1b353ad600405f0824faa1b96c
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
     ChannelContentComponent,
     DialogCreateChannelComponent,
     MainComponent,
@@ -60,9 +55,8 @@ import { KeyValue, KeyValuePipe } from '@angular/common';
     UserComponent,
     CreateDirectMessageComponent,
     ImprintComponent,
-    PolicyComponent,
-    
-    
+    PolicyComponent
+       
   ],
   imports: [
     BrowserModule,
