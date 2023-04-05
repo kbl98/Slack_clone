@@ -6,6 +6,7 @@ import {
   ViewChildren,
   QueryList,
 } from '@angular/core';
+
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Channel } from 'src/models/channel.class';
@@ -15,10 +16,8 @@ import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
 import { User } from 'src/models/user.class';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
 import { KeyValuePipe } from '@angular/common';
-
-
+import { ThemePalette } from '@angular/material/core';
 
 
 @Component({
@@ -28,7 +27,28 @@ import { KeyValuePipe } from '@angular/common';
 
   styleUrls: ['./main.component.scss'],
 })
+
+
 export class MainComponent implements OnInit {
+
+
+  @ViewChildren(ChannelContentComponent)
+  public viewedChannel: QueryList<ChannelContentComponent>;
+
+  sideThread = true;
+
+  channel = new Channel();
+  channels = [];
+
+  public open = true;
+  public open2 = true;
+
+  loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
+  loggedUser = new User();
+
+  openContent: string = "";
+
+
   constructor(
     public dialog: MatDialog,
     private firestore: AngularFirestore,
@@ -36,58 +56,53 @@ export class MainComponent implements OnInit {
     private router: Router,
     private authServ: AngularFireAuth
   ) { }
-  @ViewChildren(ChannelContentComponent)
-  public viewedChannel: QueryList<ChannelContentComponent>;
+
 
   ngOnInit(): void {
     this.getChannels();
     this.getloggedUser();
-
   }
 
-  sideThread = true;
-  channel = new Channel();
-  channels = [];
-  public open = true;
-  public open2 = true;
-  loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
-  loggedUser = new User();
 
   getChannels() {
     this.firestore
       .collection('channels')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes) => {
-        console.log(changes);
+        console.log('Channels :',changes);
         this.channels = changes;
       });
   }
 
+
   getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
-      console.log(this.loggedUserId);
+      console.log('Logged in User :',this.loggedUserId);
     })
   }
+
 
   changeOpen() {
     if (this.open) {
       this.open = false;
-      console.log(this.viewedChannel);
+      console.log('Closed Channel Tree :',this.viewedChannel);
     } else {
       this.open = true;
     }
   }
 
+
   changeOpen2() {
     if (this.open2) {
       this.open2 = false;
-      console.log(this.viewedChannel);
+      console.log('Closed Chat Tree :',this.viewedChannel);
     } else {
       this.open2 = true;
     }
-    console.log(this.loggedUser)
+    console.log('Logged in User :',this.loggedUser)
   }
+
 
   openDialogNewChannel(): void {
     const dialogRef = this.dialog.open(DialogCreateChannelComponent);
@@ -97,11 +112,13 @@ export class MainComponent implements OnInit {
     });
   }
 
+
   logout() {
-    this.authServ.signOut().then(()=>  this.router.navigateByUrl('/'))
-    .catch((error)=> console.info(error) );
+    this.authServ.signOut().then(() => this.router.navigateByUrl('/'))
+      .catch((error) => console.info(error));
     // this.router.navigateByUrl('/');
   }
+
 
   getloggedUser() {
     //this.getUserId();
@@ -112,24 +129,28 @@ export class MainComponent implements OnInit {
       .subscribe((user) => {
         console.log(user);
         this.loggedUser = new User(user);
-        console.log(this.loggedUser)
+        console.log('Logged in User :',this.loggedUser)
       });
-
   }
 
   /*getAllMessagePartner(){
     this.firestore.collection('users').doc('gn8iWQp4fDNXKy0hnwTk').valueChanges().subscribe((changes) => {
       console.log(changes);})}*/
 
-  openDialogNewChat() {
+  openDialogNewChat() {}
 
-  }
 
   openImprint() {
     this.router.navigateByUrl('main/:id/imprint');
   }
 
+
   openPolicy() {
     this.router.navigateByUrl('main/:id/policy');
+  }
+
+
+  changeOpenContent(clickedChannel: string) {
+    this.openContent = clickedChannel;
   }
 }
