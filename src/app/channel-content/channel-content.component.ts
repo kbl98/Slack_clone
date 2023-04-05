@@ -7,6 +7,7 @@ import { TextBoxComponent } from '../text-box/text-box.component';
 import { of } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { User } from 'src/models/user.class';
 
 @Component({
   selector: 'app-channel-content',
@@ -14,7 +15,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./channel-content.component.scss'],
 })
 export class ChannelContentComponent implements OnInit {
-  @ViewChild('channeltext') channeltext: TextBoxComponent;
+  @ViewChild(TextBoxComponent) editorText: TextBoxComponent;
+
   sideThread = true;
   activThreadId;
   activThread;
@@ -23,8 +25,12 @@ export class ChannelContentComponent implements OnInit {
   channelId = '';
   channel = new Channel();
   emitId;
-  threads = [new Thread()];
+  threads = [];
   channel$;
+  topBoarder = [];
+  loggedUser;
+  loggedUserId = 'gn8iWQp4fDNXKy0hnwTk';
+  loggedUser$;
 
   constructor(
     private firestore: AngularFirestore,
@@ -37,6 +43,7 @@ export class ChannelContentComponent implements OnInit {
         this.channelId = paraMap.get('id2');
         console.log(this.channelId);
         this.getThreads();
+        this.getloggedUser();
         //observer.next(this.getDate());
         observer.complete();
       });
@@ -58,8 +65,22 @@ export class ChannelContentComponent implements OnInit {
       .subscribe((channel) => {
         console.log(channel);
         this.channel = new Channel(channel);
+        /*for(let thread of this.channel.threads){
+          for (let comm of thread.comments){
+            comm=new Comment(comm);
+            console.log(comm)
+          }
+        }
+        for (let thread of this.threads){
+           thread=new Thread(thread);
+          
+           this.threads.push(thread);
+          
+        }*/
+
         this.threads = this.channel.threads;
         console.log(this.threads[0]['date']);
+        this.dateToString();
         this.getDate();
       });
   }
@@ -77,26 +98,118 @@ export class ChannelContentComponent implements OnInit {
   }
 
   async getDate() {
-    let date = new Date().getTime() / 1000;
-    this.threads.sort((a, b) => a.date - b.date);
+    let date = this.dateToTimestamp();
+    this.threads.sort((a, b) => a.date['seconds'] - b.date['seconds']);
+    console.log(this.threads)
+    this.compareDates(date);
+  }
 
-    console.log(this.threads[0]['date']['seconds']);
+  compareDates(date) {
     for (let i = 0; i < this.threads.length; i++) {
-      let datediff = +date - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
+      let diffTemp;
+      let datediff = +date['seconds'] - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
       datediff = Math.floor(datediff / 86400);
-      console.log(date);
-      console.log(datediff);
+      console.log(datediff)
+      if (!(diffTemp == datediff)) {
 
-      if (datediff == 0) {
-        this.threads[i]['dateOfThread'] = 'heute';
-       
-      } else {
-        this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
-       
+        
+        if (datediff == 0 && this.isDateChanged(i)) {
+          this.threads[i]['dateOfThread'] = 'heute';
+         
+        }  else if (this.isDateChanged(i)){
+          this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
+         
+        }
       }
-      
+     
     }
   }
 
-  
+  isDateChanged(index: number): boolean {
+    if (index === 0) {
+      // Zeige das Datum für den ersten Thread immer an
+      return true;
+    }
+    const currentThread = this.threads[index];
+    const previousThread = this.threads[index - 1];
+    return currentThread.dateOfThread !== previousThread.dateOfThread;
+  }
+
+  dateToString() {
+    for (let i = 0; i < this.threads.length; i++) {
+      let timestamp = this.threads[i]['date'];
+      const date = new Date(
+        timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+      );
+
+      // Erstellung eines Strings im gewünschten Format
+      const dateString = date.toLocaleString('de-DE', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false,
+      });
+      this.threads[i]['datestring'] = dateString;
+
+      /*let datestring=new Date(this.threads[i]['date']*1000timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+      console.log(datestring);
+      let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
+      this.threads[i]['datestring']=dateAsString;*/
+    }
+  }
+
+  getloggedUser() {
+    // this.getUserId();
+   this.loggedUser$ = new Observable((observer) => {
+      this.firestore
+        .collection('users')
+        .doc(this.loggedUserId)
+        .valueChanges()
+        .subscribe((user) => {
+          console.log(user);
+          this.loggedUser = new User(user);
+          observer.next();
+          observer.complete();
+        });
+      observer.next();
+      observer.complete();
+    });
+    this.loggedUser$.subscribe();
+  }
+
+  getUserId() {
+    this.route.paramMap.subscribe((paraMap) => {
+      this.loggedUserId = paraMap.get('id');
+      console.log(this.loggedUserId);
+    });
+  }
+
+  saveMessageToChannel() {
+    // console.log(this.editorText.message);
+    
+    let thread = new Thread();
+    thread.author = this.loggedUser.username;
+    thread.date = this.dateToTimestamp();
+    thread.text = 'Textboxinhalt';
+    thread.authorPic = this.loggedUser.userpicture;
+    this.threads.push(thread.threadToJSON());
+    this.channel.threads = this.threads;
+    this.firestore
+      .collection('channels')
+      .doc(this.channelId)
+      .update(this.channel.toJSON())
+      .then((result) => {
+        console.log(result);
+      });
+  }
+
+  dateToTimestamp() {
+    const now = new Date();
+    const seconds = Math.floor(now.getTime() / 1000);
+    const nanoseconds = (now.getTime() % 1000) * 1000000;
+    const timestamp = { seconds: seconds, nanoseconds: nanoseconds };
+    return timestamp;
+  }
 }

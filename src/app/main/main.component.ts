@@ -14,7 +14,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
 import { User } from 'src/models/user.class';
+<<<<<<< HEAD
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+=======
+import { KeyValuePipe } from '@angular/common';
+
+>>>>>>> 3eed72896e490c1b353ad600405f0824faa1b96c
 
 
 @Component({
@@ -29,9 +34,14 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
+<<<<<<< HEAD
     private router: Router,
     private authServ: AngularFireAuth,
   ) {}
+=======
+    private router: Router
+  ) { }
+>>>>>>> 3eed72896e490c1b353ad600405f0824faa1b96c
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
 
@@ -46,8 +56,8 @@ export class MainComponent implements OnInit {
   channels = [];
   public open = true;
   public open2 = true;
-  loggedUserId;
-  loggedUser=new User();
+  loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
+  loggedUser = new User();
 
   getChannels() {
     this.firestore
@@ -59,11 +69,12 @@ export class MainComponent implements OnInit {
       });
   }
 
-  getUserId(){
+  getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
       console.log(this.loggedUserId);
-  })}
+    })
+  }
 
   changeOpen() {
     if (this.open) {
@@ -81,6 +92,7 @@ export class MainComponent implements OnInit {
     } else {
       this.open2 = true;
     }
+    console.log(this.loggedUser)
   }
 
   openDialogNewChannel(): void {
@@ -97,20 +109,25 @@ export class MainComponent implements OnInit {
     // this.router.navigateByUrl('/');
   }
 
-getloggedUser(){
-  this.getUserId();
-  this.firestore
-  .collection('users')
-  .doc(this.loggedUserId)
-  .valueChanges()
-  .subscribe((user) => {
-    console.log(user);
-    this.loggedUser = new User(user);
-  });
-  
-}
+  getloggedUser() {
+    //this.getUserId();
+    this.firestore
+      .collection('users')
+      .doc(this.loggedUserId)
+      .valueChanges()
+      .subscribe((user) => {
+        console.log(user);
+        this.loggedUser = new User(user);
+        console.log(this.loggedUser)
+      });
 
-  openDialogNewChat(){
+  }
+
+  /*getAllMessagePartner(){
+    this.firestore.collection('users').doc('gn8iWQp4fDNXKy0hnwTk').valueChanges().subscribe((changes) => {
+      console.log(changes);})}*/
+
+  openDialogNewChat() {
 
   }
 
