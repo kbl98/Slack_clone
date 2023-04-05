@@ -1,4 +1,6 @@
-export class Channel{
+import { Thread } from "./thread.class";
+
+export class Channel {
 
     name;
     threads=[];
@@ -12,7 +14,7 @@ export class Channel{
     public toJSON(){
        return{
         name:this.name, 
-       threads:this.threads
+        threads: this.threads
        }
     }
 

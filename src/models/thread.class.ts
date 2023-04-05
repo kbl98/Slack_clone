@@ -1,3 +1,5 @@
+
+import { Comment } from "./comments.class";
 export class Thread{
     author;
     authorPic;

@@ -65,18 +65,6 @@ export class CreateDirectMessageComponent implements OnInit {
     });
   }
 
-  /*getloggedUser(){
-  //this.getUserId();
-  this.firestore
-  .collection('users')
-  .doc(this.loggedUserId)
-  .valueChanges()
-  .subscribe((user) => {
-    console.log(user);
-    this.loggedUser = new User(user);
-    console.log(this.loggedUser)
-  });
-}*/
 
   getloggedUser() {
     console.log('start');
@@ -150,7 +138,7 @@ export class CreateDirectMessageComponent implements OnInit {
     this.currentChatpartner = this.users[this.messageTo];
   }
 
-  getAllMessagePartner() {
+  /*getAllMessagePartner() {
     this.firestore
       .collection('users')
       .doc('gn8iWQp4fDNXKy0hnwTk')
@@ -158,5 +146,5 @@ export class CreateDirectMessageComponent implements OnInit {
       .subscribe((changes) => {
         console.log(changes);
       });
-  }
+  }*/
 }
