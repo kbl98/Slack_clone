@@ -31,7 +31,7 @@ export class MainComponent implements OnInit {
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
 
@@ -46,8 +46,8 @@ export class MainComponent implements OnInit {
   channels = [];
   public open = true;
   public open2 = true;
-  loggedUserId="gn8iWQp4fDNXKy0hnwTk";
-  loggedUser=new User();
+  loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
+  loggedUser = new User();
 
   getChannels() {
     this.firestore
@@ -59,11 +59,12 @@ export class MainComponent implements OnInit {
       });
   }
 
-  getUserId(){
+  getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
       console.log(this.loggedUserId);
-  })}
+    })
+  }
 
   changeOpen() {
     if (this.open) {
@@ -96,25 +97,25 @@ export class MainComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-getloggedUser(){
-  //this.getUserId();
-  this.firestore
-  .collection('users')
-  .doc(this.loggedUserId)
-  .valueChanges()
-  .subscribe((user) => {
-    console.log(user);
-    this.loggedUser = new User(user);
-    console.log(this.loggedUser)
-  });
-  
-}
+  getloggedUser() {
+    //this.getUserId();
+    this.firestore
+      .collection('users')
+      .doc(this.loggedUserId)
+      .valueChanges()
+      .subscribe((user) => {
+        console.log(user);
+        this.loggedUser = new User(user);
+        console.log(this.loggedUser)
+      });
 
-/*getAllMessagePartner(){
-  this.firestore.collection('users').doc('gn8iWQp4fDNXKy0hnwTk').valueChanges().subscribe((changes) => {
-    console.log(changes);})}*/
+  }
 
-  openDialogNewChat(){
+  /*getAllMessagePartner(){
+    this.firestore.collection('users').doc('gn8iWQp4fDNXKy0hnwTk').valueChanges().subscribe((changes) => {
+      console.log(changes);})}*/
+
+  openDialogNewChat() {
 
   }
 }
