@@ -8,30 +8,21 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { PolicyComponent } from './policy/policy.component';
 import { AuthGuard } from './auth.guard';
 
+
 const routes: Routes = [
   { path: '', component: HomepageComponent },
-<<<<<<< HEAD
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'policy', component: PolicyComponent },
-  {
-    path: 'main/:id',
-    component: MainComponent,
-    children: [
-      { path: 'main/:id/channel/:id2', component: ChannelContentComponent, canActivate: [AuthGuard], },
-      { path: 'main/:id/userchat', component: CreateDirectMessageComponent, canActivate: [AuthGuard], },
-    ],
-=======
+  { path: '/imprint', component: ImprintComponent },
+  { path: '/imprint', component: PolicyComponent },
 
   {
-    path: "main/:id", component: MainComponent,
-    children: [{ path: 'main/:id/channel/:id2', component: ChannelContentComponent },
-    { path: 'main/:id/userchat', component: CreateDirectMessageComponent },
-    { path: 'main/:id/userchat/:chatpartner', component: CreateDirectMessageComponent }
+    path: "main/:id", component: MainComponent, canActivate: [AuthGuard],
+    children: [{ path: 'main/:id/channel/:id2', component: ChannelContentComponent, canActivate: [AuthGuard], },
+    { path: 'main/:id/userchat', component: CreateDirectMessageComponent, canActivate: [AuthGuard], },
+    { path: 'main/:id/userchat/:chatpartner', component: CreateDirectMessageComponent, canActivate: [AuthGuard], }
 
 
 
     ]
->>>>>>> 3eed72896e490c1b353ad600405f0824faa1b96c
   },
 ];
 
