@@ -1,40 +1,49 @@
-<div class="allThreads">
-  <div class="thread-column" *ngIf="threads.length>0">
-    <div class="thread-cont" *ngFor="let thread of threads; let i = index" >
-      <div class="thread-date" [style.display]="isDateChanged(i) ? '' : 'none'">
-        {{ thread.dateOfThread }}
-      </div>
-      <div class="thread-content-cont">
-        <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
-        <div class="thread-content">
-          <h3>
-            {{ thread.author }}<span>{{ thread.datestring }}</span>
-          </h3>
-          <div class="thread-text">{{ thread.text }}</div>
+<div class="threadPage">
+
+  <div class="threadsAndEditorPosition">
+
+    <div class="allThreads" *ngIf="threads.length>0">
+
+      <div class="thread" *ngFor="let thread of threads; let i = index">
+  
+        <div class="thread-date" [style.display]="isDateChanged(i) ? '' : 'none'">
+          {{ thread.dateOfThread }}
         </div>
+  
+        <div class="thread-content-cont">
+          <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
+          <div class="thread-content">
+            <h3>
+              {{ thread.author }}<span>{{ thread.datestring }}</span>
+            </h3>
+            <div class="thread-text">{{ thread.text }}</div>
+          </div>
+        </div>
+  
+        <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
+          <img src="assets/img/pinguin.svg" alt="img of answer-user" />
+          <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
+          <span>Zeitraum zu letzter Antwort</span>
+        </div>
+  
       </div>
-      <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
-        <img src="assets/img/pinguin.svg" alt="img of answer-user" />
-        <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
-        <span>Zeitraum zu letzter Antwort</span>
-      </div>
+  
     </div>
-    <app-text-box
-      class="textbox-channel"
-      #channeltext
-      (keyup.enter)="saveMessageToChannel()"
-    ></app-text-box>
+  
+    <app-text-box #channeltext (keyup.enter)="saveMessageToChannel()"></app-text-box>
+
   </div>
 
-  <div class="side-thread-cont" *ngIf="openSide">
+
+  <!-- <div class="side-thread-cont" *ngIf="openSide">
+
     <button class="close-btn" mat-button (click)="openSide = false">X</button>
     <h1># {{ channel["name"] }}</h1>
+
     <div class="selected-thread-cont w250">
+
       <div class="thread-content-cont bg-gray">
-        <img
-          src="assets/img/{{ threads[activThreadId].authorPic }}"
-          alt="img of thread-user"
-        />
+        <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
         <div class="thread-content w60">
           <h3>
             {{ threads[activThreadId].author
@@ -44,16 +53,16 @@
         </div>
       </div>
 
-      <div
-        class="comment-cont"
-        *ngFor="let comment of threads[activThreadId]['comments']"
-      >
+      <div class="comment-cont" *ngFor="let comment of threads[activThreadId]['comments']">
         <img src="threads[activThreadId].comments.authorPic" />
         <div class="opend-comment bg-gray">
           <h2>{{ comment["author"] }}</h2>
           <p>{{ comment["comment"] }}</p>
         </div>
       </div>
+
     </div>
-  </div>
+
+  </div> -->
+
 </div>

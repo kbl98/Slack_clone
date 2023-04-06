@@ -98,7 +98,7 @@
     <div *ngIf="open2" class="channel-cont">
 
       <h4 *ngFor="let user of loggedUser.userMassages;let i=index" routerLink="main/:id/userchat/{{ user['author']}}"
-      [ngStyle]="{'background-color': (openContent == user['author']) ? '#0462A6' : ''}"
+        [ngStyle]="{'background-color': (openContent == user['author']) ? '#0462A6' : ''}"
         (click)="changeOpenContent(user['author'])">
         {{ user['author'] }}
       </h4>
@@ -107,21 +107,13 @@
 
   </mat-drawer>
 
-  <div class="example-sidenav-content">
+  <div class="content">
 
     <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
-    </button>-->
+    </button> -->
 
-    <div class="route-cont">
-
-
-      <router-outlet class="route-cont">
-
-
-      </router-outlet>
-
-    </div>
+    <router-outlet></router-outlet>
 
   </div>
 

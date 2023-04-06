@@ -32,10 +32,11 @@ export class ChannelContentComponent implements OnInit {
   loggedUserId = 'gn8iWQp4fDNXKy0hnwTk';
   loggedUser$;
 
+
   constructor(
     private firestore: AngularFirestore,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.channel$ = new Observable((observer) => {
@@ -97,35 +98,35 @@ export class ChannelContentComponent implements OnInit {
   }
 
   async getDate() {
-    if(this.threads.length>0){
-    let date = this.dateToTimestamp();
-    this.threads.sort((a, b) => a.date['seconds'] - b.date['seconds']);
-    console.log(this.threads)
-    this.compareDates(date);
+    if (this.threads.length > 0) {
+      let date = this.dateToTimestamp();
+      this.threads.sort((a, b) => a.date['seconds'] - b.date['seconds']);
+      console.log(this.threads)
+      this.compareDates(date);
     }
   }
 
   compareDates(date) {
-    if(this.threads.length>1){
-    for (let i = 0; i < this.threads.length; i++) {
-      let diffTemp;
-      let datediff = +date['seconds'] - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
-      datediff = Math.floor(datediff / 86400);
-      console.log(datediff)
-      if (!(diffTemp == datediff)) {
+    if (this.threads.length > 1) {
+      for (let i = 0; i < this.threads.length; i++) {
+        let diffTemp;
+        let datediff = +date['seconds'] - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
+        datediff = Math.floor(datediff / 86400);
+        console.log(datediff)
+        if (!(diffTemp == datediff)) {
 
-        
-        if (datediff == 0 && this.isDateChanged(i)) {
-          this.threads[i]['dateOfThread'] = 'heute';
-         
-        }  else if (this.isDateChanged(i)){
-          this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
-         
+
+          if (datediff == 0 && this.isDateChanged(i)) {
+            this.threads[i]['dateOfThread'] = 'heute';
+
+          } else if (this.isDateChanged(i)) {
+            this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
+
+          }
         }
+
       }
-     
     }
-  }
   }
 
   isDateChanged(index: number): boolean {
@@ -139,35 +140,35 @@ export class ChannelContentComponent implements OnInit {
   }
 
   dateToString() {
-    if(this.threads.length>0){
-    for (let i = 0; i < this.threads.length; i++) {
-      let timestamp = this.threads[i]['date'];
-      const date = new Date(
-        timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-      );
+    if (this.threads.length > 0) {
+      for (let i = 0; i < this.threads.length; i++) {
+        let timestamp = this.threads[i]['date'];
+        const date = new Date(
+          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        );
 
-      // Erstellung eines Strings im gewünschten Format
-      const dateString = date.toLocaleString('de-DE', {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: false,
-      });
-      this.threads[i]['datestring'] = dateString;
+        // Erstellung eines Strings im gewünschten Format
+        const dateString = date.toLocaleString('de-DE', {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: false,
+        });
+        this.threads[i]['datestring'] = dateString;
 
-      /*let datestring=new Date(this.threads[i]['date']*1000timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
-      console.log(datestring);
-      let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
-      this.threads[i]['datestring']=dateAsString;*/
+        /*let datestring=new Date(this.threads[i]['date']*1000timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+        console.log(datestring);
+        let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
+        this.threads[i]['datestring']=dateAsString;*/
+      }
     }
-  }
   }
 
   getloggedUser() {
     // this.getUserId();
-   this.loggedUser$ = new Observable((observer) => {
+    this.loggedUser$ = new Observable((observer) => {
       this.firestore
         .collection('users')
         .doc(this.loggedUserId)
@@ -191,23 +192,22 @@ export class ChannelContentComponent implements OnInit {
     });
   }
 
-  saveMessageToChannel() {
-    // console.log(this.editorText.message);
-    
+  async saveMessageToChannel() {
     let thread = new Thread();
     thread.author = this.loggedUser.username;
     thread.date = this.dateToTimestamp();
-    thread.text = 'Textboxinhalt';
+    thread.text = this.editorText.message;
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.channel.threads = this.threads;
-    this.firestore
+    await this.firestore
       .collection('channels')
       .doc(this.channelId)
       .update(this.channel.toJSON())
       .then((result) => {
         console.log(result);
       });
+    this.scrollToBottom();
   }
 
   dateToTimestamp() {
@@ -217,4 +217,11 @@ export class ChannelContentComponent implements OnInit {
     const timestamp = { seconds: seconds, nanoseconds: nanoseconds };
     return timestamp;
   }
+
+
+  scrollToBottom() {
+    let container = document.querySelector('.allThreads');
+    container.scrollTop = container.scrollHeight;
+  }
+
 }
