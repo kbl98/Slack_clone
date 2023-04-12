@@ -76,20 +76,6 @@
         <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
 
       </button>
-<<<<<<< HEAD
-            <mat-menu #menu2="matMenu">
-                <button mat-menu-item routerLink="main/:id/userchat">
-          New Chat
-        </button>
-            </mat-menu>
-        </h3>
-        <div *ngIf="open2" class="channel-cont">
-            <h4 *ngFor="let user of loggedUser.userMassages;let i=index" routerLink="main/:id/userchat/{{ user['author']}}">
-                {{ user['author'] }}
-            </h4>
-        </div>
-    </mat-drawer>
-=======
 
       Chats
 
@@ -120,22 +106,11 @@
     </div>
 
   </mat-drawer>
->>>>>>> d9d825821842ee0d1c361287e3d6c0f785781d76
 
   <div class="content">
 
     <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
-<<<<<<< HEAD
-    </button>-->
-
-        <router-outlet class="route-cont">
-
-        </router-outlet>
-
-
-        <mat-drawer-container />
-=======
     </button> -->
 
     <router-outlet></router-outlet>
@@ -143,4 +118,3 @@
   </div>
 
 </mat-drawer-container>
->>>>>>> d9d825821842ee0d1c361287e3d6c0f785781d76
