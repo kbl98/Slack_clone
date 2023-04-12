@@ -15,14 +15,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
 import { User } from 'src/models/user.class';
-<<<<<<< HEAD
-import { KeyValuePipe } from '@angular/common';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-=======
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { KeyValuePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
->>>>>>> d9d825821842ee0d1c361287e3d6c0f785781d76
 
 
 @Component({
@@ -61,12 +56,8 @@ export class MainComponent implements OnInit {
     private router: Router,
     private authServ: AngularFireAuth
   ) { }
-<<<<<<< HEAD
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
-=======
-
->>>>>>> d9d825821842ee0d1c361287e3d6c0f785781d76
 
   ngOnInit(): void {
     this.getChannels();
