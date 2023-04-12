@@ -14,12 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChannelContentComponent } from '../channel-content/channel-content.component';
 import { User } from 'src/models/user.class';
-<<<<<<< HEAD
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-=======
 import { KeyValuePipe } from '@angular/common';
-
->>>>>>> 3eed72896e490c1b353ad600405f0824faa1b96c
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -34,14 +30,9 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
-<<<<<<< HEAD
     private router: Router,
-    private authServ: AngularFireAuth,
-  ) {}
-=======
-    private router: Router
+    private authServ: AngularFireAuth
   ) { }
->>>>>>> 3eed72896e490c1b353ad600405f0824faa1b96c
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
 

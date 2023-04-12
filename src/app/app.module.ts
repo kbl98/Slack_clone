@@ -39,6 +39,10 @@ import { KeyValue, KeyValuePipe } from '@angular/common';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ImprintComponent } from './imprint/imprint.component';
 import { PolicyComponent } from './policy/policy.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { first } from 'rxjs/operators';
+
+
 
 
 

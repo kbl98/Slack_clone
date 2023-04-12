@@ -7,8 +7,8 @@
     <mat-progress-bar *ngIf="loading" class="progressBar" mode="indeterminate"></mat-progress-bar>
     <div class="dialogEmail">
         <mat-form-field appearance="outline" class="fullWidth">
-            <mat-label>Username</mat-label>
-            <input #usernameField [disabled]="loading" matInput placeholder="Username....">
+            <mat-label>Email</mat-label>
+            <input #emailField [disabled]="loading" matInput placeholder="Email...." pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
         </mat-form-field>
     </div>
     <div class="dialogPassword">

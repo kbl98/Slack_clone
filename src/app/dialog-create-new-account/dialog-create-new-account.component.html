@@ -10,7 +10,7 @@
     <div class="dialogEmail">
         <mat-form-field appearance="outline" class="fullWidth">
             <mat-label>Email</mat-label>
-            <input [disabled]="loading" matInput placeholder="Email...." [(ngModel)]="user.email">
+            <input [disabled]="loading" matInput placeholder="Email...." [(ngModel)]="user.email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
         </mat-form-field>
     </div>
     <div class="dialogPassword">

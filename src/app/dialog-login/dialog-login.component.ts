@@ -9,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 @Component({
   selector: 'app-dialog-login',
   templateUrl: './dialog-login.component.html',
-  styleUrls: ['./dialog-login.component.scss']
+  styleUrls: ['./dialog-login.component.scss'],
 })
 export class DialogLoginComponent implements OnInit {
   username: string = '';
@@ -37,52 +37,60 @@ export class DialogLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.firestore
-    .collection('users')
-    .valueChanges({idField: 'customIdName'}) // durch das zufügen von "{idField: 'customIdName'}" kann man nun die Id vom User rauslesen
-    .subscribe((changes: any) => {
-      console.log('Änderungen', changes);
-      this.allUsers = changes;
+      .collection('users')
+      .valueChanges({ idField: 'customIdName' }) // durch das zufügen von "{idField: 'customIdName'}" kann man nun die Id vom User rauslesen
+      .subscribe((changes: any) => {
+        console.log('Änderungen', changes);
+        this.allUsers = changes;
+      });
+
+    this.authServ.onAuthStateChanged((user) => {
+      if (user) {
+        // user is logged in
+        console.log(user);
+      } else {
+        // user is not logged in
+        this.router.navigateByUrl('/');
+      }
     });
   }
 
   async logInUser() {
-    this.authServ.onAuthStateChanged((user)=>{
-        if(user){
-          // user is logged in
-          
-        }else{
-          // user is not logged in
-          this.router.navigateByUrl('/');
-        }
-    });
-    let username = this.usernameField.nativeElement.value;
+    let email = this.emailField.nativeElement.value;
     let password = this.passwordField.nativeElement.value;
-  
+
     try {
       // Abfrage an Firebase
-      let querySnapshot = await this.firestore
-        .collection('users', ref => ref.where('username', '==', username).where('password', '==', password))
-        .get()
-        .toPromise();
-  
-      if (!querySnapshot.empty) {
-        // Wenn Benutzer gefunden, dann Weiterleitung zur Hauptseite
-        let user = querySnapshot.docs[0].data();
-        this.router.navigateByUrl('main/:id');
-        this.dialogRef.close();
-      } else {
-        this.wrongPassword = true;
-        setTimeout(() => {
-          this.wrongPassword = false;
-        }, 2000);
-      }
+
+      this.authServ
+        .signInWithEmailAndPassword(email.value, password.value)
+        .then((user) => {
+          console.log(user);
+        }).catch(err => console.info(err));
+
+      // let querySnapshot = await this.firestore
+      //   .collection('users', (ref) =>
+      //     ref.where('email', '==', email).where('password', '==', password)
+      //   )
+      //   .get()
+      //   .toPromise();
+
+      // if (!querySnapshot.empty) {
+      //   // Wenn Benutzer gefunden, dann Weiterleitung zur Hauptseite
+      //   let user = querySnapshot.docs[0].data();
+      //   this.router.navigateByUrl('main/:id');
+      //   this.dialogRef.close();
+      // } else {
+      //   this.wrongPassword = true;
+      //   setTimeout(() => {
+      //     this.wrongPassword = false;
+      //   }, 2000);
+      // }
     } catch (error) {
       // Wenn es einen Fehler gibt, dann in der Konsole ausgeben
       console.log(error);
     }
   }
-
-  
 
   closeWindow() {
     this.dialogRef.close();
@@ -95,14 +103,14 @@ export class DialogLoginComponent implements OnInit {
   guestLogIn() {
     this.router.navigateByUrl('main/:id');
     this.dialogRef.close();
-  }  
+  }
 
   loginAnimation() {
-    let usernameField = this.usernameField.nativeElement;
+    let emailField = this.emailField.nativeElement;
     let passwordField = this.passwordField.nativeElement;
-    let loginButton = this.loginButton.nativeElement;
-    if (!usernameField.value || !passwordField.value ) {
-      this.logedin = false; 
+    // let loginButton = this.loginButton.nativeElement;
+    if (!emailField.value || !passwordField.value) {
+      this.logedin = false;
       setTimeout(() => {
         this.logedin = true;
       }, 500);

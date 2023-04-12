@@ -12,8 +12,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class DialogCreateNewAccountComponent implements OnInit {
   
-  
-
   user = new User();
   opened = false;
   password: string = '';
@@ -36,11 +34,17 @@ export class DialogCreateNewAccountComponent implements OnInit {
   closeWindow() {
     this.dialogRef.close();
   }
-
+  
   createAccount() {
-    this.authServ.signInWithEmailAndPassword(this.email, this.password)
-    
-    .then(userCred =>{
+    // Überprüfe, ob alle Felder ausgefüllt sind
+    if (!this.user.username || !this.user.email || !this.password) {
+      alert('Bitte füllen Sie alle Felder aus.');
+      return;
+    }
+  
+    // Erstelle den Account
+    this.authServ.createUserWithEmailAndPassword(this.user.email, this.password)
+    .then(userCred =>{ 
       this.firestore
       .collection('users')
       .doc(userCred.user.uid)
@@ -48,21 +52,9 @@ export class DialogCreateNewAccountComponent implements OnInit {
       .then((result: any) => {
         this.loading = false;
         console.log(result);
-        this.dialogRef.close();
-        
+        this.dialogRef.close();        
       });
-      
-    })
-    // console.log(this.user);
-    // this.loading = true;
-    // this.firestore
-    //   .collection('users')
-    //   .add(this.user.toJSON())
-    //   .then((result: any) => {
-    //     this.loading = false;
-    //     console.log(result);
-    //     this.dialogRef.close();
-    //   });
+    }).catch(err => console.log(err));
   }
 
   public openLogIn(): void {
@@ -73,3 +65,4 @@ export class DialogCreateNewAccountComponent implements OnInit {
     this.showPassword = !this.showPassword; //wechsel zwischen true und false
   }
 }
+
