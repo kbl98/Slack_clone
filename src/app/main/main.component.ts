@@ -40,8 +40,8 @@ export class MainComponent implements OnInit {
 
   public open = true;
   public open2 = true;
-
-  loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
+  loggedUserId;
+  //loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
   loggedUser = new User();
 
   openContent: string = "";
@@ -120,7 +120,7 @@ export class MainComponent implements OnInit {
 
 
   getloggedUser() {
-    //this.getUserId();
+    this.getUserId();
     this.firestore
       .collection('users')
       .doc(this.loggedUserId)
@@ -132,9 +132,9 @@ export class MainComponent implements OnInit {
       });
   }
 
-  /*getAllMessagePartner(){
-    this.firestore.collection('users').doc('gn8iWQp4fDNXKy0hnwTk').valueChanges().subscribe((changes) => {
-      console.log(changes);})}*/
+  getAllMessagePartner(){
+    this.firestore.collection('users').doc(this.loggedUserId).valueChanges().subscribe((changes) => {
+      console.log(changes);})}
 
   openDialogNewChat() {}
 
