@@ -58,37 +58,24 @@ export class DialogLoginComponent implements OnInit {
   async logInUser() {
     let email = this.emailField.nativeElement.value;
     let password = this.passwordField.nativeElement.value;
-
+  
     try {
-      // Abfrage an Firebase
-
-      this.authServ
-        .signInWithEmailAndPassword(email.value, password.value)
-        .then((user) => {
-          console.log(user);
-        }).catch(err => console.info(err));
-
-      // let querySnapshot = await this.firestore
-      //   .collection('users', (ref) =>
-      //     ref.where('email', '==', email).where('password', '==', password)
-      //   )
-      //   .get()
-      //   .toPromise();
-
-      // if (!querySnapshot.empty) {
-      //   // Wenn Benutzer gefunden, dann Weiterleitung zur Hauptseite
-      //   let user = querySnapshot.docs[0].data();
-      //   this.router.navigateByUrl('main/:id');
-      //   this.dialogRef.close();
-      // } else {
-      //   this.wrongPassword = true;
-      //   setTimeout(() => {
-      //     this.wrongPassword = false;
-      //   }, 2000);
-      // }
+      const userCredential = await this.authServ.signInWithEmailAndPassword(email, password);
+      const user = userCredential.user; // Zugriff auf die user-Eigenschaft
+      console.log(user.uid);
+  
+      // Weiterleitung zur Hauptseite mit der UID in der URL
+      this.router.navigateByUrl(`/main/${user.uid}`);
+      this.dialogRef.close();
+  
     } catch (error) {
-      // Wenn es einen Fehler gibt, dann in der Konsole ausgeben
       console.log(error);
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        this.wrongPassword = true;
+        setTimeout(() => {
+          this.wrongPassword = false;
+        }, 500);
+      }
     }
   }
 
