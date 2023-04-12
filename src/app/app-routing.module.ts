@@ -13,15 +13,12 @@ const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'policy', component: PolicyComponent },
-
   {
     path: "main/:id", component: MainComponent, canActivate: [AuthGuard],
-    children: [{ path: 'main/:id/channel/:id2', component: ChannelContentComponent, canActivate: [AuthGuard], },
-    { path: 'main/:id/userchat', component: CreateDirectMessageComponent, canActivate: [AuthGuard], },
-    { path: 'main/:id/userchat/:chatpartner', component: CreateDirectMessageComponent, canActivate: [AuthGuard], }
-
-
-
+    children: [
+      { path: 'main/:id/channel/:id2', component: ChannelContentComponent, canActivate: [AuthGuard], },
+      { path: 'main/:id/userchat', component: CreateDirectMessageComponent, canActivate: [AuthGuard], },
+      { path: 'main/:id/userchat/:chatpartner', component: CreateDirectMessageComponent, canActivate: [AuthGuard], }
     ]
   },
 ];
@@ -30,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

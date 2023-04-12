@@ -1,57 +1,82 @@
 <mat-toolbar class="toolbar-cont mode-colors">
-    <h1>Slack_Clone</h1>
-    <div class="search-field">
-        <input matInput placeholder="Search" />
-    </div>
 
-    <button mat-icon-button class="center" [matMenuTriggerFor]="logoff">
-    <img src="assets/img/serious-woman.svg" />
+  <h1>Slack_Clone</h1>
+
+  <div class="search-field">
+    <input placeholder="Search">
+  </div>
+
+  <button mat-icon-button class="center" [matMenuTriggerFor]="logoff">
+    <img src="assets/img/serious-woman.svg">
   </button>
-    <mat-menu #logoff="matMenu">
-        <button mat-menu-item (click)="logout()">Logout</button>
-        <button mat-menu-item (click)="openImprint()">Impressum</button>
-        <button mat-menu-item (click)="openPolicy()">Datenschutz</button>
-    </mat-menu>
+
+  <mat-menu #logoff="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+    <button mat-menu-item (click)="openImprint()">Impressum</button>
+    <button mat-menu-item (click)="openPolicy()">Datenschutz</button>
+    <button mat-menu-item><mat-slide-toggle> Darkmode </mat-slide-toggle></button>
+  </mat-menu>
+
 </mat-toolbar>
-<mat-drawer-container class="nav-cont" autosize>
-    <mat-drawer #drawer class="nav-content-cont mode-colors-nav" mode="side" [opened]="true">
-        <h2>
-            My Academy
-            <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+
+
+<mat-drawer-container class="all-but-head" autosize>
+
+  <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" [opened]="true">
+
+    <h2>
+      My Academy
+      <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
         <mat-icon>expand_more</mat-icon>
       </button>
-        </h2>
+    </h2>
 
-        <h3>
-            <button (click)="changeOpen()" mat-icon-button>
+    <h3>
+
+      <button (click)="changeOpen()" mat-icon-button>
+
         <mat-icon *ngIf="!open">arrow_right </mat-icon>
         <mat-icon *ngIf="open">arrow_drop_down</mat-icon>
-      </button> Channels
-            <button mat-button [matMenuTriggerFor]="menu">
-        <mat-icon class="channel-create-icon">expand_more</mat-icon>
+
       </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="openDialogNewChannel()">
+
+      Channels
+
+      <button mat-button [matMenuTriggerFor]="menu">
+
+        <mat-icon class="channel-create-icon">expand_more</mat-icon>
+
+      </button>
+
+      <mat-menu #menu="matMenu">
+
+        <button mat-menu-item (click)="openDialogNewChannel()">
           Create new channel
         </button>
-            </mat-menu>
-        </h3>
-        <div *ngIf="open" class="channel-cont">
-            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}">
-                # {{ chan.name }}
-            </h4>
-        </div>
 
+      </mat-menu>
 
+    </h3>
 
-        <h3>
-            <button (click)="changeOpen2()" mat-icon-button>
+    <div *ngIf="open" class="channel-cont">
+
+      <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}"
+        [ngStyle]="{'background-color': (openContent == chan.customIdName) ? '#0462A6' : ''}"
+        (click)="changeOpenContent(chan.customIdName)">
+        # {{ chan.name }}
+      </h4>
+
+    </div>
+
+    <h3>
+
+      <button (click)="changeOpen2()" mat-icon-button>
+
         <mat-icon *ngIf="!open2">arrow_right </mat-icon>
         <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
-      </button> Chats
-            <button mat-button [matMenuTriggerFor]="menu2">
-        <mat-icon class="channel-create-icon">expand_more</mat-icon>
+
       </button>
+<<<<<<< HEAD
             <mat-menu #menu2="matMenu">
                 <button mat-menu-item routerLink="main/:id/userchat">
           New Chat
@@ -64,11 +89,44 @@
             </h4>
         </div>
     </mat-drawer>
+=======
 
-    <div class="example-sidenav-content">
+      Chats
 
-        <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
+      <button mat-button [matMenuTriggerFor]="menu2">
+
+        <mat-icon class="channel-create-icon">expand_more</mat-icon>
+
+      </button>
+
+      <mat-menu #menu2="matMenu">
+
+        <button mat-menu-item routerLink="main/:id/userchat">
+          New Chat
+        </button>
+
+      </mat-menu>
+
+    </h3>
+
+    <div *ngIf="open2" class="channel-cont">
+
+      <h4 *ngFor="let user of loggedUser.userMassages;let i=index" routerLink="main/:id/userchat/{{ user['author']}}"
+        [ngStyle]="{'background-color': (openContent == user['author']) ? '#0462A6' : ''}"
+        (click)="changeOpenContent(user['author'])">
+        {{ user['author'] }}
+      </h4>
+
+    </div>
+
+  </mat-drawer>
+>>>>>>> d9d825821842ee0d1c361287e3d6c0f785781d76
+
+  <div class="content">
+
+    <!-- <button type="button" class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
       <mat-icon>swap_horiz</mat-icon>
+<<<<<<< HEAD
     </button>-->
 
         <router-outlet class="route-cont">
@@ -77,3 +135,12 @@
 
 
         <mat-drawer-container />
+=======
+    </button> -->
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</mat-drawer-container>
+>>>>>>> d9d825821842ee0d1c361287e3d6c0f785781d76
