@@ -24,13 +24,11 @@ import { ThemePalette } from '@angular/material/core';
   selector: 'app-main',
   templateUrl: './main.component.html',
   template: ` <router-outlet></router-outlet>`,
-
   styleUrls: ['./main.component.scss'],
 })
 
 
 export class MainComponent implements OnInit {
-
 
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
@@ -56,8 +54,8 @@ export class MainComponent implements OnInit {
     private router: Router,
     private authServ: AngularFireAuth
   ) { }
-  @ViewChildren(ChannelContentComponent)
-  public viewedChannel: QueryList<ChannelContentComponent>;
+  
+  
 
   ngOnInit(): void {
     this.getChannels();
