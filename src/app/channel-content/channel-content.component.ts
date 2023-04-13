@@ -89,6 +89,8 @@ export class ChannelContentComponent implements OnInit {
     if (this.threads[i]['comments']) {
       this.activThreadId = i;
       this.openSide = true;
+      console.log('ThreadID: ', this.activThreadId);
+
       console.log(this.threads[0]);
     }
   }
@@ -200,6 +202,7 @@ export class ChannelContentComponent implements OnInit {
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.channel.threads = this.threads;
+    this.displayMessageAsHTML();
     await this.firestore
       .collection('channels')
       .doc(this.channelId)
@@ -224,4 +227,10 @@ export class ChannelContentComponent implements OnInit {
     container.scrollTop = container.scrollHeight;
   }
 
+  displayMessageAsHTML() {
+    for (let i = 0; i < this.channel.threads.length; i++) {
+      const threadText = this.channel.threads[i].text;
+      document.getElementById(`threadNr${i}`).innerHTML = `${threadText}`;
+    }
+  }
 }

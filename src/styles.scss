@@ -233,7 +233,9 @@ body {
 
 
 .ql-editor {
-    width: 93% !important;
+    margin-right: 70px !important;
+    min-height: 100px !important;
+    max-height: 250px !important;
     font-family: Roboto !important;
 }
 

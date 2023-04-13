@@ -8,22 +8,21 @@
 }
 
 .editorForm {
-    margin-block: 16px;
+    margin-top: 16px;
+    margin-bottom: 11px;
     width: 90%;
-    height: 140px;
     position: relative;
     border-radius: 5px;
-    background-color: #222529 !important;
 }
 
 .content-editor {
     width: 100%;
-    height: calc(100% - 42px);
+    height: 100%;
 }
 
 button {
     position: absolute;
-    bottom: 8px;
+    bottom: 13px;
     right: 8px;
     cursor: pointer;
     outline: none;
