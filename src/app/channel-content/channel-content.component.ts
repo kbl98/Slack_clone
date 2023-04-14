@@ -188,16 +188,17 @@ export class ChannelContentComponent implements OnInit {
   }
 
   getUserId() {
-    this.route.paramMap.subscribe((paraMap) => {
+    this.route.parent.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
       console.log(this.loggedUserId);
     });
   }
 
   async saveMessageToChannel() {
+    
     let thread = new Thread();
     thread.author = this.loggedUser.username;
-    console.log(this.loggedUser.username)
+   
     thread.date = this.dateToTimestamp();
     thread.text = this.editorText.message;
     thread.authorPic = this.loggedUser.userpicture;

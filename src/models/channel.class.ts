@@ -8,7 +8,7 @@ export class Channel {
 
     constructor(obj?){
         this.name=obj? obj.name:"";
-        this.threads=obj? obj.threads:""
+        this.threads=obj? obj.threads:[]
     }
 
     public toJSON(){
