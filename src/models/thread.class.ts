@@ -4,7 +4,7 @@ export class Thread{
     author;
     authorPic;
     date;
-    text;
+    text:string;
     comments=[];
     datestring;
     dateOfThread;

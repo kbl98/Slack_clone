@@ -17,7 +17,7 @@
             <h3>
               {{ thread.author }}<span>{{ thread.datestring }}</span>
             </h3>
-            <div class="thread-text" id="threadNr{{i}}"></div>
+            <div class="thread-text" id="threadNr{{i}}" [innerHTML]="thread.text"></div>
           </div>
         </div>
 

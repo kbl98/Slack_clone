@@ -100,6 +100,7 @@ export class ChannelContentComponent implements OnInit {
   }
 
   async getDate() {
+    console.log("start get date")
     if (this.threads.length > 0) {
       let date = this.dateToTimestamp();
       this.threads.sort((a, b) => a.date['seconds'] - b.date['seconds']);
@@ -198,13 +199,14 @@ export class ChannelContentComponent implements OnInit {
     
     let thread = new Thread();
     thread.author = this.loggedUser.username;
-   
+    console.log( this.editorText.message)
     thread.date = this.dateToTimestamp();
     thread.text = this.editorText.message;
+    
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.channel.threads = this.threads;
-    this.displayMessageAsHTML();
+    //await this.displayMessageAsHTML();
     await this.firestore
       .collection('channels')
       .doc(this.channelId)
@@ -229,10 +231,11 @@ export class ChannelContentComponent implements OnInit {
     container.scrollTop = container.scrollHeight;
   }
 
+  //Katja:Ich glaube, das brauchen wir nicht, wenn wir das innerHTML mit [innerHTML]="thread.text" ins div direkt einsetzen.
   displayMessageAsHTML() {
     for (let i = 0; i < this.channel.threads.length; i++) {
       const threadText = this.channel.threads[i].text;
-      document.getElementById(`threadNr${i}`).innerHTML = `${threadText}`;
+     document.getElementById(`threadNr${i}`).innerHTML = `${threadText}`;
     }
   }
 }
