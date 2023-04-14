@@ -29,7 +29,7 @@ export class ChannelContentComponent implements OnInit {
   channel$;
   topBoarder = [];
   loggedUser;
-  loggedUserId = 'gn8iWQp4fDNXKy0hnwTk';
+  loggedUserId;
   loggedUser$;
 
 
@@ -169,7 +169,7 @@ export class ChannelContentComponent implements OnInit {
   }
 
   getloggedUser() {
-    // this.getUserId();
+    this.getUserId();
     this.loggedUser$ = new Observable((observer) => {
       this.firestore
         .collection('users')
@@ -197,6 +197,7 @@ export class ChannelContentComponent implements OnInit {
   async saveMessageToChannel() {
     let thread = new Thread();
     thread.author = this.loggedUser.username;
+    console.log(this.loggedUser.username)
     thread.date = this.dateToTimestamp();
     thread.text = this.editorText.message;
     thread.authorPic = this.loggedUser.userpicture;

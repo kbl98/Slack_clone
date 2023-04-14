@@ -38,7 +38,7 @@ export class CreateDirectMessageComponent implements OnInit {
   users = [];
   currentChatpartner;
   loggedUser;
-  loggedUserId = 'gn8iWQp4fDNXKy0hnwTk';
+  loggedUserId;
   allMessages;
   loggedUser$;
 

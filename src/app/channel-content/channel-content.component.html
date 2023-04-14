@@ -11,7 +11,7 @@
           {{ thread.dateOfThread }}
         </div>
 
-        <div class="thread-content-cont">
+        <div class="thread-content-cont" (click)="open(i)">
           <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
           <div class="thread-content">
             <h3>
@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
+        <div class="answers"  *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
           <img src="assets/img/pinguin.svg" alt="img of answer-user" />
           <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
           <span>Zeitraum zu letzter Antwort</span>
@@ -78,9 +78,9 @@
           </div>
 
         </div>
-
+        
         <div class="comment" *ngFor="let comment of threads[activThreadId]['comments']">
-
+        <div *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0">
           <img src="threads[activThreadId].comments.authorPic" />
 
           <div class="thread-content">
@@ -89,6 +89,7 @@
             <span class="thread-text">{{ comment["comment"] }}</span>
 
           </div>
+        </div>
         </div>
 
 
