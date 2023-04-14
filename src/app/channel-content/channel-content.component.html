@@ -71,8 +71,8 @@
               }}<span>{{ threads[activThreadId].datestring }}</span>
             </h3>
   
-            <span class="thread-text">
-              {{ threads[activThreadId].text }}
+            <span class="thread-text" [innerHTML]="threads[activThreadId].text">
+              
             </span>
   
           </div>
@@ -86,7 +86,7 @@
           <div class="thread-content">
 
             <h3>{{ comment["author"] }}</h3>
-            <span class="thread-text">{{ comment["comment"] }}</span>
+            <span class="thread-text" [innerHTML]="comment['comment']"></span>
 
           </div>
         </div>
@@ -98,7 +98,7 @@
 
 
 
-      <app-text-box></app-text-box>
+      <app-text-box #commenttext (keyup.enter)="saveMessageToThread()"></app-text-box>
 
 
 

@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from 'src/models/user.class';
+import { Comment } from 'src/models/comments.class';
 
 @Component({
   selector: 'app-channel-content',
@@ -16,6 +17,7 @@ import { User } from 'src/models/user.class';
 })
 export class ChannelContentComponent implements OnInit {
   @ViewChild(TextBoxComponent) editorText: TextBoxComponent;
+  @ViewChild('commenttext')commenttext!:TextBoxComponent
 
   sideThread = true;
   activThreadId;
@@ -82,17 +84,16 @@ export class ChannelContentComponent implements OnInit {
         this.threads = this.channel.threads;
         this.dateToString();
         this.getDate();
+        
       });
   }
 
   open(i) {
-    if (this.threads[i]['comments']) {
+   // if (this.threads[i]['comments']) {
       this.activThreadId = i;
       this.openSide = true;
-      console.log('ThreadID: ', this.activThreadId);
-
-      console.log(this.threads[0]);
-    }
+      console.log('ThreadID: ', this.activThreadId)
+    //}
   }
 
   getAnswers(i) {
@@ -216,6 +217,25 @@ export class ChannelContentComponent implements OnInit {
       });
     this.scrollToBottom();
   }
+
+  async saveMessageToThread(){
+    let comment= new Comment;
+    comment.author=this.loggedUser.username;
+   //comment.date=this.dateToTimestamp;
+   comment.comment=this.commenttext.message;
+   console.log(comment.commentToJSON());
+   this.threads[this.activThreadId].comments.push(comment.commentToJSON());
+   this.channel.threads=this.threads;
+   await this.firestore
+   .collection('channels')
+   .doc(this.channelId)
+   .update(this.channel.toJSON())
+   .then((result) => {
+     console.log(result);
+   });
+ this.scrollToBottom();
+  }
+ 
 
   dateToTimestamp() {
     const now = new Date();

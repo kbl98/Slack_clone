@@ -14,7 +14,7 @@ export class Thread{
         this.authorPic=obj? obj.authorPic:"serious-woman.svg";
         this.date=obj? obj.date:"";
         this.text=obj? obj.text:"";
-        this.comments=obj? obj.comments:"";
+        this.comments=obj? obj.comments:[];
         this.datestring=obj? obj.datestring:"";
     }
 
