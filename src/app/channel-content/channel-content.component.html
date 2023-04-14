@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <div class="answers"  *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
+        <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
           <img src="assets/img/pinguin.svg" alt="img of answer-user" />
           <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
           <span>Zeitraum zu letzter Antwort</span>
@@ -65,31 +65,35 @@
           <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
 
           <div class="thread-content w60">
-  
+
             <h3>
               {{ threads[activThreadId].author
               }}<span>{{ threads[activThreadId].datestring }}</span>
             </h3>
-  
+
             <span class="thread-text" [innerHTML]="threads[activThreadId].text">
-              
+
             </span>
-  
+
           </div>
 
         </div>
-        
+
         <div class="comment" *ngFor="let comment of threads[activThreadId]['comments']">
-        <div *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0">
-          <img src="threads[activThreadId].comments.authorPic" />
 
-          <div class="thread-content">
+          <!-- <div>{{ comment.comment }}</div> -->
+          <!-- *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0" -->
 
-            <h3>{{ comment["author"] }}</h3>
-            <span class="thread-text" [innerHTML]="comment['comment']"></span>
+          <div *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments'].length>0">
+            <img src="threads[activThreadId].comments.authorPic" />
 
+            <div class="thread-content">
+
+              <h3>{{ comment["author"] }}</h3>
+              <span class="thread-text" [innerHTML]="comment.comment"></span>
+
+            </div>
           </div>
-        </div>
         </div>
 
 

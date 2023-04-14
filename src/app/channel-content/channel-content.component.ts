@@ -17,7 +17,7 @@ import { Comment } from 'src/models/comments.class';
 })
 export class ChannelContentComponent implements OnInit {
   @ViewChild(TextBoxComponent) editorText: TextBoxComponent;
-  @ViewChild('commenttext')commenttext!:TextBoxComponent
+  @ViewChild('commenttext')commenttext!:TextBoxComponent;
 
   sideThread = true;
   activThreadId;
@@ -38,7 +38,7 @@ export class ChannelContentComponent implements OnInit {
   constructor(
     private firestore: AngularFirestore,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.channel$ = new Observable((observer) => {
@@ -207,7 +207,6 @@ export class ChannelContentComponent implements OnInit {
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.channel.threads = this.threads;
-    //await this.displayMessageAsHTML();
     await this.firestore
       .collection('channels')
       .doc(this.channelId)
@@ -233,7 +232,7 @@ export class ChannelContentComponent implements OnInit {
    .then((result) => {
      console.log(result);
    });
- this.scrollToBottom();
+//  this.scrollToBottom();
   }
  
 
@@ -249,13 +248,5 @@ export class ChannelContentComponent implements OnInit {
   scrollToBottom() {
     let container = document.querySelector('.allThreads');
     container.scrollTop = container.scrollHeight;
-  }
-
-  //Katja:Ich glaube, das brauchen wir nicht, wenn wir das innerHTML mit [innerHTML]="thread.text" ins div direkt einsetzen.
-  displayMessageAsHTML() {
-    for (let i = 0; i < this.channel.threads.length; i++) {
-      const threadText = this.channel.threads[i].text;
-     document.getElementById(`threadNr${i}`).innerHTML = `${threadText}`;
-    }
   }
 }
