@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/models/user.class';
 import { Comment } from 'src/models/comments.class';
 
+
 @Component({
   selector: 'app-channel-content',
   templateUrl: './channel-content.component.html',
@@ -203,7 +204,8 @@ export class ChannelContentComponent implements OnInit {
     console.log( this.editorText.message)
     thread.date = this.dateToTimestamp();
     thread.text = this.editorText.message;
-    
+    this.editorText.clear();
+    console.log(this.editorText.message)
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.channel.threads = this.threads;
@@ -222,7 +224,10 @@ export class ChannelContentComponent implements OnInit {
     comment.author=this.loggedUser.username;
    //comment.date=this.dateToTimestamp;
    comment.comment=this.commenttext.message;
-   console.log(comment.commentToJSON());
+
+   console.log(this.commenttext.message);
+  
+   console.log(this.commenttext.message);
    this.threads[this.activThreadId].comments.push(comment.commentToJSON());
    this.channel.threads=this.threads;
    await this.firestore

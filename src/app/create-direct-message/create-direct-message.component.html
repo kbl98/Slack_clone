@@ -10,7 +10,7 @@
       </mat-menu>
 </div>
 <div *ngIf="overview">
-<div class="message-box" *ngFor="let message of allMessages[0]['messages']" >
+<div class="message-box" *ngFor="let message of allMessages" >
     <div class="message-date">{{message.datestring}}</div>
     <div class="message-cont" >
        
@@ -30,7 +30,9 @@
 </div>
 <div class="write-cont" *ngIf="!overview">
     <button class="close-btn" mat-button (click)="closeWrite()">X</button>
-    <!--<app-text-box class="bottom"></app-text-box>-->
+    <app-text-box #messagetext  (keyup.enter)="saveMessage()"></app-text-box>
+
+</div>
 </div>
 
 

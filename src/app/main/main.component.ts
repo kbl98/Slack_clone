@@ -73,6 +73,8 @@ export class MainComponent implements OnInit {
       });
   }
 
+  
+
 
   getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
