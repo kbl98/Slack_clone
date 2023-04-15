@@ -23,12 +23,8 @@ export class CreateDirectMessageComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-
- 
-
-
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  @ViewChild('messagetext') messagetext:(TextBoxComponent);
+  @ViewChild('messagetext') messagetext: TextBoxComponent;
   disabledTrigger = false;
   messageTo;
   overview = false;
@@ -40,63 +36,54 @@ export class CreateDirectMessageComponent implements OnInit {
   allMessages;
   loggedUser$;
 
-
   ngOnInit() {
     this.getUserId();
     this.getUsers();
-    console.log(this.users)
+    console.log(this.users);
     this.getloggedUser();
-    console.log(this.loggedUser)
+    console.log(this.loggedUser);
     this.routeSub = this.route.params.subscribe((params) => {
       this.getUsers();
       this.getloggedUser();
     });
   }
- 
+
   closeMenu() {
     this.trigger.closeMenu();
   }
 
-  
-
   getUserId() {
     this.route.parent.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
-      console.log(this.loggedUserId);
     });
   }
 
   getChatpartner() {
     this.route.paramMap.subscribe((paraMap) => {
-     let currentChatpartner = paraMap.get('chatpartner') || "";
-     // let partner=paraMap.get('chatpartner');
-     this.currentChatpartner=this.users.find((user)=>user.username===currentChatpartner);
-     console.log(this.currentChatpartner.username)
-     // this.currentChatpartner=new User(currentChatpartner)
-    
-      if(!this.currentChatpartner){
-        this.overview=false;
-      }else{
-        this.overview=true;
+      let currentChatpartner = paraMap.get('chatpartner') || '';
+      this.currentChatpartner = this.users.find(
+        (user) => user.username === currentChatpartner
+      );
+      if (!this.currentChatpartner) {
+        this.overview = false;
+      } else {
+        this.overview = true;
       }
-      console.log(this.overview);
     });
   }
 
-
   getloggedUser() {
-    console.log('start');
     this.loggedUser$ = new Observable((observer) => {
       this.firestore
         .collection('users')
         .doc(this.loggedUserId)
         .valueChanges()
         .subscribe((user) => {
-          console.log(user);
           this.loggedUser = new User(user);
-          console.log(this.loggedUser);
-
-          this.getChatpartner(), this.getMessages(),this.dateToString(),this.setChatpartnerEmail();
+          this.getChatpartner(),
+            this.getMessages(),
+            this.dateToString(),
+            this.setChatpartnerEmail();
 
           observer.next();
           observer.complete();
@@ -107,10 +94,6 @@ export class CreateDirectMessageComponent implements OnInit {
     });
     this.loggedUser$.subscribe();
   }
-
-
-  
-
 
   writeContact(contact) {
     this.messageTo = contact;
@@ -128,44 +111,42 @@ export class CreateDirectMessageComponent implements OnInit {
       .collection('users')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes) => {
-        console.log(changes);
         this.users = changes;
-        console.log(this.users);
       });
   }
 
   //filter users for current selected email;
-  getNewChatpartner(){
-    this.currentChatpartner=this.users.find((user)=>user.email===this.messageTo);
-    console.log(this.currentChatpartner.username)
-    console.log(this.messageTo)
-    console.log(this.users)
-    console.log(this.currentChatpartner)
+  getNewChatpartner() {
+    this.currentChatpartner = this.users.find(
+      (user) => user.email === this.messageTo
+    );
   }
 
-  setChatpartnerEmail(){
-    if(this.currentChatpartner){
-      this.messageTo=this.currentChatpartner.email;
+  setChatpartnerEmail() {
+    if (this.currentChatpartner) {
+      this.messageTo = this.currentChatpartner.email;
     }
   }
 
-  
   getMessages() {
-    if(this.overview){
-    this.allMessages = this.loggedUser.userMassages.filter((message) => {
-      return message.chatpartner == this.currentChatpartner.username || message.author == this.currentChatpartner.username
-    });
-    console.log(this.allMessages);
-  }}
+    if (this.overview) {
+      this.allMessages = this.loggedUser.userMassages.filter((message) => {
+        return (
+          message.chatpartner == this.currentChatpartner.username ||
+          message.author == this.currentChatpartner.username
+        );
+      });
+    }
+  }
 
-  sortMessages(){
+  sortMessages() {
     this.allMessages[0]['messages'].sort((a, b) => a.date - b.date);
   }
 
-  dateToString(){
-    if(this.overview){
-    for (let i=0;i<this.allMessages.length;i++){
-      let timestamp = this.allMessages[i]['date'];
+  dateToString() {
+    if (this.overview) {
+      for (let i = 0; i < this.allMessages.length; i++) {
+        let timestamp = this.allMessages[i]['date'];
         const date = new Date(
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
         );
@@ -179,45 +160,45 @@ export class CreateDirectMessageComponent implements OnInit {
           minute: 'numeric',
           hour12: false,
         });
-      this.allMessages[i]['datestring']=dateString;
-    }}
+        this.allMessages[i]['datestring'] = dateString;
+      }
+    }
   }
 
   async saveMessage() {
-    let message= new Message();
-    message.author=this.loggedUser.username;
-    message.text=this.messagetext.message;
-    message.date=this.dateToTimestamp();
-    message.chatpartner=this.currentChatpartner.username;
-
+    let message = new Message();
+    message.author = this.loggedUser.username;
+    message.text = this.messagetext.message;
+    message.date = this.dateToTimestamp();
+    message.chatpartner = this.currentChatpartner.username;
     this.saveMessageToChatpartner(message);
-    this.loggedUser.userMassages.push(message.toJSON())
-    this.pushNewChatpartner(this.currentChatpartner.username)
-    console.log(this.loggedUser.chatpartner)
-    await this.firestore
-    .collection('users')
-    .doc(this.loggedUserId)
-    .update(this.loggedUser.toJSON())
-    .then((result) => {
-      console.log(this.loggedUser.toJSON())
-      console.log(result);
-    
-    });
-   
+    this.saveMessageToLogged(message)
   }
 
-  async saveMessageToChatpartner(message){
-    console.log(this.currentChatpartner);
+  async saveMessageToLogged(message){
+    this.loggedUser.userMassages.push(message.toJSON());
+    this.pushNewChatpartner(this.currentChatpartner.username);
+    await this.firestore
+      .collection('users')
+      .doc(this.loggedUserId)
+      .update(this.loggedUser.toJSON())
+      .then((result) => {
+        console.log(this.loggedUser.toJSON());
+        console.log(result);
+      });
+  }
+
+  async saveMessageToChatpartner(message) {
     this.currentChatpartner.userMassages.push(message.toJSON());
     this.pushNewChatpartnerToChatpartner(this.loggedUser.username);
     await this.firestore
-    .collection('users')
-    .doc(this.currentChatpartner.customIdName)
-    .update(this.currentChatpartner)
-    .then((result) => {
-      console.log(this.currentChatpartner)
-      console.log(result);
-    });
+      .collection('users')
+      .doc(this.currentChatpartner.customIdName)
+      .update(this.currentChatpartner)
+      .then((result) => {
+        console.log(this.currentChatpartner);
+        console.log(result);
+      });
   }
 
   dateToTimestamp() {
@@ -228,35 +209,21 @@ export class CreateDirectMessageComponent implements OnInit {
     return timestamp;
   }
 
-  pushNewChatpartner(chatpartnerUsername){
-    console.log(this.loggedUser.chatpartner);
-    console.log(chatpartnerUsername);
-    let index = this.loggedUser.chatpartner.findIndex((partner) => partner === chatpartnerUsername);
-    console.log(index);
-    if(index === -1){
+  pushNewChatpartner(chatpartnerUsername) {
+    let index = this.loggedUser.chatpartner.findIndex(
+      (partner) => partner === chatpartnerUsername
+    );
+    if (index === -1) {
       this.loggedUser.chatpartner.push(this.currentChatpartner.username);
-      console.log("push");
     }
   }
 
-
-  pushNewChatpartnerToChatpartner(loggedUsername){
-    let index = this.currentChatpartner.chatpartner.findIndex((partner) => partner === loggedUsername);
-    console.log(index);
-    if(index === -1){
+  pushNewChatpartnerToChatpartner(loggedUsername) {
+    let index = this.currentChatpartner.chatpartner.findIndex(
+      (partner) => partner === loggedUsername
+    );
+    if (index === -1) {
       this.currentChatpartner.chatpartner.push(this.loggedUser.username);
-      console.log("push");
     }
   }
-
-  
-  /*getAllMessagePartner() {
-    this.firestore
-      .collection('users')
-      .doc('gn8iWQp4fDNXKy0hnwTk')
-      .valueChanges()
-      .subscribe((changes) => {
-        console.log(changes);
-      });
-  }*/
 }
