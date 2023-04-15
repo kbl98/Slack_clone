@@ -68,7 +68,12 @@ export class CreateDirectMessageComponent implements OnInit {
 
   getChatpartner() {
     this.route.paramMap.subscribe((paraMap) => {
-      this.currentChatpartner = paraMap.get('chatpartner');
+     let currentChatpartner = paraMap.get('chatpartner') || "";
+     // let partner=paraMap.get('chatpartner');
+     this.currentChatpartner=this.users.find((user)=>user.username===currentChatpartner);
+     console.log(this.currentChatpartner.username)
+     // this.currentChatpartner=new User(currentChatpartner)
+    
       if(!this.currentChatpartner){
         this.overview=false;
       }else{
@@ -132,6 +137,7 @@ export class CreateDirectMessageComponent implements OnInit {
   //filter users for current selected email;
   getNewChatpartner(){
     this.currentChatpartner=this.users.find((user)=>user.email===this.messageTo);
+    console.log(this.currentChatpartner.username)
     console.log(this.messageTo)
     console.log(this.users)
     console.log(this.currentChatpartner)
@@ -139,7 +145,7 @@ export class CreateDirectMessageComponent implements OnInit {
 
   setChatpartnerEmail(){
     if(this.currentChatpartner){
-      this.messageTo=this.currentChatpartner;
+      this.messageTo=this.currentChatpartner.email;
     }
   }
 
@@ -147,7 +153,7 @@ export class CreateDirectMessageComponent implements OnInit {
   getMessages() {
     if(this.overview){
     this.allMessages = this.loggedUser.userMassages.filter((message) => {
-      return message.chatpartner == this.currentChatpartner || message.author == this.currentChatpartner
+      return message.chatpartner == this.currentChatpartner.username || message.author == this.currentChatpartner.username
     });
     console.log(this.allMessages);
   }}
@@ -182,9 +188,9 @@ export class CreateDirectMessageComponent implements OnInit {
     message.author=this.loggedUser.username;
     message.text=this.messagetext.message;
     message.date=this.dateToTimestamp();
-    message.chatpartner=this.currentChatpartner.email;
+    message.chatpartner=this.currentChatpartner.username;
 
-
+    this.saveMessageToChatpartner(message);
     this.loggedUser.userMassages.push(message.toJSON())
     this.pushNewChatpartner(this.currentChatpartner.username)
     console.log(this.loggedUser.chatpartner)
@@ -195,8 +201,23 @@ export class CreateDirectMessageComponent implements OnInit {
     .then((result) => {
       console.log(this.loggedUser.toJSON())
       console.log(result);
+    
     });
+   
+  }
 
+  async saveMessageToChatpartner(message){
+    console.log(this.currentChatpartner);
+    this.currentChatpartner.userMassages.push(message.toJSON());
+    this.pushNewChatpartnerToChatpartner(this.loggedUser.username);
+    await this.firestore
+    .collection('users')
+    .doc(this.currentChatpartner.customIdName)
+    .update(this.currentChatpartner)
+    .then((result) => {
+      console.log(this.currentChatpartner)
+      console.log(result);
+    });
   }
 
   dateToTimestamp() {
@@ -208,13 +229,25 @@ export class CreateDirectMessageComponent implements OnInit {
   }
 
   pushNewChatpartner(chatpartnerUsername){
-    let index = this.loggedUser.chatpartner.findIndex((partner) => partner.username === chatpartnerUsername);
+    console.log(this.loggedUser.chatpartner);
+    console.log(chatpartnerUsername);
+    let index = this.loggedUser.chatpartner.findIndex((partner) => partner === chatpartnerUsername);
+    console.log(index);
     if(index === -1){
       this.loggedUser.chatpartner.push(this.currentChatpartner.username);
       console.log("push");
     }
   }
 
+
+  pushNewChatpartnerToChatpartner(loggedUsername){
+    let index = this.currentChatpartner.chatpartner.findIndex((partner) => partner === loggedUsername);
+    console.log(index);
+    if(index === -1){
+      this.currentChatpartner.chatpartner.push(this.loggedUser.username);
+      console.log("push");
+    }
+  }
 
   
   /*getAllMessagePartner() {
