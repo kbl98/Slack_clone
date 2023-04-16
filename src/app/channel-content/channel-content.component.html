@@ -52,7 +52,7 @@
 
       <div class="thread-comment-header">
 
-        <h1># {{ channel["name"] }}</h1>
+        <h2># {{ channel["name"] }}</h2>
         <button mat-button (click)="openSide = false">X</button>
 
       </div>
@@ -66,7 +66,7 @@
 
           <div class="thread-content w60">
 
-            <h3>
+            <h3 class="channelhead">
               {{ threads[activThreadId].author
               }}<span>{{ threads[activThreadId].datestring }}</span>
             </h3>
@@ -88,8 +88,8 @@
            <!-- <img src="threads[activThreadId].comments.authorPic" />-->
 
             <div class="thread-content">
-
-              <h3>{{ comment["author"] }}</h3>
+              <p>{{commentdateToString(comment)}}</p>
+              <h3>{{ comment["author"] }} </h3>
               <span class="thread-text" [innerHTML]="comment.comment"></span>
 
             </div>

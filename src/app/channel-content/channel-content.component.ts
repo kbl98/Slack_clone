@@ -71,6 +71,7 @@ export class ChannelContentComponent implements OnInit {
       });
   }
 
+
   getUserId() {
     this.route.parent.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
@@ -163,6 +164,24 @@ export class ChannelContentComponent implements OnInit {
     }
   }
 
+  commentdateToString(comment){
+    let timestamp = comment['date'];
+        const date = new Date(
+          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        );
+
+        // Erstellung eines Strings im gewünschten Format
+        const dateString = date.toLocaleString('de-DE', {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: false,
+        });
+        return dateString;
+  }
+
   async saveMessageToChannel() {
     let thread = new Thread();
     thread.author = this.loggedUser.username;
@@ -187,6 +206,7 @@ export class ChannelContentComponent implements OnInit {
     comment.author = this.loggedUser.username;
     //comment.date=this.dateToTimestamp;
     comment.comment = this.commenttext.message;
+    comment.date=this.dateToTimestamp();
     this.threads[this.activThreadId].comments.push(comment.commentToJSON());
     this.channel.threads = this.threads;
     await this.firestore

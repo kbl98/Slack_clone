@@ -4,13 +4,18 @@ alldirect-messages{
     align-items: flex-start;
 }
 
-
+.top-direct-cont{
+width:100%;
+}
 .direct-mess-cont{
-    width:100%;
-    min-height: 100vh;
+   height: 100%;
     padding-right:16px;
     padding-left: 16px;
     padding-top:16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .input-cont{
@@ -19,7 +24,7 @@ alldirect-messages{
     align-items: center;
     height:70px;
     margin-left: -16px;
-    width: 100%;
+    margin-right: -16px;
     background-color: white;
     padding:16px;
     font-size: 16px;
@@ -40,6 +45,13 @@ alldirect-messages{
     }
 }
 
+.all-Messages-cont{
+height:80vh;
+overflow-y: auto;
+width:95%;
+}
+
+
 .message-cont {
     position: relative;
    border:solid 1px rgba(0,0,0,0.15);
@@ -47,6 +59,8 @@ alldirect-messages{
    width:80%;
    padding: 24px;
    background-color: white;
+   word-wrap: break-word;
+   overflow: auto;
    &:hover{
     background-color:rgba(0,0,0,0.15); 
     cursor: pointer;
@@ -92,11 +106,13 @@ alldirect-messages{
     }
     .thread-text{
       font-size: 14px;
+      
     }
   }
 
   .write-cont{
-    position: relative;
+    width: 100%;
+    margin-left:-16px;
   }
 
   .close-btn{

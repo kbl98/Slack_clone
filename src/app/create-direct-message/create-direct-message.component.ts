@@ -84,11 +84,9 @@ export class CreateDirectMessageComponent implements OnInit {
             this.getMessages(),
             this.dateToString(),
             this.setChatpartnerEmail();
-
           observer.next();
           observer.complete();
         });
-
       observer.next();
       observer.complete();
     });
@@ -101,10 +99,6 @@ export class CreateDirectMessageComponent implements OnInit {
     this.getNewChatpartner();
   }
 
-  closeWrite() {
-    this.overview = true;
-    this.messageTo = '';
-  }
 
   async getUsers() {
     await this.firestore
@@ -139,6 +133,12 @@ export class CreateDirectMessageComponent implements OnInit {
     }
   }
 
+  getPictureOfAuthor(message){
+      let author=this.users.find((user)=>user.username===message.author);
+      return author.userpicture
+    }
+  
+
   sortMessages() {
     this.allMessages[0]['messages'].sort((a, b) => a.date - b.date);
   }
@@ -150,8 +150,6 @@ export class CreateDirectMessageComponent implements OnInit {
         const date = new Date(
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
         );
-
-        // Erstellung eines Strings im gewünschten Format
         const dateString = date.toLocaleString('de-DE', {
           day: 'numeric',
           month: 'numeric',
@@ -166,13 +164,16 @@ export class CreateDirectMessageComponent implements OnInit {
   }
 
   async saveMessage() {
+    this.checkMessageTo();
+    if(this.messageTo !==""){
     let message = new Message();
     message.author = this.loggedUser.username;
     message.text = this.messagetext.message;
     message.date = this.dateToTimestamp();
     message.chatpartner = this.currentChatpartner.username;
     this.saveMessageToChatpartner(message);
-    this.saveMessageToLogged(message)
+    this.saveMessageToLogged(message);
+    }
   }
 
   async saveMessageToLogged(message){
@@ -224,6 +225,20 @@ export class CreateDirectMessageComponent implements OnInit {
     );
     if (index === -1) {
       this.currentChatpartner.chatpartner.push(this.loggedUser.username);
+    }
+  }
+
+  checkMessageTo(){
+    let index=this.users.findIndex((user)=>user.email===this.messageTo);
+    console.log(index);
+    if(index=== -1){
+     
+      this.overview=false;
+      this.messageTo="";
+      document.getElementById("messageTo").style.backgroundColor="red";
+      setTimeout(()=>{document.getElementById("messageTo").style.backgroundColor="white";
+      },1000);
+      this.router.navigateByUrl('main/'+ this.loggedUserId + '/main/:id/userchat');
     }
   }
 }
