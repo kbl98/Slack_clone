@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
+import 'quill-emoji/dist/quill-emoji.js';
+
 @Component({
   selector: 'app-text-box',
   templateUrl: './text-box.component.html',
@@ -13,13 +15,16 @@ export class TextBoxComponent {
   message: string = '';
 
   configuration = {
+    'emoji-toolbar': true,
+    'emoji-textarea': false,
+    'emoji-shortname': true,
     toolbar: [
       ['bold', 'italic', 'underline'],
       ['link'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       ['code-block', 'blockquote'],
       [{ color: [] }, { background: [] }],
-      ['image'],
+      ['image','emoji'],
     ],
   }
 
