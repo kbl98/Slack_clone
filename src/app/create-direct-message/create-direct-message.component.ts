@@ -35,17 +35,19 @@ export class CreateDirectMessageComponent implements OnInit {
   loggedUserId;
   allMessages;
   loggedUser$;
+emailUser=[]
 
   ngOnInit() {
     this.getUserId();
-    this.getUsers();
-    console.log(this.users);
-    this.getloggedUser();
-    console.log(this.loggedUser);
+    //this.getUsers();
+    //console.log(this.users);
+    //this.getloggedUser();
+    //console.log(this.loggedUser);
     this.routeSub = this.route.params.subscribe((params) => {
       this.getUsers();
       this.getloggedUser();
     });
+   
   }
 
   closeMenu() {
@@ -84,6 +86,7 @@ export class CreateDirectMessageComponent implements OnInit {
             this.getMessages(),
             this.dateToString(),
             this.setChatpartnerEmail();
+            this.emailUser=this.users;
           observer.next();
           observer.complete();
         });
@@ -91,6 +94,11 @@ export class CreateDirectMessageComponent implements OnInit {
       observer.complete();
     });
     this.loggedUser$.subscribe();
+  }
+
+  onInputChange(): void {
+    this.trigger.openMenu();
+    this.filterUserDropDown();
   }
 
   writeContact(contact) {
@@ -184,8 +192,6 @@ export class CreateDirectMessageComponent implements OnInit {
       .doc(this.loggedUserId)
       .update(this.loggedUser.toJSON())
       .then((result) => {
-        console.log(this.loggedUser.toJSON());
-        console.log(result);
       });
   }
 
@@ -197,8 +203,6 @@ export class CreateDirectMessageComponent implements OnInit {
       .doc(this.currentChatpartner.customIdName)
       .update(this.currentChatpartner)
       .then((result) => {
-        console.log(this.currentChatpartner);
-        console.log(result);
       });
   }
 
@@ -232,7 +236,6 @@ export class CreateDirectMessageComponent implements OnInit {
     let index=this.users.findIndex((user)=>user.email===this.messageTo);
     console.log(index);
     if(index=== -1){
-     
       this.overview=false;
       this.messageTo="";
       document.getElementById("messageTo").style.backgroundColor="red";
@@ -240,5 +243,11 @@ export class CreateDirectMessageComponent implements OnInit {
       },1000);
       this.router.navigateByUrl('main/'+ this.loggedUserId + '/main/:id/userchat');
     }
+  }
+
+  filterUserDropDown(){
+    console.log(this.messageTo)
+    let input=this.messageTo.toLowerCase();
+   this.emailUser=this.users.filter((user)=>user.email.toLowerCase().includes(input))
   }
 }

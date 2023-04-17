@@ -5,9 +5,9 @@
 <div class="input-cont">
     <span>An:</span>
    
-    <div [matMenuTriggerFor]="contacts"  ><input [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
+    <div [matMenuTriggerFor]="contacts"  ><input (ngModelChange)="onInputChange()"  [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
     <mat-menu [hasBackdrop]="false" #contacts="matMenu">
-        <button *ngFor="let user of users;let i=index" mat-menu-item (click)="writeContact(user.email)" >{{user.email}} </button>
+        <button *ngFor="let user of emailUser;let i=index" mat-menu-item (click)="writeContact(user.email)" >{{user.email}} </button>
       </mat-menu>
 </div>
 </div> 

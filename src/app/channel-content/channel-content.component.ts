@@ -153,21 +153,21 @@ export class ChannelContentComponent implements OnInit {
   dateToString() {
     if (this.threads.length > 0) {
       for (let i = 0; i < this.threads.length; i++) {
-        let timestamp = this.threads[i]['date'];
-        const date = new Date(
-          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-        );
-
-        // Erstellung eines Strings im gewünschten Format
-        const dateString = date.toLocaleString('de-DE', {
-          day: 'numeric',
-          month: 'numeric',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: false,
-        });
-        this.threads[i]['datestring'] = dateString;
+       
+        //let timestamp = this.threads[i]['date'];
+        //const date = new Date(
+         // timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        //);
+        //const dateString = date.toLocaleString('de-DE', {
+        //  day: 'numeric',
+         // month: 'numeric',
+         // year: 'numeric',
+          //hour: 'numeric',
+         // minute: 'numeric',
+         // hour12: false,
+        //});
+        //this.threads[i]['datestring'] = dateString;
+        this.threads[i]['datestring']=this.commentdateToString(this.threads[i])
       }
     }
   }
@@ -177,9 +177,7 @@ export class ChannelContentComponent implements OnInit {
         const date = new Date(
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
         );
-
-        // Erstellung eines Strings im gewünschten Format
-        const dateString = date.toLocaleString('de-DE', {
+          const dateString = date.toLocaleString('de-DE', {
           day: 'numeric',
           month: 'numeric',
           year: 'numeric',
@@ -197,14 +195,15 @@ export class ChannelContentComponent implements OnInit {
     thread.text = this.editorText.message;
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
-    this.channel.threads = this.threads;
-    await this.firestore
-      .collection('channels')
-      .doc(this.channelId)
-      .update(this.channel.toJSON())
-      .then((result) => {
-        console.log(result);
-      });
+    this.pushThread();
+    //this.channel.threads = this.threads;
+    //await this.firestore
+     // .collection('channels')
+     // .doc(this.channelId)
+     // .update(this.channel.toJSON())
+     // .then((result) => {
+      //  console.log(result);
+      //});
     this.scrollToBottom('.allThreads');
     
   }
@@ -216,6 +215,22 @@ export class ChannelContentComponent implements OnInit {
     comment.comment = this.commenttext.message;
     comment.date=this.dateToTimestamp();
     this.threads[this.activThreadId].comments.push(comment.commentToJSON());
+
+    this.pushThread()
+
+    //this.channel.threads = this.threads;
+    //await this.firestore
+     // .collection('channels')
+     // .doc(this.channelId)
+     // .update(this.channel.toJSON())
+      //.then((result) => {
+      //  console.log(result);
+     // });
+      this.scrollToBottom('.open-thread-comments');
+    
+  }
+
+  async pushThread(){
     this.channel.threads = this.threads;
     await this.firestore
       .collection('channels')
@@ -224,8 +239,6 @@ export class ChannelContentComponent implements OnInit {
       .then((result) => {
         console.log(result);
       });
-      this.scrollToBottom('.open-thread-comments');
-    
   }
 
   dateToTimestamp() {
