@@ -15,16 +15,18 @@ export class TextBoxComponent {
   message: string = '';
 
   configuration = {
-    'emoji-toolbar': true,
-    'emoji-textarea': false,
+
     'emoji-shortname': true,
+    'emoji-textarea': false,
+    'emoji-toolbar': true,
+    
     toolbar: [
       ['bold', 'italic', 'underline'],
       ['link'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       ['code-block', 'blockquote'],
       [{ color: [] }, { background: [] }],
-      ['image','emoji'],
+      ['image','emoji']
     ],
   }
 

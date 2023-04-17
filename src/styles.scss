@@ -1,6 +1,7 @@
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
+@import "~quill-emoji/dist/quill-emoji.css";
 
 body {
     margin: 0;
@@ -54,35 +55,45 @@ body {
     top: -120% !important;
     left: 50% !important;
     transform: translate(-50%, -50%);
-    background-color: gray;
     width: 90%;
     max-width: 400px;
-
-    border-radius: 8px;
-    border: 1px solid red;
+    border: unset;
+    border-radius: unset;
 }
 
 #tab-panel {
-    max-height: 80px !important;
+    height: 100px !important;
     overflow: auto !important;
-    margin: 8px;
-    margin-top: 0px;
+    padding: 8px;
+    margin: 0px;
+
+    background-color: #1E1E1E;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #464646;
+    border-top: none;
 }
 
 #tab-toolbar {
     padding: 0;
+    background-color: none;
+    border: unset;
 
     ul {
         display: flex;
         align-items: center;
         justify-content: space-evenly;
-        margin: 8px;
-        padding: 0px;
-        height: 30px;
+        margin: 0px;
+        padding: 4px 8px;
+
+        background-color: #1E1E1E;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border: 1px solid #464646;
 
         li {
             list-style-type: none;
-            background-color: white;
+            transition: all 75ms ease-in-out;
         }
     }
 }
