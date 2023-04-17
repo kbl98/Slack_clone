@@ -31,7 +31,7 @@
 
     </div>
 
-    <app-text-box #channeltext (keyup.enter)="saveMessageToChannel()"></app-text-box>
+    <app-text-box (myEvent)="saveMessageToChannel()" #channeltext (keyup.enter)="saveMessageToChannel()"></app-text-box>
 
   </div>
 
@@ -102,7 +102,7 @@
 
 
 
-      <app-text-box #commenttext (keyup.enter)="saveMessageToThread()"></app-text-box>
+      <app-text-box (myEvent)="saveMessageToThread()" #commenttext (keyup.enter)="saveMessageToThread()"></app-text-box>
 
 
 

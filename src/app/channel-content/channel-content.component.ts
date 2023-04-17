@@ -39,6 +39,14 @@ export class ChannelContentComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  handleMyEvent() {
+    console.log('Funktion in der Parent-Komponente ausgeführt');
+  }
+
+  y() {
+    console.log('Funktion in der');
+  }
+
   async ngOnInit() {
     this.channel$ = new Observable((observer) => {
       this.route.paramMap.subscribe((paraMap) => {

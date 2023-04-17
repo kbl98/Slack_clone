@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-text-box',
@@ -7,10 +7,12 @@ import { Component } from '@angular/core';
 })
 export class TextBoxComponent {
 
+  @Output() myEvent = new EventEmitter();
+
   valid: boolean = false;
   message: string = '';
 
-  modules = {
+  configuration = {
     toolbar: [
       ['bold', 'italic', 'underline'],
       ['link'],
@@ -34,14 +36,20 @@ export class TextBoxComponent {
         this.valid = false;
       }
     }
-    console.log(this.message);
-
-
-   
   }
 
-  
 
+
+  saveMessageToParent() {
+    this.myEvent.emit();
+  }
+
+
+
+/**
+ * Changes the bordercolors of editor, when clicked
+ * @param event 
+ */
   onSelectionChanged = (event) => {
     if (event.oldRange == null) {
       this.onFocus(event);
@@ -61,8 +69,7 @@ export class TextBoxComponent {
     event.editor.theme.modules.toolbar.container.style = "border-color: #464646 !important;";
   }
 
-  clear(){
-   this.message=null;
-   
+  clear() {
+    this.message = null;
   }
 }
