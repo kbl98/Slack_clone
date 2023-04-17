@@ -195,7 +195,6 @@ export class ChannelContentComponent implements OnInit {
     thread.author = this.loggedUser.username;
     thread.date = this.dateToTimestamp();
     thread.text = this.editorText.message;
-    this.editorText.clear();
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.channel.threads = this.threads;
@@ -206,13 +205,14 @@ export class ChannelContentComponent implements OnInit {
       .then((result) => {
         console.log(result);
       });
-    this.scrollToBottom();
+    this.scrollToBottom('.allThreads');
+    
   }
 
   async saveMessageToThread() {
     let comment = new Comment();
     comment.author = this.loggedUser.username;
-    //comment.date=this.dateToTimestamp;
+    //comment.date=this.dateToTimestamp; ---
     comment.comment = this.commenttext.message;
     comment.date=this.dateToTimestamp();
     this.threads[this.activThreadId].comments.push(comment.commentToJSON());
@@ -224,7 +224,8 @@ export class ChannelContentComponent implements OnInit {
       .then((result) => {
         console.log(result);
       });
-    //  this.scrollToBottom();
+      this.scrollToBottom('.open-thread-comments');
+    
   }
 
   dateToTimestamp() {
@@ -235,8 +236,8 @@ export class ChannelContentComponent implements OnInit {
     return timestamp;
   }
 
-  scrollToBottom() {
-    let container = document.querySelector('.allThreads');
+  scrollToBottom(x) {
+    let container = document.querySelector(x);
     container.scrollTop = container.scrollHeight;
   }
 }

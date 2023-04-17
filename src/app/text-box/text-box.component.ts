@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-text-box',
@@ -26,18 +26,26 @@ export class TextBoxComponent {
   constructor() { }
 
 
-
   getEditorInput(event: any) {
     if (event.event === 'text-change') {
-      this.message = event.html;
-      if (this.message !== null) {
-        this.valid = true;
-      } else {
-        this.valid = false;
-      }
+      setTimeout(() => {
+        this.message = event.html;
+        if (this.message !== null) {
+          this.valid = true;
+        } else {
+          this.valid = false;
+        }
+      }, 10);
     }
   }
 
+
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      this.saveMessageToParent();
+      this.clear();
+    }
+  }
 
 
   saveMessageToParent() {
@@ -46,10 +54,10 @@ export class TextBoxComponent {
 
 
 
-/**
- * Changes the bordercolors of editor, when clicked
- * @param event 
- */
+  /**
+   * Changes the bordercolors of editor, when clicked
+   * @param event 
+   */
   onSelectionChanged = (event) => {
     if (event.oldRange == null) {
       this.onFocus(event);
@@ -70,6 +78,10 @@ export class TextBoxComponent {
   }
 
   clear() {
+    let editors = document.querySelectorAll('.ql-editor');
+    for (let i = 0; i < editors.length; i++) {
+      editors[i].innerHTML = '';
+    }
     this.message = null;
   }
 }
