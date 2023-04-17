@@ -3,10 +3,11 @@ export class User {
     email: string;
     password: string;
     userpicture: any;
-    userMassages: any[]=[]
+    userMassages: any[]=[];
+    chatpartner:any[]=[]
 
   constructor(obj?: any) {
-
+    this.chatpartner=obj ? obj.chatpartner : [];
     this.username = obj ? obj.username : ''; // if-Abfrage mit "?" ob obj.firstName eingefügt wird oder mit ":"-oder ein leerer String mit '' geingefügt wird
     this.email = obj ? obj.email : '';
     this.password = obj ? obj.password : '';
@@ -20,7 +21,8 @@ export class User {
       email: this.email,
       password: this.password,
       userpicture: this.userpicture,
-      userMassages:this.userMassages
+      userMassages:this.userMassages,
+      chatpartner:this.chatpartner
     }
   }
 }

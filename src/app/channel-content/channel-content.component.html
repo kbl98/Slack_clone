@@ -31,11 +31,38 @@
 
         </div>
 
+<<<<<<< HEAD
         <app-text-box #channeltext (keyup.enter)="saveMessageToChannel()"></app-text-box>
 
     </div>
 
 
+=======
+        <div class="thread-content-cont" (click)="open(i)">
+          <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
+          <div class="thread-content">
+            <h3>
+              {{ thread.author }}<span>{{ thread.datestring }}</span>
+            </h3>
+            <div class="thread-text" id="threadNr{{i}}" [innerHTML]="thread.text"></div>
+          </div>
+        </div>
+
+        <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
+          <img src="assets/img/pinguin.svg" alt="img of answer-user" />
+          <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
+         <!-- <span>Zeitraum zu letzter Antwort</span>-->
+        </div>
+
+      </div>
+
+    </div>
+
+    <app-text-box (myEvent)="saveMessageToChannel()" #channeltext></app-text-box>
+
+  </div>
+  <!-- (keyup.enter)="saveMessageToChannel()" -->
+>>>>>>> c3766d4f1b2efeb7f57f7a9eed0fa78f81697df6
 
 
 
@@ -55,7 +82,14 @@
                 <h1># {{ channel["name"] }}</h1>
                 <button mat-button (click)="openSide = false">X</button>
 
+<<<<<<< HEAD
             </div>
+=======
+        <h2># {{ channel["name"] }}</h2>
+        <button mat-button (click)="openSide = false">X</button>
+
+      </div>
+>>>>>>> c3766d4f1b2efeb7f57f7a9eed0fa78f81697df6
 
 
             <div class="open-thread-comments">
@@ -64,6 +98,7 @@
 
                     <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
 
+<<<<<<< HEAD
                     <div class="thread-content w60">
 
                         <h3>
@@ -104,5 +139,50 @@
 
 
         </div>
+=======
+          <div class="thread-content w60">
+
+            <h3 class="channelhead">
+              {{ threads[activThreadId].author
+              }}<span>{{ threads[activThreadId].datestring }}</span>
+            </h3>
+
+            <span class="thread-text" [innerHTML]="threads[activThreadId].text">
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="comment" *ngFor="let comment of threads[activThreadId]['comments']">
+
+          <!-- <div>{{ comment.comment }}</div> -->
+          <!-- *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0" -->
+
+          <div *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments'].length>0">
+           <!-- <img src="threads[activThreadId].comments.authorPic" />-->
+
+            <div class="thread-content">
+              <p>{{commentdateToString(comment)}}</p>
+              <h3>{{ comment["author"] }} </h3>
+              <span class="thread-text" [innerHTML]="comment.comment"></span>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+      <app-text-box (myEvent)="saveMessageToThread()" #commenttext></app-text-box>
+
+
+
+
+>>>>>>> c3766d4f1b2efeb7f57f7a9eed0fa78f81697df6
     </div>
 </div>

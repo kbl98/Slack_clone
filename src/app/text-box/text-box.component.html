@@ -1,12 +1,13 @@
 <div class="text-box-container">
 
-  <form class="editorForm">
+  <form class="editorForm" (submit)="saveMessageToParent()">
 
     <quill-editor
       class="content-editor"
       [placeholder]="'Nachricht an XXX'"
-      [modules]="modules"
+      [modules]="configuration"
       minlength="1"
+      (keydown)="onKeyDown($event)"
       (onEditorChanged)="getEditorInput($event)"
       (onSelectionChanged)="onSelectionChanged($event)"
     >

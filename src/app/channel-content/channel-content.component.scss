@@ -69,6 +69,9 @@
   align-items: flex-start;
   padding-left: 16px;
   font-size: 18px;
+  p{
+    font-size:12px;
+  }
 
   h3 {
     margin-bottom: 5px;
@@ -135,7 +138,7 @@
   padding-inline: 16px;
   border-block: solid 1px rgba(0, 0, 0, 0.1);
 
-  h1 {
+  h2 {
     margin: 0px;
   }
 
@@ -147,6 +150,7 @@
   flex-grow: 1;
   overflow: auto;
   padding-inline: 16px;
+  scroll-behavior: smooth;  
 }
 
 .comment {

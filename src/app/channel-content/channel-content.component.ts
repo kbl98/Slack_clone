@@ -17,7 +17,7 @@ import { Comment } from 'src/models/comments.class';
 })
 export class ChannelContentComponent implements OnInit {
   @ViewChild(TextBoxComponent) editorText: TextBoxComponent;
-  @ViewChild('commenttext')commenttext!:TextBoxComponent
+  @ViewChild('commenttext') commenttext!: TextBoxComponent;
 
   sideThread = true;
   activThreadId;
@@ -34,17 +34,23 @@ export class ChannelContentComponent implements OnInit {
   loggedUserId;
   loggedUser$;
 
-
   constructor(
     private firestore: AngularFirestore,
     private route: ActivatedRoute
-  ) { }
+  ) {}
+
+  handleMyEvent() {
+    console.log('Funktion in der Parent-Komponente ausgeführt');
+  }
+
+  y() {
+    console.log('Funktion in der');
+  }
 
   async ngOnInit() {
     this.channel$ = new Observable((observer) => {
       this.route.paramMap.subscribe((paraMap) => {
         this.channelId = paraMap.get('id2');
-        console.log(this.channelId);
         this.getThreads();
         this.getloggedUser();
         //observer.next(this.getDate());
@@ -66,33 +72,42 @@ export class ChannelContentComponent implements OnInit {
       .doc(this.channelId)
       .valueChanges()
       .subscribe((channel) => {
-        console.log(channel);
         this.channel = new Channel(channel);
-        /*for(let thread of this.channel.threads){
-          for (let comm of thread.comments){
-            comm=new Comment(comm);
-            console.log(comm)
-          }
-        }
-        for (let thread of this.threads){
-           thread=new Thread(thread);
-          
-           this.threads.push(thread);
-          
-        }*/
-
         this.threads = this.channel.threads;
         this.dateToString();
         this.getDate();
-        
       });
   }
 
+
+  getUserId() {
+    this.route.parent.paramMap.subscribe((paraMap) => {
+      this.loggedUserId = paraMap.get('id');
+    });
+  }
+
+  getloggedUser() {
+    this.getUserId();
+    this.loggedUser$ = new Observable((observer) => {
+      this.firestore
+        .collection('users')
+        .doc(this.loggedUserId)
+        .valueChanges()
+        .subscribe((user) => {
+          this.loggedUser = new User(user);
+          observer.next();
+          observer.complete();
+        });
+      observer.next();
+      observer.complete();
+    });
+    this.loggedUser$.subscribe();
+  }
+
   open(i) {
-   // if (this.threads[i]['comments']) {
-      this.activThreadId = i;
-      this.openSide = true;
-      console.log('ThreadID: ', this.activThreadId)
+    // if (this.threads[i]['comments']) {
+    this.activThreadId = i;
+    this.openSide = true;
     //}
   }
 
@@ -101,11 +116,9 @@ export class ChannelContentComponent implements OnInit {
   }
 
   async getDate() {
-    console.log("start get date")
     if (this.threads.length > 0) {
       let date = this.dateToTimestamp();
       this.threads.sort((a, b) => a.date['seconds'] - b.date['seconds']);
-      console.log(this.threads)
       this.compareDates(date);
     }
   }
@@ -114,21 +127,15 @@ export class ChannelContentComponent implements OnInit {
     if (this.threads.length > 1) {
       for (let i = 0; i < this.threads.length; i++) {
         let diffTemp;
-        let datediff = +date['seconds'] - this.threads[i]['date']['seconds']; //statt new Date () muss muss new Date(this.threads[i].date)
+        let datediff = +date['seconds'] - this.threads[i]['date']['seconds'];
         datediff = Math.floor(datediff / 86400);
-        console.log(datediff)
-        if (!(diffTemp == datediff)) {
-
-
-          if (datediff == 0 && this.isDateChanged(i)) {
-            this.threads[i]['dateOfThread'] = 'heute';
-
-          } else if (this.isDateChanged(i)) {
-            this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
-
-          }
+        //if (!(diffTemp == datediff)) {
+        if (datediff == 0 && this.isDateChanged(i)) {
+          this.threads[i]['dateOfThread'] = 'heute';
+        } else if (this.isDateChanged(i)) {
+          this.threads[i]['dateOfThread'] = 'vor ' + datediff + ' Tagen';
         }
-
+        // }
       }
     }
   }
@@ -146,13 +153,31 @@ export class ChannelContentComponent implements OnInit {
   dateToString() {
     if (this.threads.length > 0) {
       for (let i = 0; i < this.threads.length; i++) {
-        let timestamp = this.threads[i]['date'];
+       
+        //let timestamp = this.threads[i]['date'];
+        //const date = new Date(
+         // timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        //);
+        //const dateString = date.toLocaleString('de-DE', {
+        //  day: 'numeric',
+         // month: 'numeric',
+         // year: 'numeric',
+          //hour: 'numeric',
+         // minute: 'numeric',
+         // hour12: false,
+        //});
+        //this.threads[i]['datestring'] = dateString;
+        this.threads[i]['datestring']=this.commentdateToString(this.threads[i])
+      }
+    }
+  }
+
+  commentdateToString(comment){
+    let timestamp = comment['date'];
         const date = new Date(
           timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
         );
-
-        // Erstellung eines Strings im gewünschten Format
-        const dateString = date.toLocaleString('de-DE', {
+          const dateString = date.toLocaleString('de-DE', {
           day: 'numeric',
           month: 'numeric',
           year: 'numeric',
@@ -160,54 +185,53 @@ export class ChannelContentComponent implements OnInit {
           minute: 'numeric',
           hour12: false,
         });
-        this.threads[i]['datestring'] = dateString;
-
-        /*let datestring=new Date(this.threads[i]['date']*1000timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
-        console.log(datestring);
-        let dateAsString=datestring.toLocaleDateString("en-GB")+ ' '+datestring.toLocaleTimeString("it-IT")
-        this.threads[i]['datestring']=dateAsString;*/
-      }
-    }
-  }
-
-  getloggedUser() {
-    this.getUserId();
-    this.loggedUser$ = new Observable((observer) => {
-      this.firestore
-        .collection('users')
-        .doc(this.loggedUserId)
-        .valueChanges()
-        .subscribe((user) => {
-          console.log(user);
-          this.loggedUser = new User(user);
-          observer.next();
-          observer.complete();
-        });
-      observer.next();
-      observer.complete();
-    });
-    this.loggedUser$.subscribe();
-  }
-
-  getUserId() {
-    this.route.parent.paramMap.subscribe((paraMap) => {
-      this.loggedUserId = paraMap.get('id');
-      console.log(this.loggedUserId);
-    });
+        return dateString;
   }
 
   async saveMessageToChannel() {
-    
     let thread = new Thread();
     thread.author = this.loggedUser.username;
-    console.log( this.editorText.message)
     thread.date = this.dateToTimestamp();
     thread.text = this.editorText.message;
-    
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
+    this.pushThread();
+    //this.channel.threads = this.threads;
+    //await this.firestore
+     // .collection('channels')
+     // .doc(this.channelId)
+     // .update(this.channel.toJSON())
+     // .then((result) => {
+      //  console.log(result);
+      //});
+    this.scrollToBottom('.allThreads');
+    
+  }
+
+  async saveMessageToThread() {
+    let comment = new Comment();
+    comment.author = this.loggedUser.username;
+    //comment.date=this.dateToTimestamp; ---
+    comment.comment = this.commenttext.message;
+    comment.date=this.dateToTimestamp();
+    this.threads[this.activThreadId].comments.push(comment.commentToJSON());
+
+    this.pushThread()
+
+    //this.channel.threads = this.threads;
+    //await this.firestore
+     // .collection('channels')
+     // .doc(this.channelId)
+     // .update(this.channel.toJSON())
+      //.then((result) => {
+      //  console.log(result);
+     // });
+      this.scrollToBottom('.open-thread-comments');
+    
+  }
+
+  async pushThread(){
     this.channel.threads = this.threads;
-    //await this.displayMessageAsHTML();
     await this.firestore
       .collection('channels')
       .doc(this.channelId)
@@ -215,27 +239,7 @@ export class ChannelContentComponent implements OnInit {
       .then((result) => {
         console.log(result);
       });
-    this.scrollToBottom();
   }
-
-  async saveMessageToThread(){
-    let comment= new Comment;
-    comment.author=this.loggedUser.username;
-   //comment.date=this.dateToTimestamp;
-   comment.comment=this.commenttext.message;
-   console.log(comment.commentToJSON());
-   this.threads[this.activThreadId].comments.push(comment.commentToJSON());
-   this.channel.threads=this.threads;
-   await this.firestore
-   .collection('channels')
-   .doc(this.channelId)
-   .update(this.channel.toJSON())
-   .then((result) => {
-     console.log(result);
-   });
- this.scrollToBottom();
-  }
- 
 
   dateToTimestamp() {
     const now = new Date();
@@ -245,17 +249,8 @@ export class ChannelContentComponent implements OnInit {
     return timestamp;
   }
 
-
-  scrollToBottom() {
-    let container = document.querySelector('.allThreads');
+  scrollToBottom(x) {
+    let container = document.querySelector(x);
     container.scrollTop = container.scrollHeight;
-  }
-
-  //Katja:Ich glaube, das brauchen wir nicht, wenn wir das innerHTML mit [innerHTML]="thread.text" ins div direkt einsetzen.
-  displayMessageAsHTML() {
-    for (let i = 0; i < this.channel.threads.length; i++) {
-      const threadText = this.channel.threads[i].text;
-     document.getElementById(`threadNr${i}`).innerHTML = `${threadText}`;
-    }
   }
 }

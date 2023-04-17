@@ -1,26 +1,29 @@
 
 <div class="direct-mess-cont">
+<div class="top-direct-cont"> 
 <h1>Direktnachrichten</h1>
 <div class="input-cont">
     <span>An:</span>
    
-    <div [matMenuTriggerFor]="contacts"  ><input [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
+    <div [matMenuTriggerFor]="contacts"  ><input (ngModelChange)="onInputChange()"  [(ngModel)]="messageTo" id="messageTo" placeholder="@jemand@beispiel.com"></div>
     <mat-menu [hasBackdrop]="false" #contacts="matMenu">
-        <button *ngFor="let user of users;let i=index" mat-menu-item (click)="writeContact(user.email)" >{{user.email}} </button>
+        <button *ngFor="let user of emailUser;let i=index" mat-menu-item (click)="writeContact(user.email)" >{{user.email}} </button>
       </mat-menu>
 </div>
-<div *ngIf="overview">
-<div class="message-box" *ngFor="let message of allMessages[0]['messages']" >
+</div> 
+
+<div class="all-Messages-cont" *ngIf="overview">
+<div class="message-box" *ngFor="let message of allMessages" >
     <div class="message-date">{{message.datestring}}</div>
     <div class="message-cont" >
        
         <div class="thread-content-cont">
-          <img src="assets/img/pinguin.svg" alt="img of thread-user" />
+          <img src="assets/img/{{getPictureOfAuthor(message)}}" alt="img of thread-user" />
           <div class="thread-content">
             <h3>
                {{message.author}}
             </h3>
-            <div class="thread-text">{{message['text']}}</div>
+            <div class="thread-text" [innerHTML]="message['text']"></div>
           </div>
         </div>
        
@@ -28,9 +31,10 @@
       </div>
 </div>
 </div>
-<div class="write-cont" *ngIf="!overview">
-    <button class="close-btn" mat-button (click)="closeWrite()">X</button>
-    <!--<app-text-box class="bottom"></app-text-box>-->
+<div class="write-cont">
+    <app-text-box #messagetext  (keyup.enter)="saveMessage()"></app-text-box>
+
+</div>
 </div>
 
 

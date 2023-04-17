@@ -1,6 +1,7 @@
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
+@import "~quill-emoji/dist/quill-emoji.css";
 
 body {
     margin: 0;
@@ -45,6 +46,72 @@ body {
 
 
 // UNTERHALB TEXT BOX CSS (Muss in die style.css) //
+
+
+
+
+#emoji-palette {
+    position: absolute !important;
+    top: -120% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    border: unset;
+    border-radius: unset;
+}
+
+#tab-panel {
+    height: 100px !important;
+    overflow: auto !important;
+    padding: 8px;
+    margin: 0px;
+
+    background-color: #1E1E1E;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #464646;
+    border-top: none;
+}
+
+#tab-toolbar {
+    padding: 0;
+    background-color: none;
+    border: unset;
+
+    ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 0px;
+        padding: 4px 8px;
+
+        background-color: #1E1E1E;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border: 1px solid #464646;
+
+        li {
+            list-style-type: none;
+            transition: all 75ms ease-in-out;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .ql-toolbar.ql-snow {
