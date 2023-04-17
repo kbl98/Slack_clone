@@ -79,7 +79,6 @@ export class ChannelContentComponent implements OnInit {
       });
   }
 
-
   getUserId() {
     this.route.parent.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
@@ -109,6 +108,28 @@ export class ChannelContentComponent implements OnInit {
     this.activThreadId = i;
     this.openSide = true;
     //}
+  }
+
+  deleteThread(i) {
+    this.threads.splice(i, 1);
+    this.pushThread();
+  }
+
+  authorIsLoggedUser(i, thread) {
+    if (thread[i].author == this.loggedUser.username) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  deleteComment(i) {
+    this.threads[this.activThreadId]['comments'].splice(i);
+    this.pushThread();
+  }
+
+  onClick(event: MouseEvent) {
+    event.stopPropagation();
   }
 
   getAnswers(i) {
@@ -153,39 +174,40 @@ export class ChannelContentComponent implements OnInit {
   dateToString() {
     if (this.threads.length > 0) {
       for (let i = 0; i < this.threads.length; i++) {
-       
         //let timestamp = this.threads[i]['date'];
         //const date = new Date(
-         // timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+        // timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
         //);
         //const dateString = date.toLocaleString('de-DE', {
         //  day: 'numeric',
-         // month: 'numeric',
-         // year: 'numeric',
-          //hour: 'numeric',
-         // minute: 'numeric',
-         // hour12: false,
+        // month: 'numeric',
+        // year: 'numeric',
+        //hour: 'numeric',
+        // minute: 'numeric',
+        // hour12: false,
         //});
         //this.threads[i]['datestring'] = dateString;
-        this.threads[i]['datestring']=this.commentdateToString(this.threads[i])
+        this.threads[i]['datestring'] = this.commentdateToString(
+          this.threads[i]
+        );
       }
     }
   }
 
-  commentdateToString(comment){
+  commentdateToString(comment) {
     let timestamp = comment['date'];
-        const date = new Date(
-          timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-        );
-          const dateString = date.toLocaleString('de-DE', {
-          day: 'numeric',
-          month: 'numeric',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: false,
-        });
-        return dateString;
+    const date = new Date(
+      timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+    );
+    const dateString = date.toLocaleString('de-DE', {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false,
+    });
+    return dateString;
   }
 
   async saveMessageToChannel() {
@@ -198,14 +220,13 @@ export class ChannelContentComponent implements OnInit {
     this.pushThread();
     //this.channel.threads = this.threads;
     //await this.firestore
-     // .collection('channels')
-     // .doc(this.channelId)
-     // .update(this.channel.toJSON())
-     // .then((result) => {
-      //  console.log(result);
-      //});
+    // .collection('channels')
+    // .doc(this.channelId)
+    // .update(this.channel.toJSON())
+    // .then((result) => {
+    //  console.log(result);
+    //});
     this.scrollToBottom('.allThreads');
-    
   }
 
   async saveMessageToThread() {
@@ -213,24 +234,23 @@ export class ChannelContentComponent implements OnInit {
     comment.author = this.loggedUser.username;
     //comment.date=this.dateToTimestamp; ---
     comment.comment = this.commenttext.message;
-    comment.date=this.dateToTimestamp();
+    comment.date = this.dateToTimestamp();
     this.threads[this.activThreadId].comments.push(comment.commentToJSON());
 
-    this.pushThread()
+    this.pushThread();
 
     //this.channel.threads = this.threads;
     //await this.firestore
-     // .collection('channels')
-     // .doc(this.channelId)
-     // .update(this.channel.toJSON())
-      //.then((result) => {
-      //  console.log(result);
-     // });
-      this.scrollToBottom('.open-thread-comments');
-    
+    // .collection('channels')
+    // .doc(this.channelId)
+    // .update(this.channel.toJSON())
+    //.then((result) => {
+    //  console.log(result);
+    // });
+    this.scrollToBottom('.open-thread-comments');
   }
 
-  async pushThread(){
+  async pushThread() {
     this.channel.threads = this.threads;
     await this.firestore
       .collection('channels')

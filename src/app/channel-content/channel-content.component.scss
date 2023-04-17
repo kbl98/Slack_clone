@@ -6,7 +6,6 @@
   display: flex;
 }
 
-
 .threadsAndEditorPosition {
   height: inherit;
   width: 100%;
@@ -15,13 +14,11 @@
   transition: 75ms ease-in-out;
 }
 
-
 .allThreads {
   height: calc(100% - 172px);
   overflow: auto;
   scroll-behavior: smooth;
 }
-
 
 .thread {
   position: relative;
@@ -29,7 +26,6 @@
   padding: 16px 32px;
   margin-block: 16px;
 }
-
 
 .thread-date {
   position: absolute;
@@ -48,11 +44,11 @@
   align-items: center;
 }
 
-
 .thread-content-cont {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  position: relative;
 
   img {
     width: 54px;
@@ -61,16 +57,31 @@
   }
 }
 
+.delete-thread {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  cursor: pointer;
+  border-radius: 30px;
+  padding: 2px;
+  font-size: 12px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
 
 .thread-content {
+  position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
   padding-left: 16px;
   font-size: 18px;
-  p{
-    font-size:12px;
+  p {
+    font-size: 12px;
   }
 
   h3 {
@@ -90,7 +101,6 @@
   }
 }
 
-
 .answers {
   margin-left: 54px;
   margin-top: 24px;
@@ -109,8 +119,6 @@
   }
 }
 
-
-
 .thread-position {
   width: 300px;
   background-color: white;
@@ -121,7 +129,6 @@
   transition: 75ms ease-in-out;
 }
 
-
 .thread-content-position {
   height: 100%;
   display: flex;
@@ -130,7 +137,6 @@
 }
 
 .thread-comment-header {
-
   height: 50px;
   display: flex;
   align-items: center;
@@ -141,7 +147,6 @@
   h2 {
     margin: 0px;
   }
-
 }
 
 .open-thread-comments {
@@ -150,7 +155,7 @@
   flex-grow: 1;
   overflow: auto;
   padding-inline: 16px;
-  scroll-behavior: smooth;  
+  scroll-behavior: smooth;
 }
 
 .comment {
