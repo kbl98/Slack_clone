@@ -47,6 +47,62 @@ body {
 // UNTERHALB TEXT BOX CSS (Muss in die style.css) //
 
 
+
+
+#emoji-palette {
+    position: absolute !important;
+    top: -120% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    background-color: gray;
+    width: 90%;
+    max-width: 400px;
+
+    border-radius: 8px;
+    border: 1px solid red;
+}
+
+#tab-panel {
+    max-height: 80px !important;
+    overflow: auto !important;
+    margin: 8px;
+    margin-top: 0px;
+}
+
+#tab-toolbar {
+    padding: 0;
+
+    ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 8px;
+        padding: 0px;
+        height: 30px;
+
+        li {
+            list-style-type: none;
+            background-color: white;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .ql-toolbar.ql-snow {
     border-top-left-radius: 5px !important;
     border-top-right-radius: 5px !important;

@@ -55,6 +55,7 @@ export class TextBoxComponent {
 
   saveMessageToParent() {
     this.myEvent.emit();
+    this.clear();
   }
 
 
