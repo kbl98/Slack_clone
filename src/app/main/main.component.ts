@@ -18,8 +18,8 @@ import { User } from 'src/models/user.class';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { KeyValuePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
-
-
+import { Comment } from 'src/models/comments.class';
+import { Thread } from 'src/models/thread.class';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -37,13 +37,14 @@ export class MainComponent implements OnInit {
 
   channel = new Channel();
   channels = [];
+  filteredChannels: Channel[] = [];
+  users: string[];
 
   public open = true;
   public open2 = true;
   loggedUserId;
   //loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
   loggedUser = new User();
-
   openContent: string = "";
 
 
@@ -53,7 +54,10 @@ export class MainComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authServ: AngularFireAuth
-  ) { }
+  ) { 
+    this.channels = [];
+    this.filteredChannels = this.channels.slice();
+  }
   
   
 
@@ -153,5 +157,13 @@ export class MainComponent implements OnInit {
 
   changeOpenContent(clickedChannel: string) {
     this.openContent = clickedChannel;
+  }
+
+  filter(searchTerm: string) {
+    this.filteredChannels = this.channels.filter(channel => {
+      return channel.getComments().some(comment => comment.content.includes(searchTerm)) ||
+             channel.getUsers().some(user => user.includes(searchTerm)) ||
+             channel.getThread().some(thread => thread.title.includes(searchTerm));
+    });
   }
 }
