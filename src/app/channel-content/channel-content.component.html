@@ -1,36 +1,19 @@
 <div class="threadPage">
-
-    <div class="threadsAndEditorPosition" [ngStyle]="{'width': openSide ? 'calc(100% - 300px)' : ''}">
-
-        <!-- Kommentar von Steven: Ich denke nicht dass wir hier *ngIf thread.lenght > 0 brauchen -->
-        <div class="allThreads">
-
-            <div class="thread" *ngFor="let thread of threads; let i = index">
-
-                <div class="thread-date" [style.display]="isDateChanged(i) ? '' : 'none'">
-                    {{ thread.dateOfThread }}
-                </div>
-
-                <div class="thread-content-cont" (click)="open(i)">
-                    <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
-                    <div class="thread-content">
-                        <h3>
-                            {{ thread.author }}<span>{{ thread.datestring }}</span>
-                        </h3>
-                        <div class="thread-text" id="threadNr{{i}}" [innerHTML]="thread.text"></div>
-                    </div>
-                </div>
-
-                <div class="answers" *ngIf="(threads[i]['comments'] !== undefined && threads[i]['comments'].length>0)">
-                    <img src="assets/img/pinguin.svg" alt="img of answer-user" />
-                    <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
-                    <span>Zeitraum zu letzter Antwort</span>
-                </div>
-
-            </div>
-
+  <div
+    class="threadsAndEditorPosition"
+    [ngStyle]="{ width: openSide ? 'calc(100% - 300px)' : '' }"
+  >
+    <!-- Kommentar von Steven: Ich denke nicht dass wir hier *ngIf thread.lenght > 0 brauchen -->
+    <div class="allThreads">
+      <div class="thread" *ngFor="let thread of threads; let i = index">
+        <div
+          class="thread-date"
+          [style.display]="isDateChanged(i) ? '' : 'none'"
+        >
+          {{ thread.dateOfThread }}
         </div>
 
+<<<<<<< HEAD
         <app-text-box #channeltext (keyup.enter)="saveMessageToChannel()"></app-text-box>
 
     </div>
@@ -56,8 +39,73 @@
                 <button mat-button (click)="openSide = false">X</button>
 
             </div>
+=======
+        <div class="thread-content-cont" (click)="open(i)">
+          <div
+            class="delete-thread"
+            *ngIf="authorIsLoggedUser(i, threads) && !openSide"
+            (click)="deleteThread(i); onClick($event)"
+          >
+            Delete
+          </div>
+          <img
+            src="assets/img/{{ thread.authorPic }}"
+            alt="img of thread-user"
+          />
+          <div class="thread-content">
+            <h3>
+              {{ thread.author }}<span>{{ thread.datestring }}</span>
+            </h3>
+            <div
+              class="thread-text"
+              id="threadNr{{ i }}"
+              [innerHTML]="thread.text"
+            ></div>
+          </div>
+        </div>
 
+        <div
+          class="answers"
+          *ngIf="
+            threads[i]['comments'] !== undefined &&
+            threads[i]['comments'].length > 0
+          "
+        >
+          <img src="assets/img/pinguin.svg" alt="img of answer-user" />
+          <a (click)="open(i)"
+            >{{ threads[i]["comments"].length }}Antwort(en)</a
+          >
+          <!-- <span>Zeitraum zu letzter Antwort</span>-->
+        </div>
+      </div>
+    </div>
 
+    <app-text-box
+      (myEvent)="saveMessageToChannel()"
+      #channeltext
+    ></app-text-box>
+  </div>
+  <!-- (keyup.enter)="saveMessageToChannel()" -->
+
+  <div class="thread-position" [ngStyle]="{ right: openSide ? '0px' : '' }">
+    <div *ngIf="openSide" class="thread-content-position">
+      <div class="thread-comment-header">
+        <h2># {{ channel["name"] }}</h2>
+        <button mat-button (click)="openSide = false">X</button>
+      </div>
+>>>>>>> 44a580e8a80bf0c323a38ec7f42f9f08e8c0a6de
+
+      <div class="open-thread-comments">
+        <div
+          class="comment"
+          style="border-bottom: solid 1px rgba(0, 0, 0, 0.1)"
+        >
+          <img
+            src="assets/img/{{ threads[activThreadId].authorPic }}"
+            alt="img of thread-user"
+          />
+
+<<<<<<< HEAD
             <div class="open-thread-comments">
 
                 <div class="comment" style="border-bottom: solid 1px rgba(0, 0, 0, 0.1);">
@@ -104,5 +152,59 @@
 
 
         </div>
+=======
+          <div class="thread-content w60">
+            <h3 class="channelhead">
+              {{ threads[activThreadId].author
+              }}<span>{{ threads[activThreadId].datestring }}</span>
+            </h3>
+
+            <span class="thread-text" [innerHTML]="threads[activThreadId].text">
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="comment"
+          *ngFor="
+            let comment of threads[activThreadId]['comments'];
+            let i = index
+          "
+        >
+          <!-- <div>{{ comment.comment }}</div> -->
+          <!-- *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0" -->
+
+          <div
+            *ngIf="
+              threads[activThreadId]['comments'] !== undefined &&
+              threads[activThreadId]['comments'].length > 0
+            "
+          >
+            <!-- <img src="threads[activThreadId].comments.authorPic" />-->
+
+            <div class="thread-content">
+              <div
+                class="delete-thread"
+                *ngIf="
+                  authorIsLoggedUser(i, threads[activThreadId]['comments'])
+                "
+                (click)="deleteComment(i); onClick($event)"
+              >
+                Delete
+              </div>
+              <p>{{ commentdateToString(comment) }}</p>
+              <h3>{{ comment["author"] }}</h3>
+              <span class="thread-text" [innerHTML]="comment.comment"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <app-text-box
+        (myEvent)="saveMessageToThread()"
+        #commenttext
+      ></app-text-box>
+>>>>>>> 44a580e8a80bf0c323a38ec7f42f9f08e8c0a6de
     </div>
+  </div>
 </div>
