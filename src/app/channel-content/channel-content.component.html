@@ -13,33 +13,6 @@
           {{ thread.dateOfThread }}
         </div>
 
-<<<<<<< HEAD
-        <app-text-box #channeltext (keyup.enter)="saveMessageToChannel()"></app-text-box>
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="thread-position" [ngStyle]="{'right': openSide ? '0px' : ''}">
-
-        <div *ngIf="openSide" class="thread-content-position">
-
-            <div class="thread-comment-header">
-
-                <h1># {{ channel["name"] }}</h1>
-                <button mat-button (click)="openSide = false">X</button>
-
-            </div>
-=======
         <div class="thread-content-cont" (click)="open(i)">
           <div
             class="delete-thread"
@@ -93,7 +66,6 @@
         <h2># {{ channel["name"] }}</h2>
         <button mat-button (click)="openSide = false">X</button>
       </div>
->>>>>>> 44a580e8a80bf0c323a38ec7f42f9f08e8c0a6de
 
       <div class="open-thread-comments">
         <div
@@ -105,54 +77,6 @@
             alt="img of thread-user"
           />
 
-<<<<<<< HEAD
-            <div class="open-thread-comments">
-
-                <div class="comment" style="border-bottom: solid 1px rgba(0, 0, 0, 0.1);">
-
-                    <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
-
-                    <div class="thread-content w60">
-
-                        <h3>
-                            {{ threads[activThreadId].author }}
-                            <span>{{ threads[activThreadId].datestring }}</span>
-                        </h3>
-
-                        <span class="thread-text" [innerHTML]="threads[activThreadId].text">
-              
-            </span>
-
-                    </div>
-
-                </div>
-
-                <div class="comment" *ngFor="let comment of threads[activThreadId]['comments']">
-                    <div *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0">
-                        <img src="threads[activThreadId].comments.authorPic" />
-
-                        <div class="thread-content">
-
-                            <h3>{{ comment["author"] }}</h3>
-                            <span class="thread-text" [innerHTML]="comment['comment']"></span>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-
-
-            <app-text-box #commenttext (keyup.enter)="saveMessageToThread()"></app-text-box>
-
-
-
-
-        </div>
-=======
           <div class="thread-content w60">
             <h3 class="channelhead">
               {{ threads[activThreadId].author
@@ -204,7 +128,6 @@
         (myEvent)="saveMessageToThread()"
         #commenttext
       ></app-text-box>
->>>>>>> 44a580e8a80bf0c323a38ec7f42f9f08e8c0a6de
     </div>
   </div>
 </div>
