@@ -14,7 +14,7 @@ export class TextBoxComponent {
 
   valid: boolean = false;
   message: string = '';
-  darkmode: boolean = true;
+  darkmode: boolean = false;
 
   configuration = {
 

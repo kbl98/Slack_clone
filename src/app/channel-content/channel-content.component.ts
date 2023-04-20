@@ -34,7 +34,7 @@ export class ChannelContentComponent implements OnInit {
   loggedUser;
   loggedUserId;
   loggedUser$;
-  darkmode: boolean = true;
+  darkmode: boolean = false;
 
   constructor(
     private firestore: AngularFirestore,

@@ -32,7 +32,7 @@ import { SharedService } from '../shared.service';
 
 export class MainComponent implements OnInit {
 
-  darkmode: boolean = true;
+  darkmode: boolean = false;
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
 

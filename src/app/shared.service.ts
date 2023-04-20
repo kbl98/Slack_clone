@@ -10,14 +10,14 @@ export class SharedService {
 
   constructor(public dialog: MatDialog) { }
 
-  private _sharedBoolean: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private _darkmode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   get sharedBoolean(): boolean {
-    return this._sharedBoolean.getValue();
+    return this._darkmode.getValue();
   }
 
   set sharedBoolean(value: boolean) {
-    this._sharedBoolean.next(value);
+    this._darkmode.next(value);
   }
  
   openLogIn() {
