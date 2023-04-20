@@ -1,11 +1,11 @@
-<mat-toolbar class="toolbar-cont mode-colors">
+<mat-toolbar class="toolbar-cont mode-colors" [ngClass]="{'dark-theme': darkmode}">
 
     <div class="toolbar-left">
         <img src="./assets/img/slack-big.svg">
         <h1>Slack(clone)</h1>
     </div>
 
-    <input placeholder="Search" type="search" #search (keyup)="filter(search.value)">
+    <input placeholder="Search" type="search" #search (keyup)="filter(search.value)" [ngClass]="{'dark-theme-2': darkmode}">
 
     <button mat-icon-button class="profile" [matMenuTriggerFor]="logoff">
         <img src="assets/img/serious-woman.svg">
@@ -15,21 +15,21 @@
         <button mat-menu-item (click)="logout()">Logout</button>
         <button mat-menu-item (click)="openImprint()">Impressum</button>
         <button mat-menu-item (click)="openPolicy()">Datenschutz</button>
-        <button mat-menu-item><mat-slide-toggle> Darkmode </mat-slide-toggle></button>
+        <button mat-menu-item><mat-slide-toggle (click)="darkmode = !darkmode"> Darkmode </mat-slide-toggle></button>
     </mat-menu>
 
 </mat-toolbar>
 
 
-<mat-drawer-container class="all-but-head" autosize>
+<mat-drawer-container class="all-but-head" autosize [ngClass]="{'dark-theme-2': darkmode}">
 
-    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" [opened]="true">
+    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" [opened]="true" [ngClass]="{'dark-theme': darkmode}">
 
-        <h2>
+        <h2 [ngClass]="{'dark-theme': darkmode}">
             My Academy
         </h2>
 
-        <div class="sidebar-dropdown">
+        <div class="sidebar-dropdown" [ngClass]="{'dark-theme-sidecont': darkmode}">
 
             <button (click)="changeOpen()" class="icon-btn" mat-icon-button>
 
@@ -62,13 +62,13 @@
 
             <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}"
                 [ngStyle]="{'background-color': (openContent == chan.customIdName) ? '#0462A6' : ''}"
-                (click)="changeOpenContent(chan.customIdName)">
+                (click)="changeOpenContent(chan.customIdName)" [ngClass]="{'dark-theme-sidecont': darkmode}">
                 # {{ chan.name }}
             </h4>
 
         </div>
 
-        <div class="sidebar-dropdown">
+        <div class="sidebar-dropdown" [ngClass]="{'dark-theme-sidecont': darkmode}">
 
             <button (click)="changeOpen2()" class="icon-btn" mat-icon-button>
 
@@ -101,7 +101,7 @@
 
             <h4 *ngFor="let partner of loggedUser.chatpartner;let i=index" routerLink="main/:id/userchat/{{ partner}}"
                 [ngStyle]="{'background-color': (openContent == partner) ? '#0462A6' : ''}"
-                (click)="changeOpenContent(partner)">
+                (click)="changeOpenContent(partner)" [ngClass]="{'dark-theme-sidecont': darkmode}">
                 {{ partner }}
             </h4>
 

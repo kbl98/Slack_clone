@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewChildren,
   QueryList,
+  Input,
 } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -30,6 +31,7 @@ import { Thread } from 'src/models/thread.class';
 
 export class MainComponent implements OnInit {
 
+  darkmode: boolean = true;
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
 
@@ -47,19 +49,18 @@ export class MainComponent implements OnInit {
   loggedUser = new User();
   openContent: string = "";
 
-
   constructor(
     public dialog: MatDialog,
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
     private router: Router,
     private authServ: AngularFireAuth
-  ) { 
+  ) {
     this.channels = [];
     this.filteredChannels = this.channels.slice();
   }
-  
-  
+
+
 
   ngOnInit(): void {
     this.getChannels();
@@ -72,18 +73,18 @@ export class MainComponent implements OnInit {
       .collection('channels')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes) => {
-        console.log('Channels :',changes);
+        console.log('Channels :', changes);
         this.channels = changes;
       });
   }
 
-  
+
 
 
   getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
-      console.log('Logged in User :',this.loggedUserId);
+      console.log('Logged in User :', this.loggedUserId);
     })
   }
 
@@ -91,7 +92,7 @@ export class MainComponent implements OnInit {
   changeOpen() {
     if (this.open) {
       this.open = false;
-      console.log('Closed Channel Tree :',this.viewedChannel);
+      console.log('Closed Channel Tree :', this.viewedChannel);
     } else {
       this.open = true;
     }
@@ -101,11 +102,11 @@ export class MainComponent implements OnInit {
   changeOpen2() {
     if (this.open2) {
       this.open2 = false;
-      console.log('Closed Chat Tree :',this.viewedChannel);
+      console.log('Closed Chat Tree :', this.viewedChannel);
     } else {
       this.open2 = true;
     }
-    console.log('Logged in User :',this.loggedUser)
+    console.log('Logged in User :', this.loggedUser)
   }
 
 
@@ -134,15 +135,17 @@ export class MainComponent implements OnInit {
       .subscribe((user) => {
         console.log(user);
         this.loggedUser = new User(user);
-        console.log('Logged in User :',this.loggedUser)
+        console.log('Logged in User :', this.loggedUser)
       });
   }
 
-  getAllMessagePartner(){
+  getAllMessagePartner() {
     this.firestore.collection('users').doc(this.loggedUserId).valueChanges().subscribe((changes) => {
-      console.log(changes);})}
+      console.log(changes);
+    })
+  }
 
-  openDialogNewChat() {}
+  openDialogNewChat() { }
 
 
   openImprint() {
@@ -162,8 +165,8 @@ export class MainComponent implements OnInit {
   filter(searchTerm: string) {
     this.filteredChannels = this.channels.filter(channel => {
       return channel.getComments().some(comment => comment.content.includes(searchTerm)) ||
-             channel.getUsers().some(user => user.includes(searchTerm)) ||
-             channel.getThread().some(thread => thread.title.includes(searchTerm));
+        channel.getUsers().some(user => user.includes(searchTerm)) ||
+        channel.getThread().some(thread => thread.title.includes(searchTerm));
     });
   }
 }
