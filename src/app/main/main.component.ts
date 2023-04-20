@@ -21,6 +21,7 @@ import { KeyValuePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { Comment } from 'src/models/comments.class';
 import { Thread } from 'src/models/thread.class';
+import { SharedService } from '../shared.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -54,13 +55,17 @@ export class MainComponent implements OnInit {
     private firestore: AngularFirestore,
     private route: ActivatedRoute,
     private router: Router,
-    private authServ: AngularFireAuth
+    private authServ: AngularFireAuth,
+    private sharedService: SharedService
   ) {
     this.channels = [];
     this.filteredChannels = this.channels.slice();
   }
 
-
+  toggleDarkmode() {
+    this.sharedService.sharedBoolean = !this.sharedService.sharedBoolean;
+    this.darkmode = this.sharedService.sharedBoolean;
+  }
 
   ngOnInit(): void {
     this.getChannels();

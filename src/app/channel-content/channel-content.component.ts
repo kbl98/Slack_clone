@@ -9,6 +9,7 @@ import { startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from 'src/models/user.class';
 import { Comment } from 'src/models/comments.class';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-channel-content',
@@ -33,18 +34,16 @@ export class ChannelContentComponent implements OnInit {
   loggedUser;
   loggedUserId;
   loggedUser$;
+  darkmode: boolean = true;
 
   constructor(
     private firestore: AngularFirestore,
-    private route: ActivatedRoute
-  ) {}
-
-  handleMyEvent() {
-    console.log('Funktion in der Parent-Komponente ausgeführt');
-  }
-
-  y() {
-    console.log('Funktion in der');
+    private route: ActivatedRoute,
+    public sharedService: SharedService
+  ) {
+    setInterval(() => {
+      this.darkmode = this.sharedService.sharedBoolean;
+    }, 1000 / 30)
   }
 
   async ngOnInit() {

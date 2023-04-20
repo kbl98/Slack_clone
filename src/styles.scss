@@ -98,8 +98,8 @@ body {
     border-top-right-radius: 5px !important;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    border-color: rgb(200, 200, 200) !important;
-    background-color: rgb(235, 235, 235);
+    border-color: rgb(130, 130, 130) !important;
+    background-color: rgba(130, 130, 130, 0.1);
     transition: all 75ms ease-in-out;
 
     .ql-formats {
@@ -137,7 +137,6 @@ body {
 .ql-snow .ql-toolbar .ql-picker-item:hover,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
-    // background-color: #2a2d30;
     background-color: rgb(200, 200, 200);
     border-radius: 5px;
 }
@@ -171,7 +170,7 @@ body {
 .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
-    stroke: black !important;
+    stroke: #0462A6 !important;
 }
 
 
@@ -203,7 +202,7 @@ body {
 .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
-    fill: black !important;
+    fill: #0462A6 !important;
 }
 
 
@@ -224,7 +223,7 @@ body {
     color: black;
     font-weight: 700;
     padding: 8px 12px;
-    border: 1px solid rgb(200, 200, 200) !important;
+    border: 1px solid rgb(130, 130, 130) !important;
     border-radius: 5px;
     z-index: 1;
 }

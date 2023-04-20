@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { SharedService } from '../shared.service';
 
 import 'quill-emoji/dist/quill-emoji.js';
 
@@ -13,6 +14,7 @@ export class TextBoxComponent {
 
   valid: boolean = false;
   message: string = '';
+  darkmode: boolean = true;
 
   configuration = {
 
@@ -30,7 +32,11 @@ export class TextBoxComponent {
     ],
   }
 
-  constructor() { }
+  constructor(public sharedService: SharedService) {
+    setInterval(() => {
+      this.darkmode = this.sharedService.sharedBoolean;
+    }, 1000 / 30)
+  }
 
 
   getEditorInput(event: any) {
