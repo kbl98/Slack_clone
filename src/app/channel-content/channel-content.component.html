@@ -1,123 +1,120 @@
 <div class="threadPage" [ngClass]="{'dark-theme': darkmode}">
-  <div class="threadsAndEditorPosition" [ngStyle]="{ width: openSide ? 'calc(100% - 300px)' : '' }">
+    <div class="threadsAndEditorPosition" [ngStyle]="{ width: openSide ? 'calc(100% - 300px)' : '' }">
 
-    <div class="content-header" [ngClass]="{'dark-theme': darkmode}">
+        <div class="content-header" [ngClass]="{'dark-theme': darkmode}">
 
-      <h2>
-        # {{ channel["name"] }}
-      </h2>
-
-    </div>
-
-    <div class="allThreads">
-      <div class="thread" *ngFor="let thread of threads; let i = index"
-        [style.border-top]="isDateChanged(i) ? 'solid 1px rgba(0, 0, 0, 0.2)' : ''"
-        [ngClass]="{'dark-theme-2': darkmode}">
-        <div class="thread-date" [style.display]="isDateChanged(i) ? '' : 'none'" [ngClass]="{'dark-theme': darkmode}">
-          <b>{{ thread.dateOfThread }}</b>
-        </div>
-
-        <div class="thread-content-cont" (click)="open(i)">
-
-          <mat-icon class="delete-thread" *ngIf="authorIsLoggedUser(i, threads) && !openSide"
-            (click)="deleteThread(i); onClick($event)">
-            delete
-          </mat-icon>
-
-          <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
-
-          <div class="thread-content">
-            <div class="thread-name">
-              <h3>
-                {{ thread.author }}
-              </h3>
-              <span class="thread-span">{{ thread.datestring }}</span>
-            </div>
-            <div class="thread-text" id="threadNr{{ i }}" [innerHTML]="thread.text"></div>
-          </div>
+            <h2>
+                # {{ channel["name"] }}
+            </h2>
 
         </div>
 
-        <div class="answers" *ngIf="
+        <div class="allThreads">
+            <div class="thread" *ngFor="let thread of threads; let i = index" [style.border-top]="isDateChanged(i) ? 'solid 1px rgba(0, 0, 0, 0.2)' : ''" [ngClass]="{'dark-theme-2': darkmode}">
+                <div class="thread-date" [style.display]="isDateChanged(i) ? '' : 'none'" [ngClass]="{'dark-theme': darkmode}">
+                    <b>{{ thread.dateOfThread }}</b>
+                </div>
+
+                <div class="thread-content-cont" (click)="open(i)">
+
+                    <mat-icon class="delete-thread" *ngIf="authorIsLoggedUser(i, threads) && !openSide" (click)="deleteThread(i); onClick($event)">
+                        delete
+                    </mat-icon>
+
+                    <img src="assets/img/{{ thread.authorPic }}" alt="img of thread-user" />
+
+                    <div class="thread-content">
+                        <div class="thread-name">
+                            <h3>
+                                {{ thread.author }}
+                            </h3>
+                            <span class="thread-span">{{ thread.datestring }}</span>
+                        </div>
+                        <div class="thread-text" id="threadNr{{ i }}" [innerHTML]="thread.text"></div>
+                    </div>
+
+                </div>
+
+                <div class="answers" *ngIf="
             threads[i]['comments'] !== undefined &&
             threads[i]['comments'].length > 0
           ">
-          <img src="assets/img/pinguin.svg" alt="img of answer-user" />
-          <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
-          <!-- <span>Zeitraum zu letzter Antwort</span>-->
+                    <img src="assets/img/pinguin.svg" alt="img of answer-user" />
+                    <a (click)="open(i)">{{ threads[i]["comments"].length }}Antwort(en)</a>
+                    <!-- <span>Zeitraum zu letzter Antwort</span>-->
+                </div>
+            </div>
         </div>
-      </div>
+
+        <app-text-box (myEvent)="saveMessageToChannel()" #channeltext></app-text-box>
     </div>
 
-    <app-text-box (myEvent)="saveMessageToChannel()" #channeltext></app-text-box>
-  </div>
-
-  <div class="thread-position" [ngStyle]="{ right: openSide ? '0px' : '' }" [ngClass]="{'dark-theme': darkmode}">
-    <div *ngIf="openSide" class="thread-content-position">
-      <div class="thread-comment-header">
-        <h2># {{ channel["name"] }}</h2>
-        <mat-icon class="close-thread-comment" (click)="openSide = false" [ngClass]="{'dark-theme-2': darkmode}">close</mat-icon>
-      </div>
-
-      <div class="open-thread-comments">
-        <div class="comment" style="border-bottom: solid 1px rgba(0, 0, 0, 0.1)" [ngClass]="{'dark-theme-2': darkmode}">
-          <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
-
-          <div class="thread-content">
-            <div class="thread-name">
-              <h3>
-                {{ threads[activThreadId].author }}
-              </h3>
-              <span class="thread-span">{{ threads[activThreadId].datestring }}</span>
+    <div class="thread-position" [ngStyle]="{ right: openSide ? '0px' : '' }" [ngClass]="{'dark-theme': darkmode}">
+        <div *ngIf="openSide" class="thread-content-position">
+            <div class="thread-comment-header">
+                <h2># {{ channel["name"] }}</h2>
+                <mat-icon class="close-thread-comment" (click)="openSide = false" [ngClass]="{'dark-theme-2': darkmode}">close</mat-icon>
             </div>
 
-            <span class="thread-text" [innerHTML]="threads[activThreadId].text">
-            </span>
-          </div>
-        </div>
+            <div class="open-thread-comments">
+                <div class="comment" style="border-bottom: solid 1px rgba(0, 0, 0, 0.1)" [ngClass]="{'dark-theme-2': darkmode}">
+                    <img src="assets/img/{{ threads[activThreadId].authorPic }}" alt="img of thread-user" />
 
-        <div class="comment" *ngFor="
+                    <div class="thread-content">
+                        <div class="thread-name">
+                            <h3>
+                                {{ threads[activThreadId].author }}
+                            </h3>
+                            <span class="thread-span">{{ threads[activThreadId].datestring }}</span>
+                        </div>
+
+                        <span class="thread-text" [innerHTML]="threads[activThreadId].text">
+            </span>
+                    </div>
+                </div>
+
+                <div class="comment" *ngFor="
             let comment of threads[activThreadId]['comments'];
             let i = index" [ngClass]="{'dark-theme-2': darkmode}">
-          <!-- <div>{{ comment.comment }}</div> -->
-          <!-- *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0" -->
+                    <!-- <div>{{ comment.comment }}</div> -->
+                    <!-- *ngIf="threads[activThreadId]['comments'] !== undefined && threads[activThreadId]['comments']>0" -->
 
-          <div *ngIf="
+                    <div *ngIf="
               threads[activThreadId]['comments'] !== undefined &&
               threads[activThreadId]['comments'].length > 0
             ">
-            <!-- <img src="threads[activThreadId].comments.authorPic" />-->
+                        <!-- <img src="threads[activThreadId].comments.authorPic" />-->
 
-            <!-- HIER NOCH DAS PROFILBILD VOM KOMMENTARSCHREIBER EINFÜGEN -->
+                        <!-- HIER NOCH DAS PROFILBILD VOM KOMMENTARSCHREIBER EINFÜGEN -->
 
-            <div class="thread-content">
+                        <div class="thread-content">
 
-              <div class="thread-name">
-                <h3>{{ comment["author"] }}</h3>
-                <span>{{ commentdateToString(comment) }}</span>
-              </div>
-              <span class="thread-text" [innerHTML]="comment.comment"></span>
+                            <div class="thread-name">
+                                <h3>{{ comment["author"] }}</h3>
+                                <span>{{ commentdateToString(comment) }}</span>
+                            </div>
+                            <span class="thread-text" [innerHTML]="comment.comment"></span>
 
-              <mat-icon class="delete-thread" *ngIf="
+                            <mat-icon class="delete-thread" *ngIf="
                   authorIsLoggedUser(i, threads[activThreadId]['comments'])
                 " (click)="deleteComment(i); onClick($event)">
-                delete
-              </mat-icon>
+                                delete
+                            </mat-icon>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+
+
 
             </div>
 
-
-
-
-          </div>
+            <app-text-box (myEvent)="saveMessageToThread()" #commenttext></app-text-box>
         </div>
-
-
-
-
-      </div>
-
-      <app-text-box (myEvent)="saveMessageToThread()" #commenttext></app-text-box>
     </div>
-  </div>
 </div>

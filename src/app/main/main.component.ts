@@ -22,6 +22,7 @@ import { ThemePalette } from '@angular/material/core';
 import { Comment } from 'src/models/comments.class';
 import { Thread } from 'src/models/thread.class';
 import { SharedService } from '../shared.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -32,6 +33,8 @@ import { SharedService } from '../shared.service';
 
 export class MainComponent implements OnInit {
 
+  private routeSub: Subscription;
+
   darkmode: boolean = false;
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
@@ -39,10 +42,12 @@ export class MainComponent implements OnInit {
   sideThread = true;
 
   channel = new Channel();
+  user = new User();
   channels = [];
   filteredChannels: Channel[] = [];
-  users: string[];
-
+  filteredUsers: User[] = [];
+  userData = [];
+  users: any;
   public open = true;
   public open2 = true;
   loggedUserId;
@@ -70,6 +75,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.getChannels();
     this.getloggedUser();
+    this.getUserData();
   }
 
 
@@ -79,12 +85,19 @@ export class MainComponent implements OnInit {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes) => {
         console.log('Channels :', changes);
-        this.channels = changes;
+        this.channels = changes.map(c => new Channel(c));
       });
   }
 
-
-
+  async getUserData() {
+    await this.firestore
+    .collection('users')
+    .valueChanges({ idField: 'customIdName' })
+    .subscribe((userdata) => {
+      this.users = userdata;
+      console.log(this.users)
+    });
+  }
 
   getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
@@ -167,11 +180,33 @@ export class MainComponent implements OnInit {
     this.openContent = clickedChannel;
   }
 
-  filter(searchTerm: string) {
+  filter(searchTerm) {
+    console.log('Dast ist User: ' + this.users); 
+    this.filterComent(searchTerm);
+    console.log('Kommentar: ' + this.channel.getComments()); 
+    this.filterUsers(searchTerm);
+  }
+
+  filterComent(searchTerm: string) {
+    console.log(this.channels);
     this.filteredChannels = this.channels.filter(channel => {
-      return channel.getComments().some(comment => comment.content.includes(searchTerm)) ||
-        channel.getUsers().some(user => user.includes(searchTerm)) ||
-        channel.getThread().some(thread => thread.title.includes(searchTerm));
+      const filteredComments = channel.getComments().filter(comment => {
+        return comment.comment?.includes(searchTerm);
+      });
+      return filteredComments.length > 0;
+    });
+  }
+
+
+  filterUsers(searchTerm: string) {  
+    debugger;
+    console.log(this.users);
+    this.filteredUsers = this.users.filter(currentUser => {
+      console.log(currentUser);
+      const filteredUsers = currentUser.getUser().filter(filteredUser => {        
+        return filteredUser.username?.includes(searchTerm);
+      });
+      return filteredUsers.length > 0;
     });
   }
 }

@@ -4,7 +4,8 @@ export class User {
     password: string;
     userpicture: any;
     userMassages: any[]=[];
-    chatpartner:any[]=[]
+    chatpartner:any[]=[];
+    users = [];
 
   constructor(obj?: any) {
     this.chatpartner=obj ? obj.chatpartner : [];
@@ -25,4 +26,18 @@ export class User {
       chatpartner:this.chatpartner
     }
   }
+
+  public getUser(): string[] {
+    let users: string[] = [];
+    debugger;
+    this.users.forEach(username => {
+        username.forEach(user => {
+            if (!users.includes(user)) {
+                users.push(user);
+            }
+        });
+    });
+
+    return users;
+}
 }

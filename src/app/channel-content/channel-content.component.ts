@@ -35,6 +35,7 @@ export class ChannelContentComponent implements OnInit {
   loggedUserId;
   loggedUser$;
   darkmode: boolean = false;
+  channels: Channel[];
 
   constructor(
     private firestore: AngularFirestore,
@@ -44,6 +45,10 @@ export class ChannelContentComponent implements OnInit {
     setInterval(() => {
       this.darkmode = this.sharedService.sharedBoolean;
     }, 1000 / 30)
+  }
+
+y() {
+    console.log('Funktion in der');
   }
 
   async ngOnInit() {
@@ -271,5 +276,15 @@ export class ChannelContentComponent implements OnInit {
   scrollToBottom(x) {
     let container = document.querySelector(x);
     container.scrollTop = container.scrollHeight;
+  }
+
+  getChannels() {
+    this.firestore
+      .collection('channels')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((changes) => {
+        console.log('Channels :',changes);
+        this.channels = changes.map((channel) => new Channel(channel)); // hier wird für jeden Channel eine Instanz der "Channel"-Klasse erstellt
+      });
   }
 }
