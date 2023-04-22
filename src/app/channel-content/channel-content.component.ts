@@ -31,7 +31,7 @@ export class ChannelContentComponent implements OnInit {
   threads = [];
   channel$;
   topBoarder = [];
-  loggedUser;
+  loggedUser=new User();
   loggedUserId;
   loggedUser$;
   darkmode: boolean = false;
@@ -63,6 +63,7 @@ y() {
     });
 
     this.channel$.subscribe();
+    console.log(this.channelId)
   }
 
   async getAllThreads() {
@@ -89,23 +90,38 @@ y() {
     });
   }
 
-  getloggedUser() {
+  /*getloggedUser() {
     this.getUserId();
     this.loggedUser$ = new Observable((observer) => {
       this.firestore
         .collection('users')
-        .doc(this.loggedUserId)
+        //.doc(this.loggedUserId)
         .valueChanges()
         .subscribe((user) => {
           this.loggedUser = new User(user);
-          observer.next();
-          observer.complete();
+          console.log(user);
+          //observer.next();
+          //observer.complete();
         });
       observer.next();
       observer.complete();
     });
     this.loggedUser$.subscribe();
-  }
+    console.log(this.loggedUser)
+  }*/
+
+  getloggedUser() {
+    this.getUserId();
+    this.firestore
+      .collection('users')
+      .doc(this.loggedUserId)
+      .valueChanges()
+      .subscribe((user) => {
+        console.log(user);
+        this.loggedUser = new User(user);
+        console.log('Logged in User :', this.loggedUser)
+      })};
+  
 
   open(i) {
     // if (this.threads[i]['comments']) {
@@ -256,6 +272,8 @@ y() {
 
   async pushThread() {
     this.channel.threads = this.threads;
+    console.log(this.channelId);
+    console.log(this.channel)
     await this.firestore
       .collection('channels')
       .doc(this.channelId)

@@ -18,8 +18,7 @@ export class Channel {
   public toJSON() {
     return {
       name: this.name,
-      threads: this.threads,
-      id:this.id
+      threads: this.threads
     };
   }
 
