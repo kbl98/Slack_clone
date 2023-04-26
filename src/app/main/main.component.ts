@@ -202,7 +202,9 @@ export class MainComponent implements OnInit {
     debugger;
     console.log(this.users);
     this.filteredUsers = this.users.filter(currentUser => {
-      console.log(currentUser);
+      const user = new User(currentUser);
+      user.users = this.users;
+      console.log(user);
       const filteredUsers = currentUser.getUser().filter(filteredUser => {        
         return filteredUser.username?.includes(searchTerm);
       });

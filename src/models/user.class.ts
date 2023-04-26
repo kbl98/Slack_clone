@@ -32,7 +32,7 @@ export class User {
     debugger;
     this.users.forEach(username => {
         username.forEach(user => {
-            if (!users.includes(user)) {
+            if (!this.users.includes(user)) {
                 users.push(user);
             }
         });
