@@ -187,11 +187,15 @@ export class MainComponent implements OnInit {
     // console.log('Dast ist User: ' + this.users);
     this.filterComent(searchTerm);
     // console.log('Kommentar: ' + this.channel.getComments());
-    // this.filterUsers(searchTerm);
+    this.filterUsers(searchTerm);
   }
 
   filterComent(searchTerm: string) {
     console.log(this.channels);
+    this.channels.forEach(c => {
+      const res = c.threads.filter(t => !t.author || !t.title );
+      console.log("Threads ohne Title und Author: ", res);
+    });
     this.filteredChannels = this.channels.filter((channel) => {
       const filteredComments = channel.getComments().filter((comment) => {
         return comment.comment?.includes(searchTerm);
@@ -206,10 +210,11 @@ export class MainComponent implements OnInit {
       const user = new User(currentUser);
       user.users = this.users;
       console.log(user);
-      const filteredUsers = currentUser.getUser().filter((filteredUser) => {
-        return filteredUser.username?.includes(searchTerm);
+      const filteredUsersNames = user.getUsersNames().filter((filteredUser) => {
+        return filteredUser.includes(searchTerm);
       });
-      return filteredUsers.length > 0;
+      console.log(filteredUsersNames);
+      return filteredUsersNames.length > 0;
     });
   }
 }

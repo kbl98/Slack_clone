@@ -27,17 +27,22 @@ export class User {
     }
   }
 
-  public getUser(): string[] {
+  public getUsersNames(): string[] {
     let users: string[] = [];
-    debugger;
-    this.users.forEach(username => {
-        username.forEach(user => {
-            if (!this.users.includes(user)) {
-                users.push(user);
-            }
-        });
-    });
 
-    return users;
+    return this.users.map(user => user.username);
+
+    // console.log(this.users);
+    // this.users.forEach(user => {
+    //     user.forEach(u => {
+    //       debugger;
+    //       console.log(u);
+    //         if (!this.users.includes(u)) {
+    //             users.push(u);
+    //         }
+    //     });
+    // });
+
+    // return users;
 }
 }

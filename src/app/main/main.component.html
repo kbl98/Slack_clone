@@ -116,9 +116,11 @@
             <div class="channel" *ngFor="let channel of filteredChannels">
                 <h2>{{ channel.name }}</h2>
                 <div *ngFor="let thread of channel.threads">
-                    <p>{{ thread.title }}</p>
-                    <p>{{ thread.author }}</p>
-                    <p>{{ thread.date }}</p>
+                    <p *ngIf="thread.title">{{ thread.title}}</p>
+                    <p>{{ thread.author ||'Anonymous' }}</p>
+                    <p>{{ thread.datestring}}</p>
+                    <div [innerHTML]="thread.text"></div>
+
                     <!-- display any other relevant thread properties -->
                 </div>
             </div>
