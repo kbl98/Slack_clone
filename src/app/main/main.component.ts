@@ -85,7 +85,11 @@ export class MainComponent implements OnInit {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes) => {
         console.log('Channels :', changes);
-        this.channels = changes.map(c => new Channel(c));
+        this.channels = changes.map(
+         c => 
+         new Channel(c)
+          );
+        console.log(this.channels)
       });
   }
 
@@ -178,6 +182,8 @@ export class MainComponent implements OnInit {
 
   changeOpenContent(clickedChannel: string) {
     this.openContent = clickedChannel;
+    console.log(clickedChannel)
+    console.log('Geöffneter Channel'+this.openContent)
   }
 
   filter(searchTerm) {

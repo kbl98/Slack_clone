@@ -60,9 +60,9 @@
 
         <div *ngIf="open" class="channel-cont">
 
-            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.customIdName }}"
-                [ngStyle]="{'background-color': (openContent == chan.customIdName) ? '#0462A6' : ''}"
-                (click)="changeOpenContent(chan.customIdName)" [ngClass]="{'dark-theme-sidecont': darkmode}">
+            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.id }}"
+                [ngStyle]="{'background-color': (openContent == chan.id) ? '#0462A6' : ''}"
+                (click)="changeOpenContent(chan.id)" [ngClass]="{'dark-theme-sidecont': darkmode}">
                 # {{ chan.name }}
             </h4>
 

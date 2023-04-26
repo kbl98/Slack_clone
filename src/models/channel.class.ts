@@ -7,16 +7,18 @@ export class Channel {
   threads = [];
   currentUser;
   users: any;
+  id:any;
 
   constructor(obj?) {
     this.name = obj ? obj.name : '';
     this.threads = obj ? obj.threads : [];
+    this.id= obj ? obj.customIdName:"";
   }
 
   public toJSON() {
     return {
       name: this.name,
-      threads: this.threads,
+      threads: this.threads
     };
   }
 
