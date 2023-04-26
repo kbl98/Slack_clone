@@ -29,10 +29,7 @@ import { Subscription } from 'rxjs';
   template: ` <router-outlet></router-outlet>`,
   styleUrls: ['./main.component.scss'],
 })
-
-
 export class MainComponent implements OnInit {
-
   private routeSub: Subscription;
 
   darkmode: boolean = false;
@@ -53,7 +50,8 @@ export class MainComponent implements OnInit {
   loggedUserId;
   //loggedUserId = "gn8iWQp4fDNXKy0hnwTk";
   loggedUser = new User();
-  openContent: string = "";
+  openContent: string = '';
+  currentUser: any;
 
   constructor(
     public dialog: MatDialog,
@@ -78,38 +76,38 @@ export class MainComponent implements OnInit {
     this.getUserData();
   }
 
-
   getChannels() {
     this.firestore
       .collection('channels')
       .valueChanges({ idField: 'customIdName' })
       .subscribe((changes) => {
         console.log('Channels :', changes);
-        this.channels = changes.map(
-         c => 
-         new Channel(c)
-          );
-        console.log(this.channels)
+        this.channels = changes.map((c) => new Channel(c));
+        console.log(this.channels);
       });
   }
 
   async getUserData() {
     await this.firestore
-    .collection('users')
-    .valueChanges({ idField: 'customIdName' })
-    .subscribe((userdata) => {
-      this.users = userdata;
-      console.log(this.users)
-    });
+      .collection('users')
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((userdata) => {
+        this.users = userdata;
+        console.log(this.users);
+
+        // const currentUserData = this.users.find(user => user.email === this.currentUser.email);
+        // if (currentUserData) {
+        //   this.currentUser = new User(currentUserData);
+        // }
+      });
   }
 
   getUserId() {
     this.route.paramMap.subscribe((paraMap) => {
       this.loggedUserId = paraMap.get('id');
       console.log('Logged in User :', this.loggedUserId);
-    })
+    });
   }
-
 
   changeOpen() {
     if (this.open) {
@@ -120,7 +118,6 @@ export class MainComponent implements OnInit {
     }
   }
 
-
   changeOpen2() {
     if (this.open2) {
       this.open2 = false;
@@ -128,9 +125,8 @@ export class MainComponent implements OnInit {
     } else {
       this.open2 = true;
     }
-    console.log('Logged in User :', this.loggedUser)
+    console.log('Logged in User :', this.loggedUser);
   }
-
 
   openDialogNewChannel(): void {
     const dialogRef = this.dialog.open(DialogCreateChannelComponent);
@@ -140,13 +136,13 @@ export class MainComponent implements OnInit {
     });
   }
 
-
   logout() {
-    this.authServ.signOut().then(() => this.router.navigateByUrl('/'))
+    this.authServ
+      .signOut()
+      .then(() => this.router.navigateByUrl('/'))
       .catch((error) => console.info(error));
     // this.router.navigateByUrl('/');
   }
-
 
   getloggedUser() {
     this.getUserId();
@@ -157,61 +153,60 @@ export class MainComponent implements OnInit {
       .subscribe((user) => {
         console.log(user);
         this.loggedUser = new User(user);
-        console.log('Logged in User :', this.loggedUser)
+        console.log('Logged in User :', this.loggedUser);
       });
   }
 
   getAllMessagePartner() {
-    this.firestore.collection('users').doc(this.loggedUserId).valueChanges().subscribe((changes) => {
-      console.log(changes);
-    })
+    this.firestore
+      .collection('users')
+      .doc(this.loggedUserId)
+      .valueChanges()
+      .subscribe((changes) => {
+        console.log(changes);
+      });
   }
 
-  openDialogNewChat() { }
-
+  openDialogNewChat() {}
 
   openImprint() {
     this.router.navigateByUrl('main/:id/imprint');
   }
 
-
   openPolicy() {
     this.router.navigateByUrl('main/:id/policy');
   }
 
-
   changeOpenContent(clickedChannel: string) {
     this.openContent = clickedChannel;
-    console.log(clickedChannel)
-    console.log('Geöffneter Channel'+this.openContent)
+    console.log(clickedChannel);
+    console.log('Geöffneter Channel' + this.openContent);
   }
 
   filter(searchTerm) {
-    console.log('Dast ist User: ' + this.users); 
+    // console.log('Dast ist User: ' + this.users);
     this.filterComent(searchTerm);
-    console.log('Kommentar: ' + this.channel.getComments()); 
-    this.filterUsers(searchTerm);
+    // console.log('Kommentar: ' + this.channel.getComments());
+    // this.filterUsers(searchTerm);
   }
 
   filterComent(searchTerm: string) {
     console.log(this.channels);
-    this.filteredChannels = this.channels.filter(channel => {
-      const filteredComments = channel.getComments().filter(comment => {
+    this.filteredChannels = this.channels.filter((channel) => {
+      const filteredComments = channel.getComments().filter((comment) => {
         return comment.comment?.includes(searchTerm);
       });
       return filteredComments.length > 0;
     });
   }
 
-
-  filterUsers(searchTerm: string) {  
-    debugger;
+  filterUsers(searchTerm: string) {
     console.log(this.users);
-    this.filteredUsers = this.users.filter(currentUser => {
+    this.filteredUsers = this.users.filter((currentUser) => {
       const user = new User(currentUser);
       user.users = this.users;
       console.log(user);
-      const filteredUsers = currentUser.getUser().filter(filteredUser => {        
+      const filteredUsers = currentUser.getUser().filter((filteredUser) => {
         return filteredUser.username?.includes(searchTerm);
       });
       return filteredUsers.length > 0;

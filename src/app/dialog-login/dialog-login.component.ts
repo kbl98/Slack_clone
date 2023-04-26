@@ -88,7 +88,7 @@ export class DialogLoginComponent implements OnInit {
   }
 
   guestLogIn() {
-    this.router.navigateByUrl('main/:id');
+    this.router.navigateByUrl('main/:ghU8lG6HZRXD7YatAIPX3kdxv2E3');
     this.dialogRef.close();
   }
 

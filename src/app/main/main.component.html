@@ -60,9 +60,7 @@
 
         <div *ngIf="open" class="channel-cont">
 
-            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.id }}"
-                [ngStyle]="{'background-color': (openContent == chan.id) ? '#0462A6' : ''}"
-                (click)="changeOpenContent(chan.id)" [ngClass]="{'dark-theme-sidecont': darkmode}">
+            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.id }}" [ngStyle]="{'background-color': (openContent == chan.id) ? '#0462A6' : ''}" (click)="changeOpenContent(chan.id)" [ngClass]="{'dark-theme-sidecont': darkmode}">
                 # {{ chan.name }}
             </h4>
 
@@ -99,9 +97,7 @@
 
         <div *ngIf="open2" class="channel-cont">
 
-            <h4 *ngFor="let partner of loggedUser.chatpartner;let i=index" routerLink="main/:id/userchat/{{ partner}}"
-                [ngStyle]="{'background-color': (openContent == partner) ? '#0462A6' : ''}"
-                (click)="changeOpenContent(partner)" [ngClass]="{'dark-theme-sidecont': darkmode}">
+            <h4 *ngFor="let partner of loggedUser.chatpartner;let i=index" routerLink="main/:id/userchat/{{ partner}}" [ngStyle]="{'background-color': (openContent == partner) ? '#0462A6' : ''}" (click)="changeOpenContent(partner)" [ngClass]="{'dark-theme-sidecont': darkmode}">
                 {{ partner }}
             </h4>
 
@@ -119,9 +115,13 @@
         <div id="filtered-channels">
             <div class="channel" *ngFor="let channel of filteredChannels">
                 <h2>{{ channel.name }}</h2>
-                <p>{{ channel.threads }}</p>
+                <div *ngFor="let thread of channel.threads">
+                    <p>{{ thread.title }}</p>
+                    <p>{{ thread.author }}</p>
+                    <p>{{ thread.date }}</p>
+                    <!-- display any other relevant thread properties -->
+                </div>
             </div>
         </div>
     </div>
-
 </mat-drawer-container>
