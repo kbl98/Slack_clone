@@ -23,7 +23,7 @@
 
 <mat-drawer-container class="all-but-head" autosize [ngClass]="{'dark-theme-2': darkmode}">
 
-    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" [opened]="true" [ngClass]="{'dark-theme': darkmode}">
+    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" *ngIf="opened"  [opened]="true"  [ngClass]="{'dark-theme': darkmode}">
 
         <h2 [ngClass]="{'dark-theme': darkmode}">
             My Academy
@@ -106,7 +106,7 @@
     </mat-drawer>
 
     <div class="content">
-
+        <div (click)="closeContent()"  class="close-mobile-content" >x</div>
         <!-- <button class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
             <mat-icon>swap_horiz</mat-icon>
         </button> -->

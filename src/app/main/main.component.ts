@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
   darkmode: boolean = false;
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
-
+  opened: boolean=true;
   sideThread = true;
 
   channel = new Channel();
@@ -52,6 +52,7 @@ export class MainComponent implements OnInit {
   loggedUser = new User();
   openContent: string = '';
   currentUser: any;
+  isMobile:boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -74,6 +75,9 @@ export class MainComponent implements OnInit {
     this.getChannels();
     this.getloggedUser();
     this.getUserData();
+    if (window.screen.width === 700) { // 768px portrait
+      this.isMobile = true;
+    }
   }
 
   getChannels() {
@@ -179,8 +183,12 @@ export class MainComponent implements OnInit {
 
   changeOpenContent(clickedChannel: string) {
     this.openContent = clickedChannel;
+    if(this.openContent !== "" && window.innerWidth < 700){
+      this.opened=false;
+    }else{this.opened=true}
     console.log(clickedChannel);
     console.log('Geöffneter Channel' + this.openContent);
+
   }
 
   filter(searchTerm) {
@@ -216,5 +224,10 @@ export class MainComponent implements OnInit {
       console.log(filteredUsersNames);
       return filteredUsersNames.length > 0;
     });
+  }
+
+  closeContent(){
+    this.openContent="";
+    this.opened=true;
   }
 }

@@ -194,19 +194,6 @@ y() {
   dateToString() {
     if (this.threads.length > 0) {
       for (let i = 0; i < this.threads.length; i++) {
-        //let timestamp = this.threads[i]['date'];
-        //const date = new Date(
-        // timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
-        //);
-        //const dateString = date.toLocaleString('de-DE', {
-        //  day: 'numeric',
-        // month: 'numeric',
-        // year: 'numeric',
-        //hour: 'numeric',
-        // minute: 'numeric',
-        // hour12: false,
-        //});
-        //this.threads[i]['datestring'] = dateString;
         this.threads[i]['datestring'] = this.commentdateToString(
           this.threads[i]
         );
@@ -238,14 +225,6 @@ y() {
     thread.authorPic = this.loggedUser.userpicture;
     this.threads.push(thread.threadToJSON());
     this.pushThread();
-    //this.channel.threads = this.threads;
-    //await this.firestore
-    // .collection('channels')
-    // .doc(this.channelId)
-    // .update(this.channel.toJSON())
-    // .then((result) => {
-    //  console.log(result);
-    //});
     this.scrollToBottom('.allThreads');
   }
 
@@ -256,17 +235,7 @@ y() {
     comment.comment = this.commenttext.message;
     comment.date = this.dateToTimestamp();
     this.threads[this.activThreadId].comments.push(comment.commentToJSON());
-
     this.pushThread();
-
-    //this.channel.threads = this.threads;
-    //await this.firestore
-    // .collection('channels')
-    // .doc(this.channelId)
-    // .update(this.channel.toJSON())
-    //.then((result) => {
-    //  console.log(result);
-    // });
     this.scrollToBottom('.open-thread-comments');
   }
 
