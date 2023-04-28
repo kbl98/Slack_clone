@@ -23,7 +23,7 @@
 
 <mat-drawer-container class="all-but-head" autosize [ngClass]="{'dark-theme-2': darkmode}">
 
-    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" *ngIf="opened"  [opened]="true"  [ngClass]="{'dark-theme': darkmode}">
+    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" *ngIf="opened" [opened]="true" [ngClass]="{'dark-theme': darkmode}">
 
         <h2 [ngClass]="{'dark-theme': darkmode}">
             My Academy
@@ -106,23 +106,19 @@
     </mat-drawer>
 
     <div class="content">
-        <div (click)="closeContent()"  class="close-mobile-content" >x</div>
+        <div (click)="closeContent()" class="close-mobile-content">x</div>
         <!-- <button class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
             <mat-icon>swap_horiz</mat-icon>
         </button> -->
 
         <router-outlet></router-outlet>
-        <div id="filtered-channels">
-            <div class="channel" *ngFor="let channel of filteredChannels">
-                <h2>{{ channel.name }}</h2>
-                <div *ngFor="let thread of channel.threads">
-                    <p *ngIf="thread.title">{{ thread.title}}</p>
-                    <p>{{ thread.author ||'Anonymous' }}</p>
-                    <p>{{ thread.datestring}}</p>
-                    <div [innerHTML]="thread.text"></div>
-
-                    <!-- display any other relevant thread properties -->
-                </div>
+        <div *ngIf="inputValue" id="filtered-channels" class="filtered-channels">
+            <div *ngFor="let user of filteredUsers">
+                <h1 [innerHTML]="user.username"></h1>
+            </div>
+            <div *ngFor="let result of resultsOfChannel">
+                <p [innerHTML]="result.datestring"></p>
+                <p [innerHTML]="result.text"></p>
             </div>
         </div>
     </div>

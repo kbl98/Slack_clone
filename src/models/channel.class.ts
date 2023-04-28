@@ -8,6 +8,7 @@ export class Channel {
   currentUser;
   users: any;
   id:any;
+  channel: any;
 
   constructor(obj?) {
     this.name = obj ? obj.name : '';

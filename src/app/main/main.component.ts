@@ -41,6 +41,7 @@ export class MainComponent implements OnInit {
   channel = new Channel();
   user = new User();
   channels = [];
+  resultsOfChannel = [];
   filteredChannels: Channel[] = [];
   filteredUsers: User[] = [];
   userData = [];
@@ -53,6 +54,7 @@ export class MainComponent implements OnInit {
   openContent: string = '';
   currentUser: any;
   isMobile:boolean;
+  inputValue: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -200,9 +202,11 @@ export class MainComponent implements OnInit {
 
   filterComent(searchTerm: string) {
     console.log(this.channels);
-    this.channels.forEach(c => {
-      const res = c.threads.filter(t => !t.author || !t.title );
-      console.log("Threads ohne Title und Author: ", res);
+    this.channels.forEach(c => {          
+    this.resultsOfChannel = c.threads.filter(t => t.text.includes(searchTerm));    
+      
+      console.log("Threads ohne Title und Author: ", this.resultsOfChannel);
+      
     });
     this.filteredChannels = this.channels.filter((channel) => {
       const filteredComments = channel.getComments().filter((comment) => {
@@ -219,7 +223,7 @@ export class MainComponent implements OnInit {
       user.users = this.users;
       console.log(user);
       const filteredUsersNames = user.getUsersNames().filter((filteredUser) => {
-        return filteredUser.includes(searchTerm);
+        return filteredUser.includes(searchTerm.toLowerCase());
       });
       console.log(filteredUsersNames);
       return filteredUsersNames.length > 0;
