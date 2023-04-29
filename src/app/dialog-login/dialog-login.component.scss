@@ -1,5 +1,5 @@
 .dialogFields {
-    width: 400px;
+    width: 40vw;
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.2);
@@ -9,13 +9,23 @@
         font-weight: 600;
         padding: 10px 0 10px 0;
     }
+
+    @media (max-width: 1050px) {
+        width: 70vw;
+    }
+
+    @media (max-width: 400px) {
+        height: 310px;
+    }
 }
 
 .dialogPassword {
     position: relative;
+
     input[type="password"] {
         padding-right: 20px;
     }
+
     .toggle-password {
         position: absolute;
         top: 50%;
@@ -24,6 +34,7 @@
         cursor: pointer;
         display: flex;
         align-items: center;
+
         img {
             width: 20px;
         }
@@ -47,6 +58,7 @@
     0% {
         transform: translateX(0);
     }
+
     10%,
     30%,
     50%,
@@ -54,12 +66,14 @@
     90% {
         transform: translateX(-10px);
     }
+
     20%,
     40%,
     60%,
     80% {
         transform: translateX(10px);
     }
+
     100% {
         transform: translateX(0);
     }

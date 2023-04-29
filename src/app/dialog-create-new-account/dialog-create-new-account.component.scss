@@ -1,16 +1,22 @@
 .dialogFields {
-    width: 400px;
+    width: 40vw;
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.2);
     padding: 16px;
-    @media (max-width: 540px) {
-        width: 100%;
-    }
+
     h1 {
         font-size: 36px;
         font-weight: 600;
         padding: 10px 0 10px 0;
+    }
+
+    @media (max-width: 1050px) {
+        width: 70vw;
+    }
+
+    @media (max-width: 400px) {
+        height: 390px;
     }
 }
 

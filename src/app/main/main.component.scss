@@ -17,6 +17,10 @@
 
   h1 {
     margin: 0;
+
+    @media (max-width: 1050px) {
+      display: none;
+    }
   }
 
   img {
@@ -26,7 +30,7 @@
 }
 
 input {
-  width: 30vw;
+  width: 40vw;
   padding: 8px 24px;
   border: none;
   border-radius: 8px;
@@ -44,6 +48,10 @@ input {
   &::placeholder {
     color: white;
     font-weight: 500;
+  }
+
+  @media (max-width: 1050px) {
+    width: 50vw;
   }
 }
 
@@ -193,6 +201,7 @@ h2 {
 .close-mobile-content {
   display: none;
 }
+
 @media (max-width: 700px) {
   .left-sidebar {
     width: 100vw;
