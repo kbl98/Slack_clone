@@ -23,6 +23,7 @@ import { Comment } from 'src/models/comments.class';
 import { Thread } from 'src/models/thread.class';
 import { SharedService } from '../shared.service';
 import { Subscription } from 'rxjs';
+import { CreateDirectMessageComponent } from '../create-direct-message/create-direct-message.component';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -31,12 +32,15 @@ import { Subscription } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   private routeSub: Subscription;
-
   darkmode: boolean = false;
   @ViewChildren(ChannelContentComponent)
   public viewedChannel: QueryList<ChannelContentComponent>;
   opened: boolean=true;
   sideThread = true;
+
+  @ViewChildren(CreateDirectMessageComponent)
+  public viewedDirectChat: QueryList<CreateDirectMessageComponent>;
+ 
 
   channel = new Channel();
   user = new User();
@@ -67,6 +71,8 @@ export class MainComponent implements OnInit {
     this.channels = [];
     this.filteredChannels = this.channels.slice();
   }
+
+
 
   toggleDarkmode() {
     this.sharedService.sharedBoolean = !this.sharedService.sharedBoolean;
@@ -99,12 +105,6 @@ export class MainComponent implements OnInit {
       .valueChanges({ idField: 'customIdName' })
       .subscribe((userdata) => {
         this.users = userdata;
-        console.log(this.users);
-
-        // const currentUserData = this.users.find(user => user.email === this.currentUser.email);
-        // if (currentUserData) {
-        //   this.currentUser = new User(currentUserData);
-        // }
       });
   }
 
@@ -174,6 +174,11 @@ export class MainComponent implements OnInit {
   }
 
   openDialogNewChat() {}
+
+  resetOpenContent(){
+    this.openContent="";
+    console.log(this.openContent)
+  }
 
   openImprint() {
     this.router.navigateByUrl('main/:id/imprint');

@@ -1,125 +1,141 @@
-<mat-toolbar class="toolbar-cont mode-colors" [ngClass]="{'dark-theme': darkmode}">
+<mat-toolbar
+  class="toolbar-cont mode-colors"
+  [ngClass]="{ 'dark-theme': darkmode }"
+>
+  <div class="toolbar-left">
+    <img src="./assets/img/slack-big.svg" />
+    <h1>Slack(clone)</h1>
+  </div>
 
-    <div class="toolbar-left">
-        <img src="./assets/img/slack-big.svg">
-        <h1>Slack(clone)</h1>
-    </div>
+  <input
+    placeholder="Search"
+    type="search"
+    #search
+    (keyup)="filter(search.value)"
+    [ngClass]="{ 'dark-theme-2': darkmode }"
+  />
 
-    <input placeholder="Search" type="search" #search (keyup)="filter(search.value)" [ngClass]="{'dark-theme-2': darkmode}">
+  <button mat-icon-button class="profile" [matMenuTriggerFor]="logoff">
+    <img src="assets/img/serious-woman.svg" />
+  </button>
 
-    <button mat-icon-button class="profile" [matMenuTriggerFor]="logoff">
-        <img src="assets/img/serious-woman.svg">
+  <mat-menu #logoff="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+    <button mat-menu-item (click)="openImprint()">Impressum</button>
+    <button mat-menu-item (click)="openPolicy()">Datenschutz</button>
+    <button mat-menu-item>
+      <mat-slide-toggle (click)="toggleDarkmode()"> Darkmode </mat-slide-toggle>
     </button>
-
-    <mat-menu #logoff="matMenu">
-        <button mat-menu-item (click)="logout()">Logout</button>
-        <button mat-menu-item (click)="openImprint()">Impressum</button>
-        <button mat-menu-item (click)="openPolicy()">Datenschutz</button>
-        <button mat-menu-item><mat-slide-toggle (click)="toggleDarkmode()"> Darkmode </mat-slide-toggle></button>
-    </mat-menu>
-
+  </mat-menu>
 </mat-toolbar>
 
+<mat-drawer-container
+  class="all-but-head"
+  autosize
+  [ngClass]="{ 'dark-theme-2': darkmode }"
+>
+  <mat-drawer
+    #drawer
+    class="left-sidebar mode-colors"
+    mode="side"
+    *ngIf="opened"
+    [opened]="true"
+    [ngClass]="{ 'dark-theme': darkmode }"
+  >
+    <h2 [ngClass]="{ 'dark-theme': darkmode }">My Academy</h2>
 
-<mat-drawer-container class="all-but-head" autosize [ngClass]="{'dark-theme-2': darkmode}">
+    <div
+      class="sidebar-dropdown"
+      [ngClass]="{ 'dark-theme-sidecont': darkmode }"
+    >
+      <button (click)="changeOpen()" class="icon-btn" mat-icon-button>
+        <mat-icon *ngIf="!open">arrow_right </mat-icon>
+        <mat-icon *ngIf="open">arrow_drop_down</mat-icon>
+      </button>
 
-    <mat-drawer #drawer class="left-sidebar mode-colors" mode="side" *ngIf="opened" [opened]="true" [ngClass]="{'dark-theme': darkmode}">
+      <h3 [ngStyle]="{ 'font-weight': !open ? '500' : '' }">Channels</h3>
 
-        <h2 [ngClass]="{'dark-theme': darkmode}">
-            My Academy
-        </h2>
+      <button mat-icon-button class="icon-btn" [matMenuTriggerFor]="menu">
+        <mat-icon class="channel-create-icon">add</mat-icon>
+      </button>
 
-        <div class="sidebar-dropdown" [ngClass]="{'dark-theme-sidecont': darkmode}">
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialogNewChannel()">
+          Create new channel
+        </button>
+      </mat-menu>
+    </div>
 
-            <button (click)="changeOpen()" class="icon-btn" mat-icon-button>
+    <div *ngIf="open" class="channel-cont">
+      <h4
+        *ngFor="let chan of channels"
+        routerLink="main/:id/channel/{{ chan.id }}"
+        [ngStyle]="{
+          'background-color': openContent == chan.id ? '#0462A6' : ''
+        }"
+        (click)="changeOpenContent(chan.id)"
+        [ngClass]="{ 'dark-theme-sidecont': darkmode }"
+      >
+        # {{ chan.name }}
+      </h4>
+    </div>
 
-                <mat-icon *ngIf="!open">arrow_right </mat-icon>
-                <mat-icon *ngIf="open">arrow_drop_down</mat-icon>
+    <div
+      class="sidebar-dropdown"
+      [ngClass]="{ 'dark-theme-sidecont': darkmode }"
+    >
+      <button (click)="changeOpen2()" class="icon-btn" mat-icon-button>
+        <mat-icon *ngIf="!open2">arrow_right </mat-icon>
+        <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
+      </button>
 
-            </button>
+      <h3 [ngStyle]="{ 'font-weight': !open ? '500' : '' }">Direct Messages</h3>
 
-            <h3 [ngStyle]="{ 'font-weight': (!open ? '500' : '') }">
-                Channels
-            </h3>
+      <button mat-icon-button class="icon-btn" [matMenuTriggerFor]="menu2">
+        <mat-icon class="channel-create-icon">add</mat-icon>
+      </button>
 
-            <button mat-icon-button class="icon-btn" [matMenuTriggerFor]="menu">
+      <mat-menu #menu2="matMenu">
+        <button
+          mat-menu-item
+          routerLink="main/:id/userchat"
+          (click)="resetOpenContent()"
+        >
+          New Chat
+        </button>
+      </mat-menu>
+    </div>
 
-                <mat-icon class="channel-create-icon">add</mat-icon>
+    <div *ngIf="open2" class="channel-cont">
+      <h4
+        *ngFor="let partner of loggedUser.chatpartner; let i = index"
+        routerLink="main/:id/userchat/{{ partner }}"
+        [ngStyle]="{
+          'background-color': openContent == partner ? '#0462A6' : ''
+        }"
+        (click)="changeOpenContent(partner)"
+        [ngClass]="{ 'dark-theme-sidecont': darkmode }"
+      >
+        {{ partner }}
+      </h4>
+    </div>
+  </mat-drawer>
 
-            </button>
-
-            <mat-menu #menu="matMenu">
-
-                <button mat-menu-item (click)="openDialogNewChannel()">
-                    Create new channel
-                </button>
-
-            </mat-menu>
-
-        </div>
-
-        <div *ngIf="open" class="channel-cont">
-
-            <h4 *ngFor="let chan of channels" routerLink="main/:id/channel/{{ chan.id }}" [ngStyle]="{'background-color': (openContent == chan.id) ? '#0462A6' : ''}" (click)="changeOpenContent(chan.id)" [ngClass]="{'dark-theme-sidecont': darkmode}">
-                # {{ chan.name }}
-            </h4>
-
-        </div>
-
-        <div class="sidebar-dropdown" [ngClass]="{'dark-theme-sidecont': darkmode}">
-
-            <button (click)="changeOpen2()" class="icon-btn" mat-icon-button>
-
-                <mat-icon *ngIf="!open2">arrow_right </mat-icon>
-                <mat-icon *ngIf="open2">arrow_drop_down</mat-icon>
-
-            </button>
-
-            <h3 [ngStyle]="{ 'font-weight': (!open ? '500' : '') }">
-                Direct Messages
-            </h3>
-
-            <button mat-icon-button class="icon-btn" [matMenuTriggerFor]="menu2">
-
-                <mat-icon class="channel-create-icon">add</mat-icon>
-
-            </button>
-
-            <mat-menu #menu2="matMenu">
-
-                <button mat-menu-item routerLink="main/:id/userchat">
-                    New Chat
-                </button>
-
-            </mat-menu>
-
-        </div>
-
-        <div *ngIf="open2" class="channel-cont">
-
-            <h4 *ngFor="let partner of loggedUser.chatpartner;let i=index" routerLink="main/:id/userchat/{{ partner}}" [ngStyle]="{'background-color': (openContent == partner) ? '#0462A6' : ''}" (click)="changeOpenContent(partner)" [ngClass]="{'dark-theme-sidecont': darkmode}">
-                {{ partner }}
-            </h4>
-
-        </div>
-
-    </mat-drawer>
-
-    <div class="content">
-        <div (click)="closeContent()" class="close-mobile-content">x</div>
-        <!-- <button class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
+  <div class="content">
+    <div (click)="closeContent()" class="close-mobile-content">x</div>
+    <!-- <button class="toggle-sidenav" mat-icon-button (click)="drawer.toggle()" mode="open">
             <mat-icon>swap_horiz</mat-icon>
         </button> -->
 
-        <router-outlet></router-outlet>
-        <div *ngIf="inputValue" id="filtered-channels" class="filtered-channels">
-            <div *ngFor="let user of filteredUsers">
-                <h1 [innerHTML]="user.username"></h1>
-            </div>
-            <div *ngFor="let result of resultsOfChannel">
-                <p [innerHTML]="result.datestring"></p>
-                <p [innerHTML]="result.text"></p>
-            </div>
-        </div>
+    <router-outlet></router-outlet>
+    <div *ngIf="inputValue" id="filtered-channels" class="filtered-channels">
+      <div *ngFor="let user of filteredUsers">
+        <h1 [innerHTML]="user.username"></h1>
+      </div>
+      <div *ngFor="let result of resultsOfChannel">
+        <p [innerHTML]="result.datestring"></p>
+        <p [innerHTML]="result.text"></p>
+      </div>
     </div>
+  </div>
 </mat-drawer-container>

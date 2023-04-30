@@ -22,7 +22,7 @@ export class CreateDirectMessageComponent implements OnInit {
     private firestore: AngularFirestore,
     private route: ActivatedRoute
   ) {}
-
+  @Input() openContent: string;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   @ViewChild('messagetext') messagetext: TextBoxComponent;
   disabledTrigger = false;
@@ -35,19 +35,14 @@ export class CreateDirectMessageComponent implements OnInit {
   loggedUserId;
   allMessages;
   loggedUser$;
-emailUser=[]
+  emailUser = [];
 
   ngOnInit() {
     this.getUserId();
-    //this.getUsers();
-    //console.log(this.users);
-    //this.getloggedUser();
-    //console.log(this.loggedUser);
     this.routeSub = this.route.params.subscribe((params) => {
       this.getUsers();
       this.getloggedUser();
     });
-   
   }
 
   closeMenu() {
@@ -86,7 +81,7 @@ emailUser=[]
             this.getMessages(),
             this.dateToString(),
             this.setChatpartnerEmail();
-            this.emailUser=this.users;
+          this.emailUser = this.users;
           observer.next();
           observer.complete();
         });
@@ -106,7 +101,6 @@ emailUser=[]
     this.overview = false;
     this.getNewChatpartner();
   }
-
 
   async getUsers() {
     await this.firestore
@@ -141,11 +135,10 @@ emailUser=[]
     }
   }
 
-  getPictureOfAuthor(message){
-      let author=this.users.find((user)=>user.username===message.author);
-      return author.userpicture
-    }
-  
+  getPictureOfAuthor(message) {
+    let author = this.users.find((user) => user.username === message.author);
+    return author.userpicture;
+  }
 
   sortMessages() {
     this.allMessages[0]['messages'].sort((a, b) => a.date - b.date);
@@ -173,26 +166,32 @@ emailUser=[]
 
   async saveMessage() {
     this.checkMessageTo();
-    if(this.messageTo !==""){
-    let message = new Message();
-    message.author = this.loggedUser.username;
-    message.text = this.messagetext.message;
-    message.date = this.dateToTimestamp();
-    message.chatpartner = this.currentChatpartner.username;
-    this.saveMessageToChatpartner(message);
-    this.saveMessageToLogged(message);
+    if (this.messageTo !== '') {
+      let message = new Message();
+      message.author = this.loggedUser.username;
+      message.text = this.messagetext.message;
+      message.date = this.dateToTimestamp();
+      message.chatpartner = this.currentChatpartner.username;
+      this.saveMessageToChatpartner(message);
+      this.saveMessageToLogged(message);
+      this.openContent = this.currentChatpartner.username;
+      this.router.navigate([
+        'main/' +
+          this.loggedUserId +
+          '/main/:id/userchat/' +
+          this.currentChatpartner.username,
+      ]);
     }
   }
 
-  async saveMessageToLogged(message){
+  async saveMessageToLogged(message) {
     this.loggedUser.userMassages.push(message.toJSON());
     this.pushNewChatpartner(this.currentChatpartner.username);
     await this.firestore
       .collection('users')
       .doc(this.loggedUserId)
       .update(this.loggedUser.toJSON())
-      .then((result) => {
-      });
+      .then((result) => {});
   }
 
   async saveMessageToChatpartner(message) {
@@ -202,8 +201,7 @@ emailUser=[]
       .collection('users')
       .doc(this.currentChatpartner.customIdName)
       .update(this.currentChatpartner)
-      .then((result) => {
-      });
+      .then((result) => {});
   }
 
   dateToTimestamp() {
@@ -232,22 +230,27 @@ emailUser=[]
     }
   }
 
-  checkMessageTo(){
-    let index=this.users.findIndex((user)=>user.email===this.messageTo);
+  checkMessageTo() {
+    let index = this.users.findIndex((user) => user.email === this.messageTo);
     console.log(index);
-    if(index=== -1){
-      this.overview=false;
-      this.messageTo="";
-      document.getElementById("messageTo").style.backgroundColor="red";
-      setTimeout(()=>{document.getElementById("messageTo").style.backgroundColor="white";
-      },1000);
-      this.router.navigateByUrl('main/'+ this.loggedUserId + '/main/:id/userchat');
+    if (index === -1) {
+      this.overview = false;
+      this.messageTo = '';
+      document.getElementById('messageTo').style.backgroundColor = 'red';
+      setTimeout(() => {
+        document.getElementById('messageTo').style.backgroundColor = 'white';
+      }, 1000);
+      this.router.navigateByUrl(
+        'main/' + this.loggedUserId + '/main/:id/userchat'
+      );
     }
   }
 
-  filterUserDropDown(){
-    console.log(this.messageTo)
-    let input=this.messageTo.toLowerCase();
-   this.emailUser=this.users.filter((user)=>user.email.toLowerCase().includes(input))
+  filterUserDropDown() {
+    console.log(this.messageTo);
+    let input = this.messageTo.toLowerCase();
+    this.emailUser = this.users.filter((user) =>
+      user.email.toLowerCase().includes(input)
+    );
   }
 }

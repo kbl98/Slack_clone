@@ -90,25 +90,7 @@ y() {
     });
   }
 
-  /*getloggedUser() {
-    this.getUserId();
-    this.loggedUser$ = new Observable((observer) => {
-      this.firestore
-        .collection('users')
-        //.doc(this.loggedUserId)
-        .valueChanges()
-        .subscribe((user) => {
-          this.loggedUser = new User(user);
-          console.log(user);
-          //observer.next();
-          //observer.complete();
-        });
-      observer.next();
-      observer.complete();
-    });
-    this.loggedUser$.subscribe();
-    console.log(this.loggedUser)
-  }*/
+  
 
   getloggedUser() {
     this.getUserId();

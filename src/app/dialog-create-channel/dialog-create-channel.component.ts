@@ -7,6 +7,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-create-channel',
@@ -17,7 +18,8 @@ export class DialogCreateChannelComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogCreateChannelComponent>,
     public dialog: MatDialog,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private router:Router
   ) {}
 
   loading = false;
@@ -38,6 +40,7 @@ export class DialogCreateChannelComponent {
         this.loading = false;
         this.dialogRef.close();
       });
+
   }
 
   onNoClick() {
