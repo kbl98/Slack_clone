@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { take } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
+
 @Component({
   selector: 'app-dialog-login',
   templateUrl: './dialog-login.component.html',
@@ -21,6 +22,7 @@ export class DialogLoginComponent implements OnInit {
 
   logedin = true;
   wrongPassword = false;
+ 
 
   @ViewChild('emailField') emailField: ElementRef;
   @ViewChild('passwordField') passwordField: ElementRef;
