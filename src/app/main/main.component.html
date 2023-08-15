@@ -8,7 +8,7 @@
   </div>
 
   <input
-    placeholder="Search"
+    placeholder="Search in messagecontent"
     type="search"
     #search
     (keyup)="filter(search.value)"
@@ -128,6 +128,17 @@
         </button> -->
 
     <router-outlet></router-outlet>
+
+    <div *ngIf="search.value"  id="filtered-threads" class="filtered-threads">
+      <div *ngFor="let thread of filteredThreads" class="filtered-thread">
+        <p>Channel: {{ thread.channelName }}</p>
+        <p>Datum: {{ thread.datestring }}</p>
+        <p>Autor: {{ thread.author }}</p>
+        <p [innerHTML]="thread.text"></p>
+        
+      </div>
+    </div>
+
     <div *ngIf="inputValue" id="filtered-channels" class="filtered-channels">
       <div *ngFor="let user of filteredUsers">
         <h1 [innerHTML]="user.username"></h1>

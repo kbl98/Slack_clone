@@ -59,6 +59,7 @@ export class MainComponent implements OnInit {
   currentUser: any;
   isMobile:boolean;
   inputValue: string = '';
+  filteredThreads: any[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -199,25 +200,16 @@ export class MainComponent implements OnInit {
   }
 
   filter(searchTerm) {
-    // console.log('Dast ist User: ' + this.users);
     this.filterComent(searchTerm);
-    // console.log('Kommentar: ' + this.channel.getComments());
-    this.filterUsers(searchTerm);
   }
 
   filterComent(searchTerm: string) {
-    console.log(this.channels);
+    this.filteredThreads = []
     this.channels.forEach(c => {          
-    this.resultsOfChannel = c.threads.filter(t => t.text.includes(searchTerm));    
-      
+    this.resultsOfChannel = c.threads.filter(t => t.text.includes(searchTerm))    
+    .map(t => ({ ...t, channelName: c.name })); 
       console.log("Threads ohne Title und Author: ", this.resultsOfChannel);
-      
-    });
-    this.filteredChannels = this.channels.filter((channel) => {
-      const filteredComments = channel.getComments().filter((comment) => {
-        return comment.comment?.includes(searchTerm);
-      });
-      return filteredComments.length > 0;
+      this.filteredThreads.push(...this.resultsOfChannel);
     });
   }
 

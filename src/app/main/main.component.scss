@@ -53,6 +53,10 @@ input {
   @media (max-width: 1050px) {
     width: 50vw;
   }
+
+  @media (max-width: 700px) {
+    display:none
+  }
 }
 
 .profile {
@@ -216,4 +220,9 @@ h2 {
     font-size: 28px;
     cursor: pointer;
   }
+}
+
+.filtered-thread{
+  color:#6e446f;
+  padding: 24px;
 }
